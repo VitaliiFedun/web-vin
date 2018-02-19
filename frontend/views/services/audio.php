@@ -11,7 +11,7 @@ use frontend\widgets\AudioFormWidget;
 ?>
 
 <?=
-$this->title = 'AudioNotepad >Google Spech Recognition';
+$this->title = 'AudioNotepad ';
 
 $this->params['breadcrumbs'][] = [
 //'template' => "<li><b>{link}</b></li>\n", // шаблон для этой ссылки

@@ -38,156 +38,6 @@ Yii::$app->view->registerJsFile('/services/files/quill.min.js',['yii\web\JsAsset
         <section class="switchable switchable--switch bg--primary space--sm">
             <div class="container">
                 <div class="row" id="dictation">
-                    <div class="col-lg-offset-1 col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                        <ins class="adsbygoogle"
-                             style="display: block;
-                             min-width:300px;
-                             max-width:360px"
-                             data-ad-format="fluid"
-                             data-ad-layout="in-article"
-                             data-ad-client="ca-pub-3152670624293746"
-                             data-ad-slot="2661515976">
-                        </ins>
-                        <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
-                        <div class="input-select chrome langdd mt--1">
-                            <select name="lang" id="lang" onchange="dictation('lang')">
-                                <option value=""   selected="selected"
-                                        disabled="disabled">Choose your Language
-                                </option>
-                                <option value="af-za">Afrikaans</option>
-                                <option value="az-az">Azərbaycan</option>
-                                <option value="id-id">Bahasa Indonesia</option>
-                                <option value="ms-my">Bahasa Melayu</option>
-                                <option value="jv-id">Basa Jawa</option>
-                                <option value="su-id">Basa Sunda</option>
-                                <option value="ca-es">Català</option>
-                                <option value="cs-cz">Čeština</option>
-                                <option value="da-dk">Dansk</option>
-                                <option value="de-de">Deutsch</option>
-                                <option value="en-au">English (Australia)</option>
-                                <option value="en-ca">English (Canada)</option>
-                                <option value="en-gh">English (Ghana)</option>
-                                <option value="en-in">English (India)</option>
-                                <option value="en-ie">English (Ireland)</option>
-                                <option value="en-ke">English (Kenya)</option>
-                                <option value="en-nz">English (New Zealand)</option>
-                                <option value="en-ng">English (Nigeria)</option>
-                                <option value="en-ph">English (Philippines)</option>
-                                <option value="en-za">English (South Africa)</option>
-                                <option value="en-tz">English (Tanzania)</option>
-                                <option value="en-gb">English (United Kingdom)</option>
-                                <option value="en-us">English (United States)</option>
-                                <option value="es-mx">Español</option>
-                                <option value="es-ar">Español (Argentina)</option>
-                                <option value="es-bo">Español (Bolivia)</option>
-                                <option value="es-cl">Español (Chile)</option>
-                                <option value="es-co">Español (Colombia)</option>
-                                <option value="es-cr">Español (Costa Rica)</option>
-                                <option value="es-ec">Español (Ecuador)</option>
-                                <option value="es-sv">Español (El Salvador)</option>
-                                <option value="es-es">Español (España)</option>
-                                <option value="es-us">Español (Estados Unidos)</option>
-                                <option value="es-gt">Español (Guatemala)</option>
-                                <option value="es-hn">Español (Honduras)</option>
-                                <option value="es-419">Español (Latinoamérica)</option>
-                                <option value="es-mx">Español (México)</option>
-                                <option value="es-ni">Español (Nicaragua)</option>
-                                <option value="es-pa">Español (Panamá)</option>
-                                <option value="es-py">Español (Paraguay)</option>
-                                <option value="es-pe">Español (Perú)</option>
-                                <option value="es-pr">Español (Puerto Rico)</option>
-                                <option value="es-do">Español (República Dominicana)</option>
-                                <option value="es-uy">Español (Uruguay)</option>
-                                <option value="es-ve">Español (Venezuela)</option>
-                                <option value="eu-es">Euskara</option>
-                                <option value="fil-ph">Filipino</option>
-                                <option value="fr-fr">Français</option>
-                                <option value="gl-es">Galego</option>
-                                <option value="hr-hr">Hrvatski</option>
-                                <option value="zu-za">Isizulu</option>
-                                <option value="is-is">Íslenska</option>
-                                <option value="it-it">Italiano</option>
-                                <option value="it-it">Italiano (Italia)</option>
-                                <option value="it-ch">Italiano (Svizzera)</option>
-                                <option value="sw-ke">Kiswahili (Kenya)</option>
-                                <option value="sw-tz">Kiswahili (Tanzania)</option>
-                                <option value="lv-lv">Latviešu</option>
-                                <option value="lt-lt">Lietuvių</option>
-                                <option value="hu-hu">Magyar</option>
-                                <option value="nl-nl">Nederlands</option>
-                                <option value="nb-no">Norsk (Bokmål)</option>
-                                <option value="pl-pl">Polski</option>
-                                <option value="pt-br">Português (Brasil)</option>
-                                <option value="pt-pt">Português (Portugal)</option>
-                                <option value="ro-ro">Română</option>
-                                <option value="sk-sk">Slovenčina</option>
-                                <option value="sl-si">Slovenščina</option>
-                                <option value="fi-fi">Suomi</option>
-                                <option value="sv-se">Svenska</option>
-                                <option value="vi-vn">Tiếng Việt</option>
-                                <option value="tr-tr">Türkçe</option>
-                                <option value="el-gr">Ελληνικά</option>
-                                <option value="bg-bg">Български</option>
-                                <option value="ru-ru">Русский</option>
-                                <option value="sr-rs">Српски</option>
-                                <option value="uk-ua">Українська</option>
-                                <option value="hy-am">հայերեն</option>
-                                <option value="he-il">עברית</option>
-                                <option value="ur-in">(اردو (بھارت</option>
-                                <option value="ur-pk">(اردو (پاکستان</option>
-                                <option value="ar-x-gulf">العربية</option>
-                                <option value="ar-il">(العربية (إسرائيل</option>
-                                <option value="ar-jo">(العربية (الأردن</option>
-                                <option value="ar-ae">(العربية (الإمارات</option>
-                                <option value="ar-bh">(العربية (البحرين</option>
-                                <option value="ar-dz">(العربية (الجزائر</option>
-                                <option value="ar-sa">(العربية (السعودية</option>
-                                <option value="ar-kw">(العربية (الكويت</option>
-                                <option value="ar-ma">(العربية (المغرب</option>
-                                <option value="ar-tn">(العربية (تونس</option>
-                                <option value="ar-om">(العربية (عُمان</option>
-                                <option value="ar-ps">(العربية (فلسطين</option>
-                                <option value="ar-qa">(العربية (قطر</option>
-                                <option value="ar-lb">(العربية (لبنان</option>
-                                <option value="ar-eg">(العربية (مصر</option>
-                                <option value="fa-ir">فارسی</option>
-                                <option value="ne-np">नेपाली</option>
-                                <option value="mr-in">मराठी</option>
-                                <option value="hi-in">हिन्दी</option>
-                                <option value="bn-bd">বাংলা (বাংলাদেশ)</option>
-                                <option value="bn-in">বাংলা (ভারত)</option>
-                                <option value="gu-in">ગુજરાતી</option>
-                                <option value="ta-in">தமிழ் (இந்தியா)</option>
-                                <option value="ta-lk">தமிழ் (இலங்கை)</option>
-                                <option value="ta-sg">தமிழ் (சிங்கப்பூர்)</option>
-                                <option value="ta-my">தமிழ் (மலேஷியா)</option>
-                                <option value="te-in">తెలుగు</option>
-                                <option value="kn-in">ಕನ್ನಡ</option>
-                                <option value="ml-in">മലയാളം</option>
-                                <option value="si-lk">සිංහල</option>
-                                <option value="th-th">ไทย</option>
-                                <option value="lo-la">ລາວ</option>
-                                <option value="ka-ge">ქართულად</option>
-                                <option value="am-et">አማርኛ</option>
-                                <option value="km-kh">ខ្មែរ</option>
-                                <option value="cmn-hans-cn">中文（中国）</option>
-                                <option value="cmn-hant-tw">中文（台灣）</option>
-                                <option value="yue-hant-hk">中文（香港）</option>
-                                <option value="ja-jp">日本語</option>
-                                <option value="ko-kr">한국어</option>
-                            </select>
-                        </div>
-                        <div class="commands">
-                        </div>
-                        <div class="text-block mt--1">
-                            <p class="log">
-                                <span>Click the microphone icon and speak</span>
-                                <img src="images/mic.svg" class="bars">
-                            </p>
-                        </div>
-                        <div class="text-block mt--2 teaser hidden-xs">
-                        </div>
-                    </div>
                     <div class="col-lg-7 col-md-8 col-sm-8 col-xs-12">
                         <div class="notepad">
                             <div id="toolbar" class="hidden-xs ql-toolbar ql-snow">
@@ -658,6 +508,157 @@ Yii::$app->view->registerJsFile('/services/files/quill.min.js',['yii\web\JsAsset
                             </div>
                         </div>
                     </div>
+                    <div class="col-lg-offset-1 col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                        <ins class="adsbygoogle"
+                             style="display: block;
+                             min-width:300px;
+                             max-width:360px"
+                             data-ad-format="fluid"
+                             data-ad-layout="in-article"
+                             data-ad-client="ca-pub-3152670624293746"
+                             data-ad-slot="2661515976">
+                        </ins>
+                        <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+                        <div class="input-select chrome langdd mt--1">
+                            <select name="lang" id="lang" onchange="dictation('lang')">
+                                <option value=""   selected="selected"
+                                        disabled="disabled">Choose your Language
+                                </option>
+                                <option value="af-za">Afrikaans</option>
+                                <option value="az-az">Azərbaycan</option>
+                                <option value="id-id">Bahasa Indonesia</option>
+                                <option value="ms-my">Bahasa Melayu</option>
+                                <option value="jv-id">Basa Jawa</option>
+                                <option value="su-id">Basa Sunda</option>
+                                <option value="ca-es">Català</option>
+                                <option value="cs-cz">Čeština</option>
+                                <option value="da-dk">Dansk</option>
+                                <option value="de-de">Deutsch</option>
+                                <option value="en-au">English (Australia)</option>
+                                <option value="en-ca">English (Canada)</option>
+                                <option value="en-gh">English (Ghana)</option>
+                                <option value="en-in">English (India)</option>
+                                <option value="en-ie">English (Ireland)</option>
+                                <option value="en-ke">English (Kenya)</option>
+                                <option value="en-nz">English (New Zealand)</option>
+                                <option value="en-ng">English (Nigeria)</option>
+                                <option value="en-ph">English (Philippines)</option>
+                                <option value="en-za">English (South Africa)</option>
+                                <option value="en-tz">English (Tanzania)</option>
+                                <option value="en-gb">English (United Kingdom)</option>
+                                <option value="en-us">English (United States)</option>
+                                <option value="es-mx">Español</option>
+                                <option value="es-ar">Español (Argentina)</option>
+                                <option value="es-bo">Español (Bolivia)</option>
+                                <option value="es-cl">Español (Chile)</option>
+                                <option value="es-co">Español (Colombia)</option>
+                                <option value="es-cr">Español (Costa Rica)</option>
+                                <option value="es-ec">Español (Ecuador)</option>
+                                <option value="es-sv">Español (El Salvador)</option>
+                                <option value="es-es">Español (España)</option>
+                                <option value="es-us">Español (Estados Unidos)</option>
+                                <option value="es-gt">Español (Guatemala)</option>
+                                <option value="es-hn">Español (Honduras)</option>
+                                <option value="es-419">Español (Latinoamérica)</option>
+                                <option value="es-mx">Español (México)</option>
+                                <option value="es-ni">Español (Nicaragua)</option>
+                                <option value="es-pa">Español (Panamá)</option>
+                                <option value="es-py">Español (Paraguay)</option>
+                                <option value="es-pe">Español (Perú)</option>
+                                <option value="es-pr">Español (Puerto Rico)</option>
+                                <option value="es-do">Español (República Dominicana)</option>
+                                <option value="es-uy">Español (Uruguay)</option>
+                                <option value="es-ve">Español (Venezuela)</option>
+                                <option value="eu-es">Euskara</option>
+                                <option value="fil-ph">Filipino</option>
+                                <option value="fr-fr">Français</option>
+                                <option value="gl-es">Galego</option>
+                                <option value="hr-hr">Hrvatski</option>
+                                <option value="zu-za">Isizulu</option>
+                                <option value="is-is">Íslenska</option>
+                                <option value="it-it">Italiano</option>
+                                <option value="it-it">Italiano (Italia)</option>
+                                <option value="it-ch">Italiano (Svizzera)</option>
+                                <option value="sw-ke">Kiswahili (Kenya)</option>
+                                <option value="sw-tz">Kiswahili (Tanzania)</option>
+                                <option value="lv-lv">Latviešu</option>
+                                <option value="lt-lt">Lietuvių</option>
+                                <option value="hu-hu">Magyar</option>
+                                <option value="nl-nl">Nederlands</option>
+                                <option value="nb-no">Norsk (Bokmål)</option>
+                                <option value="pl-pl">Polski</option>
+                                <option value="pt-br">Português (Brasil)</option>
+                                <option value="pt-pt">Português (Portugal)</option>
+                                <option value="ro-ro">Română</option>
+                                <option value="sk-sk">Slovenčina</option>
+                                <option value="sl-si">Slovenščina</option>
+                                <option value="fi-fi">Suomi</option>
+                                <option value="sv-se">Svenska</option>
+                                <option value="vi-vn">Tiếng Việt</option>
+                                <option value="tr-tr">Türkçe</option>
+                                <option value="el-gr">Ελληνικά</option>
+                                <option value="bg-bg">Български</option>
+                                <option value="ru-ru">Русский</option>
+                                <option value="sr-rs">Српски</option>
+                                <option value="uk-ua">Українська</option>
+                                <option value="hy-am">հայերեն</option>
+                                <option value="he-il">עברית</option>
+                                <option value="ur-in">(اردو (بھارت</option>
+                                <option value="ur-pk">(اردو (پاکستان</option>
+                                <option value="ar-x-gulf">العربية</option>
+                                <option value="ar-il">(العربية (إسرائيل</option>
+                                <option value="ar-jo">(العربية (الأردن</option>
+                                <option value="ar-ae">(العربية (الإمارات</option>
+                                <option value="ar-bh">(العربية (البحرين</option>
+                                <option value="ar-dz">(العربية (الجزائر</option>
+                                <option value="ar-sa">(العربية (السعودية</option>
+                                <option value="ar-kw">(العربية (الكويت</option>
+                                <option value="ar-ma">(العربية (المغرب</option>
+                                <option value="ar-tn">(العربية (تونس</option>
+                                <option value="ar-om">(العربية (عُمان</option>
+                                <option value="ar-ps">(العربية (فلسطين</option>
+                                <option value="ar-qa">(العربية (قطر</option>
+                                <option value="ar-lb">(العربية (لبنان</option>
+                                <option value="ar-eg">(العربية (مصر</option>
+                                <option value="fa-ir">فارسی</option>
+                                <option value="ne-np">नेपाली</option>
+                                <option value="mr-in">मराठी</option>
+                                <option value="hi-in">हिन्दी</option>
+                                <option value="bn-bd">বাংলা (বাংলাদেশ)</option>
+                                <option value="bn-in">বাংলা (ভারত)</option>
+                                <option value="gu-in">ગુજરાતી</option>
+                                <option value="ta-in">தமிழ் (இந்தியா)</option>
+                                <option value="ta-lk">தமிழ் (இலங்கை)</option>
+                                <option value="ta-sg">தமிழ் (சிங்கப்பூர்)</option>
+                                <option value="ta-my">தமிழ் (மலேஷியா)</option>
+                                <option value="te-in">తెలుగు</option>
+                                <option value="kn-in">ಕನ್ನಡ</option>
+                                <option value="ml-in">മലയാളം</option>
+                                <option value="si-lk">සිංහල</option>
+                                <option value="th-th">ไทย</option>
+                                <option value="lo-la">ລາວ</option>
+                                <option value="ka-ge">ქართულად</option>
+                                <option value="am-et">አማርኛ</option>
+                                <option value="km-kh">ខ្មែរ</option>
+                                <option value="cmn-hans-cn">中文（中国）</option>
+                                <option value="cmn-hant-tw">中文（台灣）</option>
+                                <option value="yue-hant-hk">中文（香港）</option>
+                                <option value="ja-jp">日本語</option>
+                                <option value="ko-kr">한국어</option>
+                            </select>
+                        </div>
+                        <div class="commands">
+                        </div>
+                        <div class="text-block mt--1">
+                            <p class="log">
+                                <span>Click the microphone icon and speak</span>
+                                <img src="images/mic.svg" class="bars">
+                            </p>
+                        </div>
+                        <div class="text-block mt--2 teaser hidden-xs">
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </section>

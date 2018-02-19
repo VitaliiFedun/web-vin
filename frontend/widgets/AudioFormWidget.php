@@ -16,14 +16,18 @@ use frontend\models\AudioForm;
 class AudioFormWidget extends Widget {
 
     public function run() {
-        if (Yii::$app->user->isGuest) {
-            $model = new AudioForm();
-            return $this->render('AudioWidgetView', [
-                'model' => $model,
-            ]);
-        } else {
-            return ;
-        }
+//        if (Yii::$app->user->isGuest) {
+//            $model = new AudioForm();
+//            return $this->render('AudioWidgetView', [
+//                'model' => $model,
+//            ]);
+//        } else {
+//            return ;
+//        }
+        $model = new AudioForm();
+        return $this->render('AudioWidgetView', [
+            'model' => $model,
+        ]);
     }
 
 }
