@@ -7,11 +7,23 @@ $params = array_merge(
 );
 
 return [
-    'id' => 'app-frontend',
+    'id' => 'app_myblog',
+
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
     'components' => [
+
+// Чтобы приложение не копировало файлы бутстрапа, jquery и
+// скриптов yii,
+// а также других каких-то ассетов, в папку web,
+// можно настроить его на создание линков:
+
+        'assetManager'=>[
+            'class'=>'yii\web\AssetManager',
+            'linkAssets'=>true,
+        ],
+
         'request' => [
             'csrfParam' => '_csrf-frontend',
         ],
@@ -22,7 +34,7 @@ return [
         ],
         'session' => [
             // this is the name of the session cookie used for login on the frontend
-            'name' => 'advanced-frontend',
+            'name' => 'Web&Vin',
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -43,6 +55,7 @@ return [
             'rules' => [
                     ''=>'site/index',
                     '<action>'=>'site/<action>',
+                '<controller>/<action>' => '<controller>/<action>',
 
             ],
         ],

@@ -710,26 +710,26 @@ Yii::$app->view->registerJsFile('/services/files/quill.min.js',['yii\web\JsAsset
                         </div>
                     </div>
                     <div class="col-sm-5 text-right text-center-xs">
-<!--                        <ul class="social-list list-inline">-->
-<!--                            <li>-->
-<!--                                <a href="https://twitter.com/labnol">-->
-<!--                                    <i class="socicon socicon-twitter icon icon--xs">-->
-<!--                                    </i>-->
-<!--                                </a>-->
-<!--                            </li>-->
-<!--                            <li>-->
-<!--                                <a href="https://www.facebook.com/digital.inspiration">-->
-<!--                                    <i class="socicon socicon-facebook icon icon--xs">-->
-<!--                                    </i>-->
-<!--                                </a>-->
-<!--                            </li>-->
-<!--                            <li>-->
-<!--                                <a href="https://www.youtube.com/labnol">-->
-<!--                                    <i class="socicon socicon-youtube icon icon--xs">-->
-<!--                                    </i>-->
-<!--                                </a>-->
-<!--                            </li>-->
-<!--                        </ul>-->
+                        <ul class="social-list list-inline">
+                            <li>
+                                <a href="https://twitter.com/labnol">
+                                    <i class="socicon socicon-twitter icon icon--xs">
+                                    </i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://www.facebook.com/digital.inspiration">
+                                    <i class="socicon socicon-facebook icon icon--xs">
+                                    </i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://www.youtube.com/labnol">
+                                    <i class="socicon socicon-youtube icon icon--xs">
+                                    </i>
+                                </a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>

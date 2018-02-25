@@ -46,7 +46,7 @@ AppAsset::register($this);
             ['label' => 'Home', 'url' => ['/site/index']],
             ['label' => 'About', 'url' => ['/site/about']],
             ['label' => 'On-line services', 'url' => ['/services/index']],
-//            ['label' => 'Contact', 'url' => ['/site/contact']],
+            ['label' => 'Blog',             'url' => ['/posts/index']],
             ['label' => 'Contact', 'url' => '#', 'options' => ['data-toggle' => 'modal', 'data-target' => '#myModal']],
         ];
         if (Yii::$app->user->isGuest) {
@@ -58,14 +58,26 @@ AppAsset::register($this);
 //            $menuItems[] = ['label' => 'Signup2', 'url' => '#', 'options' => ['data-toggle' => 'modal', 'data-target' => '#social-modal']];
             $menuItems[] = ['label' => 'Login', 'url' => '#', 'options' => ['data-toggle' => 'modal', 'data-target' => '#login-modal']];
         } else {
-            $menuItems[] = '<li>'
-                . Html::beginForm(['/site/logout'], 'post')
-                . Html::submitButton(
-                    'Logout (' . Yii::$app->user->identity->username . ')',
-                    ['class' => 'btn btn-link logout']
-                )
-                . Html::endForm()
-                . '</li>';
+//            $menuItems[] = '<li>'
+//                . Html::beginForm(['/site/logout'], 'post')
+//                . Html::submitButton(
+//                    'Logout (' . Yii::$app->user->identity->username . ')',
+//                    ['class' => 'btn btn-link logout']
+//                )
+//                . Html::endForm()
+//                . '</li>';
+            $menuItems[] =
+            ['label' => Yii::$app->user->identity->username, 'items' => [
+                ['label' => 'Category', 'url' => ['/categories']],
+                ['label' => 'Posts', 'url' => ['/posts']],
+                ['label' => 'Comments', 'url' => ['/comments']],
+                [
+                    'label' => 'Logout',
+                    'url' => ['/site/logout'],
+                    'linkOptions' => ['data-method' => 'post']]
+            ]
+            ];
+
         }
         echo Nav::widget([
             'options' => ['class' => 'navbar-nav navbar-right'],
