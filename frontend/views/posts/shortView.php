@@ -63,7 +63,7 @@ use yii\helpers\Url;
     </h5>
     <p>
         <?= Yii::t('app', 'Category') ?>:
-        <?= Html::a($model->category->title, ['category/view', 'id' =>
+        <?= Html::a($model->category->title, ['categories/view', 'id' =>
             $model->category->id]) ?>
     </p>
 
@@ -73,14 +73,14 @@ use yii\helpers\Url;
         $tags = [];
         foreach($model->getTagPost()->all() as $postTag) {
             $tag = $postTag->getTag()->one();
-            $tags[] = Html::a($tag->title, ['tag/view', 'id' => $tag->id]);
+            $tags[] = Html::a($tag->title, ['tags/view', 'id' => $tag->id]);
         } ?>
 
         <?= Yii::t('app', 'Tags') ?>:
         <?= implode($tags, ', ') ?>
     </div>
 
-    <?php echo Html::a('Permalink',['post/view', 'id' => $model->id]); ?> |
+    <?php echo Html::a('Permalink',['posts/view', 'id' => $model->id]); ?> |
     <?php echo Html::a("Comments ({$model->commentCount})",$model->url.'#comments'); ?> |
     Last updated on <?php echo date('d-m-Y H:i:s',$model->updated_at); ?>
 

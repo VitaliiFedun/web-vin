@@ -2,13 +2,13 @@
 
 namespace frontend\controllers;
 
-use app\models\Categories;
-use app\models\Comments;
+use common\models\Categories;
+use common\models\Comments;
 //use app\models\TagPost;
-use app\models\Tags;
+use common\models\Tags;
 use common\models\User;
 use Yii;
-use app\models\Posts;
+use common\models\Posts;
 //use app\models\PostsSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -54,21 +54,46 @@ class PostsController extends Controller
 //            'dataProvider' => $dataProvider,
 //        ]);
 //    }
+
     public function actionIndex()
     {
-        $post = new Posts();
-        $category = new Categories();
+        $criteria=new CDbCriteria(array(
+            'condition'=>'status='.Post::STATUS_PUBLISHED,
+            'order'=>'update_time DESC',
+            'with'=>'commentCount',
+        ));
+        if(isset($_GET['tag']))
+            $criteria->addSearchCondition('tags',$_GET['tag']);
 
-        $posts = $post->getPublishedPosts();
-        $posts->setPagination([
-            'pageSize' => Yii::$app->params['pageSize']
-        ]);
+        $dataProvider=new CActiveDataProvider('Post', array(
+            'pagination'=>array(
+                'pageSize'=>Yii::app()->params['postsPerPage'],
+            ),
+            'criteria'=>$criteria,
+        ));
 
-        return $this->render('index', [
-            'posts' => $posts,
-            'categories' => $category->getCategories()
-        ]);
+        $this->render('index',array(
+            'dataProvider'=>$dataProvider,
+        ));
     }
+
+
+
+//    public function actionIndex()
+//    {
+//        $post = new Posts();
+//        $category = new Categories();
+//
+//        $posts = $post->getPublishedPosts();
+//        $posts->setPagination([
+//            'pageSize' => Yii::$app->params['pageSize']
+//        ]);
+//
+//        return $this->render('index', [
+//            'posts' => $posts,
+//            'categories' => $category->getCategories()
+//        ]);
+//    }
 
 
 

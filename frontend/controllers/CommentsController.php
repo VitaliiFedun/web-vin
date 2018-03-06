@@ -3,9 +3,9 @@
 namespace frontend\controllers;
 
 use Yii;
-use app\models\Comments;
+use common\models\Comments;
 use frontend\models\CommentForm;
-use app\models\CommentsSearch;
+use common\models\CommentsSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;

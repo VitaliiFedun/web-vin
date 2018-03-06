@@ -23,7 +23,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'content')->textarea(['rows' => 6]) ?>
 
     <?= $form->field($model, 'category_id')->dropDownList(
-  ArrayHelper::map($category, 'id', 'name')
+  ArrayHelper::map($category, 'id', 'title')
 ) ?>
 
 
