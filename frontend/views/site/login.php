@@ -44,20 +44,21 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <section class="main full">
 
-                <   <div class="portlet" id="yw2">
+                <div class="portlet" id="yw2">
                     <div class="portlet-decoration">
                         <div class="portlet-title"><span>Вход через аккаунт в соцсети</span></div>
                     </div>
                     <div class="portlet-content">
 
                         <div id="uLogin"
-                             x-ulogin-params="display=panel;fields=first_name,last_name,email,
-                 photo;providers=
-                 twitter,
-                 facebook,
-                 google;
-                 hidden=other;
-                 redirect_uri=http%3A%2F%2Fwww.planetatuninga.ru%2Fulogin%2Flogin%3Freturn%3D%252Flogin"
+                             x-ulogin-params=
+                           "
+                             display=panel;
+                             fields=first_name,last_name,email,photo;
+                             providers= twitter, facebook, google;
+                             hidden=other;
+                             redirect_uri=http%3A%2F%2Fwww.planetatuninga.ru%2Fulogin%2Flogin%3Freturn%3D%252Flogin
+                           "
                              style="position: relative;"
                              data-ulogin-inited="1516778900726">
                             <div class="ulogin-buttons-container" style="margin: 0px; padding: 0px; outline: none; border: none; border-radius: 0px; cursor: default; float: none; position: relative; display: inline-block; width: 210px; height: 32px; left: 0px; top: 0px; box-sizing: content-box; max-width: 100%; vertical-align: top; line-height: 0;">
