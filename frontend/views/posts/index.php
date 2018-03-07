@@ -14,8 +14,8 @@ $this->title = Yii::t('app', 'Posts');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-
-<div class="posts-index">
+<div class="col-sm-8 post-index">
+<!--<div class="posts-index">-->
 
     <h1><?= Html::encode($this->title) ?></h1>
     <p>

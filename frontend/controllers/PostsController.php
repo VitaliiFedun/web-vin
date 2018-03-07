@@ -44,56 +44,53 @@ class PostsController extends Controller
      * Lists all Posts models.
      * @return mixed
      */
+
 //    public function actionIndex()
 //    {
-//        $searchModel = new PostsSearch();
-//        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+//        $criteria=new DbCriteria(array(
+//            'condition'=>'status='.Post::STATUS_PUBLISHED,
+//            'order'=>'update_time DESC',
+//            'with'=>'commentCount',
+//        ));
+//        if(isset($_GET['tag']))
+//            $criteria->addSearchCondition('tags',$_GET['tag']);
 //
-//        return $this->render('index', [
-//            'searchModel' => $searchModel,
-//            'dataProvider' => $dataProvider,
-//        ]);
+//        $dataProvider=new CActiveDataProvider('Post', array(
+//            'pagination'=>array(
+//                'pageSize'=>Yii::app()->params['postsPerPage'],
+//            ),
+//            'criteria'=>$criteria,
+//        ));
+//
+//        $this->render('index',array(
+//            'dataProvider'=>$dataProvider,
+//        ));
 //    }
+
+
 
     public function actionIndex()
     {
-        $criteria=new CDbCriteria(array(
-            'condition'=>'status='.Post::STATUS_PUBLISHED,
-            'order'=>'update_time DESC',
-            'with'=>'commentCount',
-        ));
-        if(isset($_GET['tag']))
-            $criteria->addSearchCondition('tags',$_GET['tag']);
+        $posts = new Posts();
+//        var_dump($post-count);
+        $category = new Categories();
 
-        $dataProvider=new CActiveDataProvider('Post', array(
-            'pagination'=>array(
-                'pageSize'=>Yii::app()->params['postsPerPage'],
-            ),
-            'criteria'=>$criteria,
-        ));
+        $posts = $posts->getPublishedPosts();
+//        var_dump($posts-count);
+//        if(isset($_GET['tag']))
+//            $criteria->addSearchCondition('tags',$_GET['tag']);
 
-        $this->render('index',array(
-            'dataProvider'=>$dataProvider,
-        ));
+
+        $posts->setPagination([
+            'pageSize' => Yii::$app->params['pageSize']
+        ]);
+
+//        var_dump($posts-count);
+        return $this->render('index', [
+            'posts' => $posts,
+            'categories' => $category->getCategories()
+        ]);
     }
-
-
-
-//    public function actionIndex()
-//    {
-//        $post = new Posts();
-//        $category = new Categories();
-//
-//        $posts = $post->getPublishedPosts();
-//        $posts->setPagination([
-//            'pageSize' => Yii::$app->params['pageSize']
-//        ]);
-//
-//        return $this->render('index', [
-//            'posts' => $posts,
-//            'categories' => $category->getCategories()
-//        ]);
-//    }
 
 
 
