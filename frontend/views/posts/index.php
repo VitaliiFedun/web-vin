@@ -4,18 +4,33 @@ use yii\helpers\Html;
 use yii\widgets\ListView;
 use yii\widgets\LinkPager;
 use yii\helpers\ArrayHelper;
+use  yii\widgets\Breadcrumbs;
 //Yii::$app->view->registerCssFile('/services/css/styles.css', ['yii\web\CssAsset']);
 Yii::$app->view->registerCssFile('/blog/css/styles.css', ['yii\web\CssAsset']);
+
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\PostsSearch */
+/* @var $searchModel common\models\PostsSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Posts');
+$title_main= Yii::t('app', 'All Posts');
+
+\common\models\Posts::
+//if ($session->has('category_id') &&  $session['category_id']!=0)
+$title_main=\common\models\Posts::$_category_url['title'];
+var_dump($title_main);
+die();
+    {
+     $this->params['breadcrumbs'][] = ['label' => Yii::t('app', $_category_url['title']) . ': ' . $category->title, 'url' => ['index']];
+//        Yii::t('frontend', 'Category:') . ' ' . $category->title;
+    }
+
+
+//$this->params['breadcrumbs'][] = ['label' => 'Подкатегория-2', 'url' => ['/category/subcategory']];
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
 
-<div class="col-sm-8 post-index">
-<!--<div class="posts-index">-->
+<div class="col-sm-10 post-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
     <p>
@@ -23,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
 
     <div id="content">
-        <div class="container showcase">
+<!--        <div class="container showcase">-->
             <div class="boxcontainer">
                 <?php
                 foreach ($posts->models as $post) {
@@ -33,7 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
                 ?>
             </div>
-        </div>
+<!--        </div>-->
     </div>
     <div>
         <?= LinkPager::widget([
@@ -41,7 +56,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
     </div>
 </div>
-<div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+<div class="col-sm-2 col-sm-offset blog-sidebar">
     <h2><?= Yii::t('app', 'Categories') ?></h2>
     <ul>
         <?php

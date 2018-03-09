@@ -13,13 +13,13 @@ use yii\widgets\LinkPager;
 /** @var $categories \yii\data\ActiveDataProvider список категорий */
 /** @var $posts \yii\data\ActiveDataProvider список категорий */
 
-$this->title = Yii::t('frontend', 'Category') . ' ' . $category->title;
+$this->title = Yii::t('frontend', 'Category:') . ' ' . $category->title;
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <div class="col-sm-8 post-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h3><?= Html::encode($this->title) ?></h3>
 
 <?php
 foreach ($posts->models as $post) {

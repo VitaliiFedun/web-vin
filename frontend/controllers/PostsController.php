@@ -71,7 +71,13 @@ class PostsController extends Controller
 
     public function actionIndex()
     {
+
+        $session = Yii::$app->session;
+        $session['category_id'] = 0;
+        $session['tag_id'] = 0;
+
         $posts = new Posts();
+        Posts::$_category_url = ['title'=>'test','url'=>'/test','id'=>0];
 //        var_dump($post-count);
         $category = new Categories();
 

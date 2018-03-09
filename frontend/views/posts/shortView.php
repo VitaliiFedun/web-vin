@@ -13,12 +13,7 @@ use yii\helpers\Url;
 ?>
 
 <!--<h1>--><?//= $model->title.'titles' ?><!--</h1>-->
-<div class="article-box post-4811 post
-            type-post status-publish
-             format-standard has-post-thumbnail
-              hentry category-uncategorized
-               tag-blogging tag-comment-spam
-                tag-comments">
+<div class="article-box">
     <!--     id="post-4811" style="">-->
 
     <div class="featured-image">

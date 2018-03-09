@@ -8,6 +8,7 @@ $params = array_merge(
 
 return [
     'id' => 'app_myblog',
+	'language'=>'uk-UK',
 
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],

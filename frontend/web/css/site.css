@@ -120,3 +120,24 @@ a.desc:after {
 .nav > li > form > button.logout:focus {
     outline: none;
 }
+.breadcrumb > li + li::before {
+    padding: 0 5px;
+    color: #ccc;
+    content: "\00bb ";
+}
+.blog-sidebar, .breadcrumb, .footer > .container {
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, .3);
+}
+.article code, .article pre {
+    font-family: monospace;
+    font-size: .9em;
+    background-color: #eee
+}
+
+/*Ховаємо заголовок сторінки*/
+h1 {
+    display: none;
+}
+.jumbotron h1 {
+    display: block;
+}

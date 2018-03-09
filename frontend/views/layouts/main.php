@@ -87,8 +87,13 @@ AppAsset::register($this);
         ?>
 
         <div class="container">
-            <?= Breadcrumbs::widget([
+            <?= Breadcrumbs::widget(
+                    [
                 'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+                'homeLink' =>  [              //переозначуэмо homeLink на 'Blog'
+        'label' => Yii::t('app', 'Blog'),
+        'url' => ['posts/index']
+    ],
             ]) ?>
             <?= Alert::widget() ?>
             <?= $content ?>
@@ -97,7 +102,7 @@ AppAsset::register($this);
 
     <footer class="footer">
         <div class="container">
-            <p class="pull-left">© My Company <?= date('Y') ?></p>
+            <p class="pull-left">© <?=Yii::$app->components[name_brand]?> <?= date('Y') ?></p>
 
 <!--            <p class="pull-right">--><?//= Yii::powered() ?><!--</p>-->
         </div>
