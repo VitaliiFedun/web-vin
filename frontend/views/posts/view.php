@@ -2,9 +2,10 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use common\models\Posts;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Posts */
+/* @var $model common\models\Posts */
 
 //use common\models\Comment;
 //use common\models\TagPost;
@@ -17,7 +18,14 @@ use yii\widgets\DetailView;
 
 
 $this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Posts'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Blog'), 'url' => ['posts/index']];
+$category_url= Posts::loadBreadCrumb();
+if ($category_url['title'] !== null) {
+    $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Category') . ': ' .$model->category->title,
+        'url' => ['/categories/show', 'id' => $model->category->id]];
+
+}
+
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="posts-view">

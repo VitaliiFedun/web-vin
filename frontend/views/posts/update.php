@@ -1,13 +1,22 @@
 <?php
 
 use yii\helpers\Html;
+use common\models\Posts;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Posts */
+/* @var $model common\models\Posts */
 
 $this->title = Yii::t('app', 'Update Posts: {nameAttribute}', [
     'nameAttribute' => $model->title,
 ]);
+$category_url = Posts:: loadBreadCrumb();
+if ($category_url['title'] !== null) {
+    $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Category') . ': ' . $category->title,
+        'url' => ['/categories/show', 'id' => $category->id]];
+
+}
+
+
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Posts'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'Update');

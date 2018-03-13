@@ -87,13 +87,9 @@ AppAsset::register($this);
         ?>
 
         <div class="container">
-            <?= Breadcrumbs::widget(
-                    [
+            <?= Breadcrumbs::widget([
                 'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-                'homeLink' =>  [              //переозначуэмо homeLink на 'Blog'
-        'label' => Yii::t('app', 'Blog'),
-        'url' => ['posts/index']
-    ],
+//                'homeLink' => false,
             ]) ?>
             <?= Alert::widget() ?>
             <?= $content ?>

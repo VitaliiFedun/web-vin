@@ -4,9 +4,18 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Posts */
+/* @var $model common\models\Posts */
+
+//<link href="https://cdn.quilljs.com/1.0.0/quill.snow.css" rel="stylesheet">
 
 $this->title = Yii::t('app', 'Create Posts');
+$category_url = Posts:: loadBreadCrumb();
+if ($category_url['title'] !== null) {
+    $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Category') . ': ' . $category->title,
+        'url' => ['/categories/show', 'id' => $category->id]];
+
+}
+
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Posts'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

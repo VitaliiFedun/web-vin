@@ -14,7 +14,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
-use frontend\models\CommentForm;
+use common\models\CommentForm;
 use yii\helpers\Url;
 
 
@@ -45,60 +45,24 @@ class PostsController extends Controller
      * @return mixed
      */
 
-//    public function actionIndex()
-//    {
-//        $criteria=new DbCriteria(array(
-//            'condition'=>'status='.Post::STATUS_PUBLISHED,
-//            'order'=>'update_time DESC',
-//            'with'=>'commentCount',
-//        ));
-//        if(isset($_GET['tag']))
-//            $criteria->addSearchCondition('tags',$_GET['tag']);
-//
-//        $dataProvider=new CActiveDataProvider('Post', array(
-//            'pagination'=>array(
-//                'pageSize'=>Yii::app()->params['postsPerPage'],
-//            ),
-//            'criteria'=>$criteria,
-//        ));
-//
-//        $this->render('index',array(
-//            'dataProvider'=>$dataProvider,
-//        ));
-//    }
-
-
 
     public function actionIndex()
     {
-
-        $session = Yii::$app->session;
-        $session['category_id'] = 0;
-        $session['tag_id'] = 0;
-
         $posts = new Posts();
-        Posts::$_category_url = ['title'=>'test','url'=>'/test','id'=>0];
-//        var_dump($post-count);
         $category = new Categories();
-
         $posts = $posts->getPublishedPosts();
-//        var_dump($posts-count);
-//        if(isset($_GET['tag']))
-//            $criteria->addSearchCondition('tags',$_GET['tag']);
 
+        $category_url = [];
+        Posts::saveBreadCrumb($category_url);
 
         $posts->setPagination([
             'pageSize' => Yii::$app->params['pageSize']
         ]);
-
-//        var_dump($posts-count);
         return $this->render('index', [
             'posts' => $posts,
             'categories' => $category->getCategories()
         ]);
     }
-
-
 
     /**
      * Displays a single Posts model.
@@ -108,10 +72,13 @@ class PostsController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-            'commentForm' => new CommentForm(Url::to(['comments/add', 'id' => $id])),
 
+        $post=$this->findModel($id);
+        $category=$post->getCategory($post->category_id);
+        return $this->render('view', [
+            'model' => $post, /*$this->findModel($id),*/
+            'commentForm' => new CommentForm(Url::to(['comments/add', 'id' => $id])),
+            'category' => $category,
         ]);
     }
 
@@ -218,5 +185,35 @@ class PostsController extends Controller
         }
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+    }
+    //для визуального редактора
+    public function actions()
+    {
+        return [
+            'images-get' => [
+                'class' => 'vova07\imperavi\actions\GetImagesAction',
+                'url' => 'http://web-vin/frontend/web/blog/images/', // Directory URL address, where files are stored.
+                'path' => '@frontend/web/blog/images', // Or absolute path to directory where files are stored.
+                'options' => ['only' => ['*.jpg', '*.jpeg', '*.png', '*.gif', '*.ico']], // These options are by default.
+            ],
+            'files-get' => [
+                'class' => 'vova07\imperavi\actions\GetFilesAction',
+                'url' => 'http://web-vin/web/blog/files/', // Directory URL address, where files are stored.
+                'path' => '@frontend/web/blog/files', // Or absolute path to directory where files are stored.
+                'options' => ['only' => ['*.txt', '*.md']], // These options are by default.
+            ],
+            'image-upload' => [
+                'class' => 'vova07\imperavi\actions\UploadFileAction',
+                'url' => 'http://web-vin/frontend/web/blog/images/', // Directory URL address, where files are stored.
+                'path' => '@frontend/web/blog/images', // Or absolute path to directory where files are stored.
+            ],
+            'file-upload' => [
+                'class' => 'vova07\imperavi\actions\UploadAction',
+                'url' => 'http://web-vin/web/blog/files/', // Directory URL address, where files are stored.
+                'path' => '@frontend/web/blog/files', // Or absolute path to directory where files are stored.
+                'uploadOnlyImage' => false, // For any kind of files uploading.
+            ],
+
+        ];
     }
 }

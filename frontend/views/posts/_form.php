@@ -2,33 +2,58 @@
 
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
+use \yii\helpers\Url;
 use yii\widgets\ActiveForm;
+use common\models\Posts;
+use vova07\imperavi\Widget;
+
+Yii::$app->view->registerCssFile('/services/css/quill.snow.css', ['yii\web\CssAsset']);
+Yii::$app->view->registerJsFile('/services/files/quill.min.js',['yii\web\JsAsset']);
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Posts */
+/* @var $model common\models\Posts */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="posts-form">
+<div class="posts-form" xmlns:>
 
     <?php $form = ActiveForm::begin(); ?>
 
-	<?= $form->field($model, 'author_id')->dropDownList(
+
+    <?= $form->field($model, 'author_id')->dropDownList(
         ArrayHelper::map($authors, 'id', 'username')
     ) ?>
 
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+    <a href="<?= (Url::to(['/blog/images-upload/'])); ?> "  > йцуке </a>
+    <!--    --><?//= $form->field($model, 'content')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'content')->widget(Widget::className(), [
 
-    <?= $form->field($model, 'content')->textarea(['rows' => 6]) ?>
+        'settings' => [
+            'lang' => 'ru',
+            'minHeight' => 200,
+            'imageUpload' => Url::to(['posts/image-upload']),
+            'imageManagerJson' => Url::to(['/posts/images-get']),
+            'fileUpload' => Url::to(['posts/file-upload']),
+            'fileManagerJson' => Url::to(['/posts/files-get']),
+
+            'plugins' => [
+                'imagemanager',
+                'filemanager',
+
+            ],
+        ],
+    ]);
+    ?>
+
 
     <?= $form->field($model, 'category_id')->dropDownList(
-  ArrayHelper::map($category, 'id', 'title')
-) ?>
-
+        ArrayHelper::map($category, 'id', 'title')
+    ) ?>
 
     <?= $form->field($model, 'status')->dropDownList(
-         \app\models\Posts::$statuses
+        Posts::$statuses
     ) ?>
 
     <?= $form->field($model, 'tags')->checkboxList(
@@ -38,11 +63,10 @@ use yii\widgets\ActiveForm;
         ]
     ) ?>
 
-
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
     </div>
-
+    <?php //   alert("Hello\nHow are you?"); ?>
     <?php ActiveForm::end(); ?>
 
 </div>

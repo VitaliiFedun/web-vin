@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use common\models\Posts;
 use Yii;
 use common\models\Categories;
 use common\models\CategoriesSearch;
@@ -127,7 +128,14 @@ class CategoriesController extends Controller
     public function actionShow($id)
 {
     $category = Categories::findOne(['id' => $id]);
+    $category_url['title'] = $category->title;
+    $category_url['url'] = ['categories/show', 'id' => $category->id];
+    $category_url['id'] =   $category->id;
+    Posts::saveBreadCrumb($category_url);
 
+
+//\yii\helpers\Html::a($model->title.' - ('.$model->getPosts()->count.')', ['categories/show', 'id' => $model->id])
+//    Yii::t('frontend', 'Category:') . ' ' . $category->title;
     return $this->render('index', [
         'category' => $category->getCategory($id),
         'posts' => $category->getPosts($id),

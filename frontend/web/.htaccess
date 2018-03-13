@@ -1,7 +1,7 @@
 # Mod_Autoindex
 <IfModule mod_autoindex.c>
   # Запрещаем просмотр содержимого папок
-  Options -Indexes
+   Options -Indexes
 </IfModule>
 
 # Mod_Rewrite

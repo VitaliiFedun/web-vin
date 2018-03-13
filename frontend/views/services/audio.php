@@ -11,23 +11,20 @@ use frontend\widgets\AudioFormWidget;
 ?>
 
 <?=
-$this->title = 'AudioNotepad ';
-
+$this->title = 'Audio Notepad ';
 $this->params['breadcrumbs'][] = [
-//'template' => "<li><b>{link}</b></li>\n", // шаблон для этой ссылки
 'label' => 'Online services', // название ссылки
 'url' => ['/services/index'] // сама ссылка
 ];
 $this->params['breadcrumbs'][] = $this->title;
 
-
 ?>
 
-
+<div id="content">
 <!-- Викликаєм Частину коду з віджету  -->
 <?= AudioFormWidget::widget([]) ?>
 
-
+</div>
 <div class="site-about">
 
     <p>This is the 'AudioNotepad' page. You may modify the following file to customize its content:</p>
