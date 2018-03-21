@@ -9,9 +9,11 @@ use yii\db\ActiveQuery;
 
 use yii\data\ActiveDataProvider;
 
-use yii\db\Expression;
+//use yii\db\Expression;
 use yii\helpers\ArrayHelper;
-use common\models\User;
+use yii\web\NotFoundHttpException;
+
+//use common\models\User;
 /**
  * This is the model class for table "{{%post}}".
  *
@@ -31,7 +33,7 @@ use common\models\User;
  * @property Comments $comments
 
  */
-class Posts extends \yii\db\ActiveRecord
+class Posts extends ActiveRecord
 {
      /*
      * Статус поста: черновие.
@@ -66,7 +68,7 @@ class Posts extends \yii\db\ActiveRecord
 
 
 
-    private $_oldTags;
+//    private $_oldTags;
     /**
      * Список тэгов, закреплённых за постом.
      * @var array
@@ -84,21 +86,41 @@ class Posts extends \yii\db\ActiveRecord
     }
     public static function getRealIP()
     {
-        if (!empty($_SERVER['HTTP_CLIENT_IP']))
-            $ip = $_SERVER['HTTP_CLIENT_IP'];
-        elseif ( !empty($_SERVER['HTTP_X_FORWARDED_FOR']) )
-            $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+//        if (!empty($_SERVER['HTTP_CLIENT_IP']))
+//            $ip = $_SERVER['HTTP_CLIENT_IP'];
+//        elseif ( !empty($_SERVER['HTTP_X_FORWARDED_FOR']) )
+//            $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+//        else
+//            $ip = $_SERVER['REMOTE_ADDR'];
+//        return $ip;
+
+//        $ipaddress = '';
+        if (getenv('HTTP_CLIENT_IP'))
+            $ipaddress = getenv('HTTP_CLIENT_IP');
+        else if(getenv('HTTP_X_FORWARDED_FOR'))
+            $ipaddress = getenv('HTTP_X_FORWARDED_FOR');
+        else if(getenv('HTTP_X_FORWARDED'))
+            $ipaddress = getenv('HTTP_X_FORWARDED');
+        else if(getenv('HTTP_FORWARDED_FOR'))
+            $ipaddress = getenv('HTTP_FORWARDED_FOR');
+        else if(getenv('HTTP_FORWARDED'))
+            $ipaddress = getenv('HTTP_FORWARDED');
+        else if(getenv('REMOTE_ADDR'))
+            $ipaddress = getenv('REMOTE_ADDR');
         else
-            $ip = $_SERVER['REMOTE_ADDR'];
-        return $ip;
+            $ipaddress = 'UNKNOWN';
+
+        return $ipaddress;
+
     }
 
     public function getUrl()
     {
-        return Yii::$app->urlManager->createUrl('post/view', array(
-            'id'=>$this->id,
-            'title'=>$this->title,
-        ));
+        return Yii::$app->urlManager->createUrl('post/view');
+//        , array(
+//            'id'=>$this->id,
+////            'title'=>$this->title,
+//        ));
     }
 
     public static function saveBreadCrumb($value)
@@ -183,7 +205,7 @@ public function behaviors()
             'image_url' => Yii::t('app', 'Image Url'),
         ];
     }
-    public function normalizeTags($attribute,$params)
+    public function normalizeTags()
     {
 //        var_dump($this->tags);
         $this->tags=Tags::array2string(array_unique(Tags::string2array(Tags::array2string($this->tags))));
@@ -211,7 +233,7 @@ public function behaviors()
     }
 
     /**
-     * @return ActiveQuery
+     * @return int
      */
     public function getCommentCount()
     {
@@ -279,7 +301,7 @@ public function behaviors()
      * Возвращает модель поста.
      * @param int $id
      * @throws NotFoundHttpException в случае, когда пост не найден или не опубликован
-     * @return Post
+     * @return Posts
      */
     public function getPost($id)
     {
@@ -342,17 +364,17 @@ public function behaviors()
     /**
      * Adds a new comment to this post.
      * This method will set status and post_id of the comment accordingly.
-     * @param Comment the comment to be added
+     * @param Comments the comment to be added
      * @return boolean whether the comment is saved successfully
      */
-    public function addComment($comment)
+    public function addComment(Comments $comment)
     {
-        if(Yii::app()->params['commentNeedApproval'])
+        if(Yii::$app->params['commentNeedApproval'])
             $comment->status=Comments::STATUS_MODERATE; /*STATUS_PENDING;*/
         else
             $comment->status=Comments::STATUS_PUBLISHED; /*STATUS_APPROVED;*/
         $comment->post_id=$this->id;
-        return $comment->save();
+        return  $comment->save();
     }
 public function beforeSave($insert)
 {
