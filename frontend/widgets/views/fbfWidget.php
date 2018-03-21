@@ -27,13 +27,13 @@ use yii\captcha\Captcha;
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Feedback form</h4>
+                    <h4 class="modal-title" id="myModalLabel"><?=Yii::t('app','Feedback form')?></h4>
                 </div>
                 <div class="modal-body">
-                    <p>Thank you for contacting us. We will respond to you as soon as possible.</p>
+                    <p><?= Yii::t('app','Thank you for contacting us. We will respond to you as soon as possible.')?></p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><?=Yii::t('app','Close')?></button>
                 </div>
             </div>
         </div>
@@ -50,7 +50,7 @@ use yii\captcha\Captcha;
 
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                <h4 class="modal-title" id="myModalLabel">Feedback form</h4>
+                <h4 class="modal-title" id="myModalLabel"><?=Yii::t('app','Feedback form')?></h4>
             </div>
             <div class="modal-body">
 

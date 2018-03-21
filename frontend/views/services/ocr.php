@@ -5,8 +5,8 @@
  * Date: 23.01.2018
  * Time: 10:55
  */
-use yii\helpers\Html;
-use yii\bootstrap\ActiveForm;
+//use yii\helpers\Html;
+//use yii\bootstrap\ActiveForm;
 use frontend\widgets\OcrFormWidget;
 use frontend\widgets\ItemButtonWidget;
 
@@ -14,19 +14,17 @@ use frontend\widgets\ItemButtonWidget;
 ?>
 
 <?=
-$this->title = 'Ocr >Optical Character Recognition';
+$this->title = Yii::t('app','Ocr >Optical Character Recognition');
 
 $this->params['breadcrumbs'][] = [
 //'template' => "<li><b>{link}</b></li>\n", // шаблон для этой ссылки
-'label' => 'Online services', // название ссылки
+'label' =>Yii::t('app', 'On-line services'), // название ссылки
 'url' => ['/services/index'] // сама ссылка
 ];
 $this->params['breadcrumbs'][] = $this->title;
 
 
 ?>
-
-
 <!-- Викликаєм Частину коду з віджету  -->
 <?= OcrFormWidget::widget([]) ?>
 <?= ItemButtonWidget::widget([]) ?>

@@ -1,10 +1,10 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\ListView;
+//use yii\widgets\ListView;
 use yii\widgets\LinkPager;
-use yii\helpers\ArrayHelper;
-use  yii\widgets\Breadcrumbs;
+//use yii\helpers\ArrayHelper;
+//use  yii\widgets\Breadcrumbs;
 use common\models\Posts;
 //Yii::$app->view->registerCssFile('/services/css/styles.css', ['yii\web\CssAsset']);
 Yii::$app->view->registerCssFile('/blog/css/styles.css', ['yii\web\CssAsset']);
@@ -17,8 +17,8 @@ $this->title = Yii::t('app', 'All Posts');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Blog'), 'url' => ['posts/index']];
 $category_url = Posts:: loadBreadCrumb();
 if ($category_url['title'] !== null) {
-    $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Category') . ': ' . $category->title,
-        'url' => ['/categories/show', 'id' => $category->id]];
+      $this->params['breadcrumbs'][] = ['label' => $category_url['title'],
+        'url' => $category_url['url']];
 
 }
 $this->params['breadcrumbs'][] = $this->title;
@@ -61,4 +61,17 @@ $this->params['breadcrumbs'][] = $this->title;
     </ul>
 
 </div>
+<div class="col-sm-2 col-sm-offset blog-sidebar">
+    <h2><?= Yii::t('frontend', 'Tags') ?></h2>
+    <ul>
+        <?php
+        foreach ($tags as $tag) {
+            echo $this->render('//tags/shortViewTag', [
+                'model' => $tag
+            ]);
+        }
+        ?>
+    </ul>
+</div>
+
 

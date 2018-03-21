@@ -8,4 +8,8 @@
 
 /* @var $model frontend\models\Categories */
 ?>
-<li><?= \yii\helpers\Html::a($model->title.' - ('.$model->getPosts()->count.')', ['categories/show', 'id' => $model->id])?></li>
+<?php
+if ($model->getPosts()->count>0) { ?>
+    <li><?= \yii\helpers\Html::a($model->title . ' - (' . $model->getPosts()->count . ')', ['categories/show', 'id' => $model->id]) ?></li>
+<?php } ?>
+

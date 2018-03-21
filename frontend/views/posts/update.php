@@ -11,8 +11,8 @@ $this->title = Yii::t('app', 'Update Posts: {nameAttribute}', [
 ]);
 $category_url = Posts:: loadBreadCrumb();
 if ($category_url['title'] !== null) {
-    $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Category') . ': ' . $category->title,
-        'url' => ['/categories/show', 'id' => $category->id]];
+    $this->params['breadcrumbs'][] = ['label' => $category_url['title'],
+        'url' => $category_url['url']];
 
 }
 

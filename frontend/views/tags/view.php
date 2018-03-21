@@ -1,4 +1,5 @@
 <?php
+//H:\1_PHP\OpenServer\domains\web-vin\frontend\views\tags\view.php
 /**
  * Created by PhpStorm.
  * User: georg
@@ -24,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php
     foreach ($posts->models as $postTag) {
-        echo $this->render('//posts/shortView', [
+        echo $this->render('//posts/shortViewAllPosts', [
             'model' => $postTag->getPost()->one()
         ]);
     }

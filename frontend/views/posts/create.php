@@ -11,8 +11,9 @@ use yii\helpers\Html;
 $this->title = Yii::t('app', 'Create Posts');
 $category_url = Posts:: loadBreadCrumb();
 if ($category_url['title'] !== null) {
-    $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Category') . ': ' . $category->title,
-        'url' => ['/categories/show', 'id' => $category->id]];
+       $this->params['breadcrumbs'][] = ['label' => $category_url['title'],
+        'url' => $category_url['url']];
+
 
 }
 

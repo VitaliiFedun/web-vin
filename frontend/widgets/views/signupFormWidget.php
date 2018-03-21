@@ -10,12 +10,12 @@ use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Modal;
 
 Modal::begin([
-    'header'=>'<h4>Registration</h4>',
+    'header'=>'<h4>'.Yii::t('app','Registration').'</h4>',
     'id'=>'signup-modal',
 ]);
 ?>
 
-    <p>Please fill out the following fields to register:</p>
+    <p> <?= Yii::t('app','Please fill out the following fields to register').':'?></p>
 
 <?php $form = ActiveForm::begin([
     'id' => 'signup-form',
@@ -37,8 +37,8 @@ echo $form->field($model, 'repassword')->passwordInput();
         <div class="text-right">
 
             <?php
-            echo Html::button('Cancel', ['class' => 'btn btn-default', 'data-dismiss' => 'modal']);
-            echo Html::submitButton('Register', ['class' => 'btn btn-primary', 'name' => 'login-button']);
+            echo Html::button(Yii::t('app','Cancel'), ['class' => 'btn btn-default', 'data-dismiss' => 'modal']);
+            echo Html::submitButton(Yii::t('app','Register'), ['class' => 'btn btn-primary', 'name' => 'login-button']);
             ?>
 
         </div>

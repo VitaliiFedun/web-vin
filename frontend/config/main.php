@@ -78,6 +78,11 @@ return [
                     'consumerKey' => 'twitter_consumer_key',
                     'consumerSecret' => 'twitter_consumer_secret',
                 ],
+                'facebook' => [
+                    'class' => 'yii\authclient\clients\Facebook',
+                    'clientId' => 'xxxxxx',
+                    'clientSecret' => 'xxxxxx',
+                ],
             ],
         ],
 

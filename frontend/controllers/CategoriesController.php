@@ -2,6 +2,7 @@
 namespace frontend\controllers;
 
 use common\models\Posts;
+use common\models\Tags;
 use Yii;
 use common\models\Categories;
 use common\models\CategoriesSearch;
@@ -44,20 +45,7 @@ class CategoriesController extends Controller
         ]);
     }
 
-    /**
-     * Displays a single Categories model.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
-
-    /**
+     /**
      * Creates a new Categories model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
@@ -82,7 +70,7 @@ class CategoriesController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate_2($id)
+    public function actionUpdate($id)
     {
         $model = $this->findModel($id);
 
@@ -128,20 +116,32 @@ class CategoriesController extends Controller
     public function actionShow($id)
 {
     $category = Categories::findOne(['id' => $id]);
-    $category_url['title'] = $category->title;
+    $category_url['title'] =Yii::t('app', 'Category') . ': ' .Yii::t('app', $category->title);
     $category_url['url'] = ['categories/show', 'id' => $category->id];
     $category_url['id'] =   $category->id;
     Posts::saveBreadCrumb($category_url);
 
-
-//\yii\helpers\Html::a($model->title.' - ('.$model->getPosts()->count.')', ['categories/show', 'id' => $model->id])
-//    Yii::t('frontend', 'Category:') . ' ' . $category->title;
     return $this->render('index', [
         'category' => $category->getCategory($id),
         'posts' => $category->getPosts($id),
-        'categories' => $category->getCategories()
+        'categories' => $category->getCategories(),
+        'tags' => Tags::find()->all(),
     ]);
-}
+    }
+
+        /**
+         * Displays a single Categories model.
+         * @param integer $id
+         * @return mixed
+         * @throws NotFoundHttpException if the model cannot be found
+         */
+        public function actionView($id)
+    {
+        return $this->render('view', [
+            'model' => $this->findModel($id),
+        ]);
+    }
+
 
 
 }

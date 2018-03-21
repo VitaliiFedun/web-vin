@@ -12,7 +12,9 @@ use common\widgets\Alert;
 use common\widgets\LoginFormWidget;
 use frontend\widgets\SignupFormWidget;
 use frontend\widgets\FBFWidget;
+//use frontend\widgets\Lang;
 //use frontend\widgets\OcrFormWidget;
+use frontend\widgets\MultiLang\MultiLang;
 
 
 
@@ -43,36 +45,31 @@ AppAsset::register($this);
             ],
         ]);
         $menuItems = [
-            ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'About', 'url' => ['/site/about']],
-            ['label' => 'On-line services', 'url' => ['/services/index']],
-            ['label' => 'Blog',             'url' => ['/posts/index']],
-            ['label' => 'Contact', 'url' => '#', 'options' => ['data-toggle' => 'modal', 'data-target' => '#myModal']],
+            ['label' => Yii::t('app','Home'), 'url' => ['/site/index']],
+            ['label' => Yii::t('app','About'), 'url' => ['/site/about']],
+            ['label' => Yii::t('app','On-line services'), 'url' => ['/services/index']],
+            ['label' => Yii::t('app','Blog'),             'url' => ['/posts/index']],
+            ['label' => Yii::t('app','Contact'), 'url' => '#', 'options' => ['data-toggle' => 'modal', 'data-target' => '#myModal']],
         ];
         if (Yii::$app->user->isGuest) {
-//            $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
-            $menuItems[] = ['label' => 'Signup', 'url' => '#', 'options' => ['data-toggle' => 'modal', 'data-target' => '#signup-modal']];
-
-            $menuItems[] = ['label' => 'Social', 'url' => ['/site/social']];
-
-//            $menuItems[] = ['label' => 'Signup2', 'url' => '#', 'options' => ['data-toggle' => 'modal', 'data-target' => '#social-modal']];
-            $menuItems[] = ['label' => 'Login', 'url' => '#', 'options' => ['data-toggle' => 'modal', 'data-target' => '#login-modal']];
+            $menuItems[] = ['label' => Yii::t('app','Sign up'), 'url' => '#', 'options' => ['data-toggle' => 'modal', 'data-target' => '#signup-modal']];
+            $menuItems[] = ['label' => Yii::t('app','Social'), 'url' => ['/site/social']];
+            $menuItems[] = ['label' => Yii::t('app','Login'), 'url' => '#', 'options' => ['data-toggle' => 'modal', 'data-target' => '#login-modal']];
         } else {
-//            $menuItems[] = '<li>'
-//                . Html::beginForm(['/site/logout'], 'post')
-//                . Html::submitButton(
-//                    'Logout (' . Yii::$app->user->identity->username . ')',
-//                    ['class' => 'btn btn-link logout']
-//                )
-//                . Html::endForm()
-//                . '</li>';
+
             $menuItems[] =
             ['label' => Yii::$app->user->identity->username, 'items' => [
-                ['label' => 'Category', 'url' => ['/categories']],
-                ['label' => 'Posts', 'url' => ['/posts']],
-                ['label' => 'Comments', 'url' => ['/comments']],
+                ['label' => Yii::t('app','Categories'), 'url' => ['/categories']],
+                ['label' => Yii::t('app','Posts'), 'url' => ['/posts']],
+                ['label' => Yii::t('app','Comments'), 'url' => ['/comments']],
+
+                ['label' => '',
+                    'options'=>['class'=>'divider'],
+
+                ],
+
                 [
-                    'label' => 'Logout',
+                    'label' => Yii::t('app','Logout'),
                     'url' => ['/site/logout'],
                     'linkOptions' => ['data-method' => 'post']]
             ]
@@ -84,7 +81,11 @@ AppAsset::register($this);
             'items' => $menuItems,
         ]);
         NavBar::end();
+
         ?>
+
+        <?php echo MultiLang::widget(['cssClass'=>'pull-right language']); ?>
+<!--        --><?//= Lang::widget();?>
 
         <div class="container">
             <?= Breadcrumbs::widget([
@@ -100,7 +101,6 @@ AppAsset::register($this);
         <div class="container">
             <p class="pull-left">© <?=Yii::$app->components[name_brand]?> <?= date('Y') ?></p>
 
-<!--            <p class="pull-right">--><?//= Yii::powered() ?><!--</p>-->
         </div>
     </footer>
     <?= FBFWidget::widget([]) ?>

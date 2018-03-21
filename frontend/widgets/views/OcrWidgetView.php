@@ -5,7 +5,7 @@
  * Date: 21.01.2018
  * Time: 11:44
  */
-use yii\helpers\Html;
+//use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 Yii::$app->view->registerCssFile('/services/css/ocr.css', ['yii\web\CssAsset']);
 //Yii::$app->view->registerCssFile('/services/css/quill.snow.css', ['yii\web\CssAsset']);
@@ -57,27 +57,23 @@ Yii::$app->view->registerJsFile("/services/files/demo.js",['yii\web\JsAsset']);
 
         function recognizeFile(file) {
 
-            document.querySelector("#log").innerHTML = ''
-            document.getElementById('button-clear-all').style.display = 'none'
+            document.querySelector("#log").innerHTML = '';
+            document.getElementById('button-clear-all').style.display = 'none';
             Tesseract.recognize(file, {
-                lang: document.querySelector('#langsel').value
+                lang: document.querySelector('#langsel').value;
             })
                 .progress(function (packet) {
-                    console.info(packet)
-                    progressUpdate(packet)
+                    console.info(packet);
+                    progressUpdate(packet);
 
                 })
                 .then(function (data) {
-                    console.log(data)
-                    progressUpdate({status: 'done', data: data})
+                    console.log(data);
+                    progressUpdate({status: 'done', data: data});
                 })
         }
         function setupurl(file_param) {
-
             var reader = new FileReader();
-//        Tesseract.recognize(file_param, language)
-//            .progress( progressUpdate )
-//            .then( result );
             reader.onload = function(e){
                 input.src = e.target.result;
                 input.onload = function(){
@@ -90,23 +86,15 @@ Yii::$app->view->registerJsFile("/services/files/demo.js",['yii\web\JsAsset']);
         }
 
         function recognized(){
-            //TO DO
-//            document.querySelector('#langsel').value = "null";
-//            return;
-
-
-
             var filename = input.src;
             recognizeFile(filename);
-//        input.src = e.target.result;
         }
-        function modeimage () {
-            alert("TO DO function")
-
-        }
+        // function modeimage () {
+        //     alert("TO DO function")
+        // }
 
         function ClearAll() {
-            document.getElementById('button-clear-all').style.display = 'none'
+            document.getElementById('button-clear-all').style.display = 'none';
             ClearLog();
         }
     </script>
@@ -114,13 +102,10 @@ Yii::$app->view->registerJsFile("/services/files/demo.js",['yii\web\JsAsset']);
     <div  class="ocrmenu_conteiner" >
         <div class="flex-container" >
             <div class="flex-item item-select-language">
-                <p>
-                    Select language:
-                </p>
+                <p><?= Yii::t('app','Select language')?>:</p>
             </div>
             <div class="flex-item item-language">
-<!--            <div class="input-select chrome langdd mt--1">-->
-                <select id="langsel" title="Select language:">
+                <select id="langsel" title=".<?= Yii::t('app','Select language')?>!">
                     <option value='null' >  </option>
                     <option value='afr'> Afrikaans</option>
                     <option value='ara'> Arabic</option>
@@ -195,9 +180,9 @@ Yii::$app->view->registerJsFile("/services/files/demo.js",['yii\web\JsAsset']);
                 <input type="file"
                  onchange="setupurl(window.lastFile=this.files[0])"/>
             </div>
-            <div class="flex-item">
-                <input type="button"  value="Mode Image" onclick="modeimage()"/>
-            </div>
+<!--            <div class="flex-item">-->
+<!--                <input type="button"  value="Mode Image" onclick="modeimage()"/>-->
+<!--            </div>-->
             <div class="flex-item caption-text">
                 <input type="button"  value="Recognize" onclick="recognized()"/>
             </div>

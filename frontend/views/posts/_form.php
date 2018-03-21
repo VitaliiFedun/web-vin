@@ -19,6 +19,26 @@ Yii::$app->view->registerJsFile('/services/files/quill.min.js',['yii\web\JsAsset
 
     <?php $form = ActiveForm::begin(); ?>
 
+    <?= $form->field($model, 'image_url')->widget(Widget::className(), [
+
+        'settings' => [
+            'lang' => 'en',
+            'minHeight' => 200,
+            'imageUpload' => Url::to(['/posts/image-upload']),
+            'imageManagerJson' => Url::to(['/posts/images-get']),
+            'fileUpload' => Url::to(['posts/file-upload']),
+            'fileManagerJson' => Url::to(['/posts/files-get']),
+            'buttons' => ['image', 'file','html'],
+
+            'plugins' => [
+                'imagemanager',
+                'filemanager',
+
+            ],
+        ],
+    ]);
+    ?>
+
 
     <?= $form->field($model, 'author_id')->dropDownList(
         ArrayHelper::map($authors, 'id', 'username')
@@ -31,9 +51,9 @@ Yii::$app->view->registerJsFile('/services/files/quill.min.js',['yii\web\JsAsset
     <?= $form->field($model, 'content')->widget(Widget::className(), [
 
         'settings' => [
-            'lang' => 'ru',
+            'lang' => 'en',
             'minHeight' => 200,
-            'imageUpload' => Url::to(['posts/image-upload']),
+            'imageUpload' => Url::to(['/posts/image-upload']),
             'imageManagerJson' => Url::to(['/posts/images-get']),
             'fileUpload' => Url::to(['posts/file-upload']),
             'fileManagerJson' => Url::to(['/posts/files-get']),

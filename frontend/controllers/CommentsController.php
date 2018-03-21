@@ -4,7 +4,7 @@ namespace frontend\controllers;
 
 use Yii;
 use common\models\Comments;
-use frontend\models\CommentForm;
+use common\models\CommentForm;
 use common\models\CommentsSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -124,7 +124,7 @@ class CommentsController extends Controller
         ]);
     }
 
-    /**
+    /*
      * Deletes an existing Comments model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id

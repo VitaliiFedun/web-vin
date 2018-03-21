@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\DetailView;
+//use yii\widgets\DetailView;
 use common\models\Posts;
 
 /* @var $this yii\web\View */
@@ -21,8 +21,8 @@ $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Blog'), 'url' => ['posts/index']];
 $category_url= Posts::loadBreadCrumb();
 if ($category_url['title'] !== null) {
-    $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Category') . ': ' .$model->category->title,
-        'url' => ['/categories/show', 'id' => $model->category->id]];
+    $this->params['breadcrumbs'][] = ['label' => $category_url['title'],
+        'url' => $category_url['url']];
 
 }
 
@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <!--    <h1>--><?//= Html::encode($this->title) ?><!--</h1>-->
 
 <!--    <p>-->
-<!--        --><?//= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
 <!--        --><?//= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
 //            'class' => 'btn btn-danger',
 //            'data' => [
@@ -48,12 +48,21 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="featured-image">
             <p>
                     <img
-                    alt="Схема иерархии RBAC для модуля управления статьями"
-                    src="../blog/images/1.jpg"
+                    src="<?= $model->image_url ?>"
             </p>
         </div>
         <div class="content-big">
             <h3><?= $model->title ?></h3>
+            <h5 class="storytitle" >
+                <p>
+                    <?= Yii::t('app', 'Published on') ?>:
+                    <?= date('d-m-Y',$model->created_at) ?>
+                </p>
+                <p><?= Yii::t('app', 'Author') ?>:
+                    <?= $model->author->username ?>
+                </p>
+
+            </h5>
             <h4>
                     <?= $model->content; ?>
             </h4>
@@ -61,16 +70,6 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
 
         <h4 class="storytitle" >
-            <p><?= Yii::t('app', 'Author') ?>:
-                <?= $model->author->username ?>
-            </p>
-        </h4>
-        <h5>
-            <p>
-                <?= Yii::t('app', 'Published on') ?>:
-                <?= date('d-m-Y H:i:s',$model->created_at) ?>
-            </p>
-        </h5>
         <p>
             <?= Yii::t('app', 'Category') ?>:
             <?= Html::a($model->category->title, ['category/view', 'id' =>
@@ -90,9 +89,9 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= implode($tags, ', ') ?>
         </div>
 
-        <?php echo Html::a('Permalink',['post/view', 'id' => $model->id]); ?> |
-        <?php echo Html::a("Comments ({$model->commentCount})",$model->url.'#comments'); ?> |
-        Last updated on <?php echo date('d-m-Y H:i:s',$model->updated_at); ?>
+        <?php echo Html::a(Yii::t('app','Permalink'),['post/view', 'id' => $model->id]); ?> |
+        <?php echo Html::a(Yii::t('app','Comments ')."({$model->commentCount})",$model->url.'#comments'); ?> |
+        <?=Yii::t('app','Last updated on')?> <?php echo date('d-m-Y H:i:s',$model->updated_at); ?>
 
     </div>
 
@@ -104,7 +103,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div><?= htmlspecialchars($comment->content) ?></div>
             </div>
 
-            <?php echo Html::a('Add comment',['comments/add', 'id' => $comment->id],['class' => 'btn btn-success']); ?>
+            <?php echo Html::a(Yii::t('app','Add comment'),['comments/add', 'id' => $comment->id],['class' => 'btn btn-success']); ?>
                <?php endforeach; ?>
     </div>
 

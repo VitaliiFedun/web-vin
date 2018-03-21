@@ -5,15 +5,15 @@
  * Date: 23.01.2018
  * Time: 10:55
  */
-use yii\helpers\Html;
-use yii\bootstrap\ActiveForm;
+//use yii\helpers\Html;
+//use yii\bootstrap\ActiveForm;
 use frontend\widgets\AudioFormWidget;
 ?>
 
 <?=
-$this->title = 'Audio Notepad ';
+$this->title = Yii::t('app','Audio Notepad');
 $this->params['breadcrumbs'][] = [
-'label' => 'Online services', // название ссылки
+'label' => Yii::t('app','On-line services'), // название ссылки
 'url' => ['/services/index'] // сама ссылка
 ];
 $this->params['breadcrumbs'][] = $this->title;

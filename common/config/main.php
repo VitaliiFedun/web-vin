@@ -20,12 +20,20 @@ return [
             'assignmentFile' => '@common/components/rbac/assignments.php',
             'ruleFile' => '@common/components/rbac/rules.php'
         ],
-		        'i18n' => [
+        'i18n' => [
             'translations' => [
+                'app' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'basePath' => '@common/messages',
+                    'sourceLanguage' => 'en-Us',
+                    'fileMap' => [
+                        'app' => 'app.php'
+                    ],
+                ],
                 'backend' => [
                     'class' => 'yii\i18n\PhpMessageSource',
                     'basePath' => '@common/messages',
-                    'sourceLanguage' => 'en-US',
+                    'sourceLanguage' => 'en-Us',
                     'fileMap' => [
                         'backend' => 'backend.php'
                     ],
@@ -33,7 +41,7 @@ return [
                 'frontend' => [
                     'class' => 'yii\i18n\PhpMessageSource',
                     'basePath' => '@common/messages',
-                    'sourceLanguage' => 'en-US',
+                    'sourceLanguage' => 'en-Us',
                     'fileMap' => [
                         'frontend' => 'frontend.php'
                     ],

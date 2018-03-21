@@ -60,7 +60,8 @@ class PostsController extends Controller
         ]);
         return $this->render('index', [
             'posts' => $posts,
-            'categories' => $category->getCategories()
+            'categories' => $category->getCategories(),
+            'tags' => Tags::find()->all(),
         ]);
     }
 
@@ -79,6 +80,7 @@ class PostsController extends Controller
             'model' => $post, /*$this->findModel($id),*/
             'commentForm' => new CommentForm(Url::to(['comments/add', 'id' => $id])),
             'category' => $category,
+            'tags' => new Tags(),
         ]);
     }
 
@@ -190,30 +192,43 @@ class PostsController extends Controller
     public function actions()
     {
         return [
-            'images-get' => [
+
+//            . Насколько я вижу, логика такова:
+//               загрузил изображение по пути указанному в path,
+//               а в редакторе, в src изображения прописал url.
+            'images-get' => [  //Добавляем возможность выбирать уже загружённые изображения
                 'class' => 'vova07\imperavi\actions\GetImagesAction',
-                'url' => 'http://web-vin/frontend/web/blog/images/', // Directory URL address, where files are stored.
+                'url' => 'http://web-vin/frontend/web/blog/images', // Directory URL address, where files are stored.
                 'path' => '@frontend/web/blog/images', // Or absolute path to directory where files are stored.
                 'options' => ['only' => ['*.jpg', '*.jpeg', '*.png', '*.gif', '*.ico']], // These options are by default.
+
             ],
-            'files-get' => [
+            'files-get' => [ //Добавляем возможность выбирать уже загружённые файлы
                 'class' => 'vova07\imperavi\actions\GetFilesAction',
-                'url' => 'http://web-vin/web/blog/files/', // Directory URL address, where files are stored.
-                'path' => '@frontend/web/blog/files', // Or absolute path to directory where files are stored.
-                'options' => ['only' => ['*.txt', '*.md']], // These options are by default.
-            ],
-            'image-upload' => [
-                'class' => 'vova07\imperavi\actions\UploadFileAction',
-                'url' => 'http://web-vin/frontend/web/blog/images/', // Directory URL address, where files are stored.
+                'url' => 'http://web-vin/web/blog/images', // Directory URL address, where files are stored.
                 'path' => '@frontend/web/blog/images', // Or absolute path to directory where files are stored.
+//                'options' => ['only' => ['*.txt', '*.md']], // These options are by default.
+
             ],
-            'file-upload' => [
-                'class' => 'vova07\imperavi\actions\UploadAction',
-                'url' => 'http://web-vin/web/blog/files/', // Directory URL address, where files are stored.
-                'path' => '@frontend/web/blog/files', // Or absolute path to directory where files are stored.
+            'file-upload' => [  //Загрузка файла
+                'class' => 'vova07\imperavi\actions\UploadFileAction',
+                'url' => 'http://web-vin/frontend/web/blog/images', // Directory URL address, where files are stored.
+                'path' => '@frontend/web/blog/images', // Or absolute path to directory where files are stored.
                 'uploadOnlyImage' => false, // For any kind of files uploading.
+//                'createDirectory' => true,
+//                'createDirectoryMode' => 0777,
+//                'createDirectoryRecursive' => true,
+            ],
+
+
+          'image-upload' => [  //Добавляем возможность выбирать уже загружённые изображения
+                'class' => 'vova07\imperavi\actions\UploadFileAction',
+                'url' => 'http://web-vin/frontend/web/blog/images', // Directory URL address, where files are stored.
+                'path' => '@frontend/web/blog/images', // Or absolute path to directory where files are stored.
+
             ],
 
         ];
     }
 }
+
