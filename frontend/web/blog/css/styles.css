@@ -281,8 +281,8 @@ Author URI: http://www.this-play.nl
     }
 
     .boxcontainer .article-box img.size-square {
-        width: 200px;
-        height: 200px
+        width: 250px;
+        /*height: 200px*/
     }
 
     .article img {

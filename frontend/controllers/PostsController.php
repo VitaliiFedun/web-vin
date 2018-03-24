@@ -13,7 +13,7 @@ use common\models\Posts;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\helpers\ArrayHelper;
+//use yii\helpers\ArrayHelper;
 use common\models\CommentForm;
 use yii\helpers\Url;
 
@@ -75,7 +75,8 @@ class PostsController extends Controller
     {
 
         $post=$this->findModel($id);
-        $category=$post->getCategory($post->category_id);
+        $category=$post->getCategory();  //$post->category_id);
+        $post->viewedCounter();
         return $this->render('view', [
             'model' => $post, /*$this->findModel($id),*/
             'commentForm' => new CommentForm(Url::to(['comments/add', 'id' => $id])),
@@ -164,7 +165,7 @@ class PostsController extends Controller
 
         $post->delete();
         Comments::deleteAll('post_id='.$id);
-        Tags::updateFrequency($this->tags, '');
+//        Tags::updateFrequency($this->tags, '');
 
         Yii::$app->session->setFlash('PostDeleted');
 //        Yii::$app->getResponse()->redirect(array('site/index'));
@@ -198,21 +199,21 @@ class PostsController extends Controller
 //               а в редакторе, в src изображения прописал url.
             'images-get' => [  //Добавляем возможность выбирать уже загружённые изображения
                 'class' => 'vova07\imperavi\actions\GetImagesAction',
-                'url' => 'http://web-vin/frontend/web/blog/images', // Directory URL address, where files are stored.
+                'url' => 'http://web-vin.com/blog/images', // Directory URL address, where files are stored.
                 'path' => '@frontend/web/blog/images', // Or absolute path to directory where files are stored.
                 'options' => ['only' => ['*.jpg', '*.jpeg', '*.png', '*.gif', '*.ico']], // These options are by default.
 
             ],
             'files-get' => [ //Добавляем возможность выбирать уже загружённые файлы
                 'class' => 'vova07\imperavi\actions\GetFilesAction',
-                'url' => 'http://web-vin/web/blog/images', // Directory URL address, where files are stored.
+                'url' => 'http://web-vin.com/blog/images', // Directory URL address, where files are stored.
                 'path' => '@frontend/web/blog/images', // Or absolute path to directory where files are stored.
 //                'options' => ['only' => ['*.txt', '*.md']], // These options are by default.
 
             ],
             'file-upload' => [  //Загрузка файла
                 'class' => 'vova07\imperavi\actions\UploadFileAction',
-                'url' => 'http://web-vin/frontend/web/blog/images', // Directory URL address, where files are stored.
+                'url' => 'http://web-vin.com/blog/images', // Directory URL address, where files are stored.
                 'path' => '@frontend/web/blog/images', // Or absolute path to directory where files are stored.
                 'uploadOnlyImage' => false, // For any kind of files uploading.
 //                'createDirectory' => true,
@@ -223,7 +224,7 @@ class PostsController extends Controller
 
           'image-upload' => [  //Добавляем возможность выбирать уже загружённые изображения
                 'class' => 'vova07\imperavi\actions\UploadFileAction',
-                'url' => 'http://web-vin/frontend/web/blog/images', // Directory URL address, where files are stored.
+                'url' => 'http://web-vin.com/blog/images', // Directory URL address, where files are stored.
                 'path' => '@frontend/web/blog/images', // Or absolute path to directory where files are stored.
 
             ],

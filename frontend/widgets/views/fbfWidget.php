@@ -68,8 +68,8 @@ use yii\captcha\Captcha;
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <?= Html::submitButton('Submit', ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><?= Yii::t('app','Cancel')?></button>
+                <?= Html::submitButton( Yii::t('app','Submit'), ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>
             </div>
 
             <?php ActiveForm::end(); ?>

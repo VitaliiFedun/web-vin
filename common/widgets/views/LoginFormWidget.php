@@ -37,14 +37,14 @@ echo $form->field($model, 'rememberMe')->checkbox();
         </div>
 
         <div class="portlet-content">
-            <?=Yii::t('app','If you forgot your password you can')?><?= Html::a(' '.Yii::t('app','reset it'), ['site/request-password-reset']) ?>.
-
             <p style="margin:0;">
-            <li data-toggle="modal" data-target="#signup-modal"><a href="#">Реєстрація</a></li>
-                    --><?//= Html::a(' '.Yii::t('app','Registration'), ['site/ajax-signup']) ?><!--.-->
-<!--                <a href="/registration">--><?//=Yii::t('app',Registration)?><!--</a>-->
-<!--                'url' => '#', 'options' => ['data-toggle' => 'modal', 'data-target' => '#login-modal']]-->
-                | <a href="/remind"><?=Yii::t('app','Forgot your password?')?></a></p>
+
+                <a class="btn btn-lg btn-success" data-toggle="modal" data-target="#signup-modal" <a href="#">
+                <?=Yii::t('app','Registration')?></a>
+                <a class="btn btn-lg btn-success" <a href='site/request-password-reset'>
+                    <?=Yii::t('app','Forgot your password?')?></a>
+            </p>
+
         </div>
     </div>
 

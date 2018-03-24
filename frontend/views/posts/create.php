@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-
+use common\models\Posts;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Posts */

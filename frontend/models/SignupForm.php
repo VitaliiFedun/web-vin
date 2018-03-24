@@ -6,6 +6,7 @@ namespace frontend\models;
 
 use yii\base\Model;
 use common\models\User;
+use Yii;
 
 /**
  * Signup form
@@ -40,6 +41,15 @@ class SignupForm extends Model
 
             ['repassword', 'required'],
             ['repassword', 'compare', 'compareAttribute' => 'password'],
+        ];
+    }
+    public function attributeLabels()
+    {
+        return [
+            'username' =>  Yii::t('app','Username'),
+            'email' =>  Yii::t('app','E-mail'),
+            'password' =>  Yii::t('app','Password'),
+            'repassword' =>  Yii::t('app','Repassword'),
         ];
     }
 

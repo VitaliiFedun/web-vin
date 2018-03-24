@@ -200,7 +200,7 @@ Yii::$app->view->registerJsFile("/services/files/demo.js",['yii\web\JsAsset']);
 
             <div id="input-overlay-border" >
                 <canvas id="input-overlay" width="1486" height="68"></canvas>
-                <img id="input" src="http://web-vin/services/images/addempty.png">
+                <img id="input" src="/services/images/addempty.png">
             </div>
             <div id="arrow"></div>
             <div>

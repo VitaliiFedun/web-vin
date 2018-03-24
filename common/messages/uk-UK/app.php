@@ -52,6 +52,9 @@ return [
     'Moderate' => 'На модерації',
     'My Yii Blog' => 'Мій Yii Блог',
     'New Password' => 'Новий пароль',
+    'Password' => 'Пароль',
+    'Repassword' => 'Повторіть пароль',
+
     'Ocr >Optical Character Recognition'=>'Ocr >Оптичне розпізнавання тексту',
     'On-line services'=>'Онлайнові послуги',
     'Pid' => 'PID',
@@ -118,7 +121,7 @@ return [
     'Cancel' => 'Відмова',
     'Feedback form' => "Форма зворотнього зв'язку",
 
-//    'Logout ({username})' => 'Вихід ({username})',
+    'Close' => 'Закрити',
     'Logout' => 'Вихід',
     'Register' => 'Реєстрація',
 
@@ -129,16 +132,16 @@ return [
 //    'Publish date' => 'Дата публикації',
     'Sign up' => 'Реєстрація',
     'Submit' => 'Відправити',
-//    'Tags' => 'Теги',
+//    'Verification Code' => 'Код перевірки',
 
 
-     'ID' => 'ID',
-     'Title' => 'Заголовок',
-     'Content' => 'Зміст',
-     'Status' => 'Статус',
-     'Category ID' => 'ID категорії',
+//     'ID' => 'ID',
+//     'Title' => 'Заголовок',
+//     'Content' => 'Зміст',
+//     'Status' => 'Статус',
+//     'Category ID' => 'ID категорії',
      'Viewed' => 'Переглядів',
-     'Author ID' => 'ID Автора',
+//     'Author ID' => 'ID Автора',
      'Created At' => 'Створено',
      'Updated At' => 'Оновлено',
      'Image Url' => 'Малюнок',

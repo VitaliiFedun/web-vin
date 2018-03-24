@@ -35,9 +35,9 @@ use yii\web\NotFoundHttpException;
  */
 class Posts extends ActiveRecord
 {
-     /*
-     * Статус поста: черновие.
-     */
+    /*
+    * Статус поста: черновие.
+    */
     const STATUS_DRAFT = 0; /* 'draft';
      /*
      * Статус поста: опубликованн.
@@ -61,22 +61,76 @@ class Posts extends ActiveRecord
         self::STATUS_Pending_Approval => 'pending_approval',
 
     ];
-
-//    public static $category_url = ['title'=>'','url'=>'','id'=>0];
-//    public static $tag_url = ['title'=>'test','url'=>'','id'=>0];
-
-
-
-
-//    private $_oldTags;
     /**
      * Список тэгов, закреплённых за постом.
      * @var array
      */
     protected $tags = [];
+
+
+//    public static $category_url = ['title'=>'','url'=>'','id'=>0];
+//    public static $tag_url = ['title'=>'test','url'=>'','id'=>0];
+
+
     /**
-     * @return string the URL that shows the detail of the post
+     * @inheritdoc
      */
+    public static function tableName()
+    {
+        return '{{%post}}';
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        return [
+            [['title', 'content', 'category_id', 'status'], 'required'],
+            [['content','image_url'], 'string'],
+            [['category_id', 'status', 'author_id','viewed'], 'integer'],
+            [['created_at', 'updated_at', 'tags'], 'safe'],
+            [['title'], 'string', 'max' => 255],
+            [['status'], 'in', 'range'=>array(0,1,2,3)],
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => Yii::t('app', 'ID'),
+            'title' => Yii::t('app', 'Title'),
+            'content' => Yii::t('app', 'Content'),
+            'status' => Yii::t('app', 'Status'),
+            'category_id' => Yii::t('app', 'Category ID'),
+            'viewed' => Yii::t('app', 'Viewed'),
+            'author_id' => Yii::t('app', 'Author ID'),
+            'created_at' => Yii::t('app', 'Created At'),
+            'updated_at' => Yii::t('app', 'Updated At'),
+            'image_url' => Yii::t('app', 'Image Url'),
+        ];
+    }
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::className(),
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+                ],
+                // если вместо метки времени UNIX используется datetime:
+//                'value' => new Expression('NOW()'),
+            ],
+        ];
+    }
+
+
+
     public static function cutStr($str, $length=100, $postfix='...')
     {
         if ( strlen($str) < $length)
@@ -117,10 +171,6 @@ class Posts extends ActiveRecord
     public function getUrl()
     {
         return Yii::$app->urlManager->createUrl('post/view');
-//        , array(
-//            'id'=>$this->id,
-////            'title'=>$this->title,
-//        ));
     }
 
     public static function saveBreadCrumb($value)
@@ -129,88 +179,22 @@ class Posts extends ActiveRecord
         $session['BreadCrumb']=$value;
     }
 
-    public function loadBreadCrumb()
+    public static function loadBreadCrumb()
     {
         $session = Yii::$app->session;
         return isset($session['BreadCrumb']) ? $session['BreadCrumb'] : null;
     }
 
 
-
-public function behaviors()
+    public function viewedCounter()
     {
-        return [
-            [
-                'class' => TimestampBehavior::className(),
-                'attributes' => [
-                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
-                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
-                ],
-                // если вместо метки времени UNIX используется datetime:
-//                'value' => new Expression('NOW()'),
-            ],
-        ];
+        $this->viewed = $this->viewed+1;
+//        return
+        $this->updateAttributes(['viewed']);
+//        save(false);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public static function tableName()
-    {
-        return '{{%post}}';
-    }
 
-    /**
-     * @inheritdoc
-     */
-    public function rules()
-    {
-        return [
-            [['title', 'content', 'category_id', 'status'], 'required'],
-            [['content','image_url'], 'string'],
-            [['category_id', 'status', 'author_id'], 'integer'],
-            [['created_at', 'updated_at'], 'safe'],
-            [['title'], 'string', 'max' => 255],
-            [['status'], 'in', 'range'=>array(0,1,2,3)],
-//            [['tags'], 'match', 'pattern'=> '/^[0-1A-Za-zА-Яа-яs,]+$/u\',',
-//                'message'=>'В тегах можно использовать только буквы.'],
-            [['tags'], 'normalizeTags'],
-            [['title, status'], 'safe', 'on'=>'search'],
-//            array('title, content, status', 'required'),
-//            array('title', 'length', 'max'=>128),
-//            array('status', 'in', 'range'=>array(1,2,3)),
-//            array('tags', 'match', 'pattern'=>'/^[\w\s,]+$/',
-//                'message'=>'В тегах можно использовать только буквы.'),
-//            array('tags', 'normalizeTags'),
-
-//            array('title, status', 'safe', 'on'=>'search'),
-        ];
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function attributeLabels()
-    {
-        return [
-            'id' => Yii::t('app', 'ID'),
-            'title' => Yii::t('app', 'Title'),
-            'content' => Yii::t('app', 'Content'),
-            'status' => Yii::t('app', 'Status'),
-            'category_id' => Yii::t('app', 'Category ID'),
-            'viewed' => Yii::t('app', 'Viewed'),
-            'author_id' => Yii::t('app', 'Author ID'),
-            'created_at' => Yii::t('app', 'Created At'),
-            'updated_at' => Yii::t('app', 'Updated At'),
-            'image_url' => Yii::t('app', 'Image Url'),
-        ];
-    }
-    public function normalizeTags()
-    {
-//        var_dump($this->tags);
-        $this->tags=Tags::array2string(array_unique(Tags::string2array(Tags::array2string($this->tags))));
-
-    }
 
     /**
      * @return ActiveQuery
@@ -227,6 +211,7 @@ public function behaviors()
     /**
      * @return ActiveQuery
      */
+
     public function getComments()
     {
         return $this->hasMany(Comments::className(), ['post_id' => 'id']);
@@ -241,7 +226,6 @@ public function behaviors()
 
     }
 
-
     /**
      * Возвращает опубликованные комментарии
      * @return ActiveDataProvider
@@ -253,6 +237,20 @@ public function behaviors()
                 ->where(['publish_status' => Comments::STATUS_PUBLISHED])
         ]);
     }
+
+
+    /* ============   Tag    =========================== */
+
+/**
+* @return ActiveQuery
+     * возвращать тэги, закреплённые за постом*
+     * @return ActiveQuery
+     **/
+    public function getTagPosts()
+    {
+        return $this->hasMany(TagPost::className(), ['post_id' => 'id']);
+    }
+
 
     /**
      * Устанавлиает тэги поста.
@@ -283,7 +281,7 @@ public function behaviors()
             TagPost::className(), ['post_id' => 'id']
         );
     }
-
+    /* ============== end Tag =========================
     /**
      * Возвращает опубликованные посты
      * @return ActiveDataProvider
@@ -342,6 +340,14 @@ public function behaviors()
 
         parent::afterSave($insert, $changedAttributes);
     }
+    public function beforeSave($insert)
+    {
+        preg_match('/http:\/\/[^\s\Z]+/i',
+            $this->image_url, $matches);
+        $this->image_url = $matches[0];
+        return parent::beforeSave($insert);
+    }
+
 
     /**
      * Опубликован ли пост.
@@ -351,16 +357,6 @@ public function behaviors()
     {
         return $this->status === self::STATUS_PUBLISHED;
     }
-    /**
-     * @return ActiveQuery
-     * возвращать тэги, закреплённые за постом*
-     * @return ActiveQuery
-      **/
-    public function getTagPosts()
-    {
-        return $this->hasMany(TagPost::className(), ['post_id' => 'id']);
-    }
-
     /**
      * Adds a new comment to this post.
      * This method will set status and post_id of the comment accordingly.
@@ -376,14 +372,5 @@ public function behaviors()
         $comment->post_id=$this->id;
         return  $comment->save();
     }
-public function beforeSave($insert)
-{
-//    $str = $this->image_url;
-//    $links = $str.match(/http:\/\/[^\s\Z]+/i);
-   preg_match('/http:\/\/[^\s\Z]+/i',
-       $this->image_url, $matches);
-    $this->image_url = $matches[0];
-//    $this->image_url=$first_link;
-    return parent::beforeSave($insert);
-}
+
 }

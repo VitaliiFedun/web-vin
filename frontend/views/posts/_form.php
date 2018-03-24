@@ -46,9 +46,7 @@ Yii::$app->view->registerJsFile('/services/files/quill.min.js',['yii\web\JsAsset
 
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
-    <a href="<?= (Url::to(['/blog/images-upload/'])); ?> "  > йцуке </a>
-    <!--    --><?//= $form->field($model, 'content')->textarea(['rows' => 6]) ?>
-    <?= $form->field($model, 'content')->widget(Widget::className(), [
+     <?= $form->field($model, 'content')->widget(Widget::className(), [
 
         'settings' => [
             'lang' => 'en',

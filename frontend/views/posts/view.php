@@ -10,9 +10,9 @@ use common\models\Posts;
 //use common\models\Comment;
 //use common\models\TagPost;
 
-/* @var $model common\models\Post */
-/* @var \frontend\models\CommentForm $commentForm \;
-/* @var TagPost $post */
+/* @var $model common\models\Posts */
+/* @var  common\models\CommentForm $commentForm */
+/* @var \common\models\TagPost $post */
 
 
 
@@ -23,7 +23,6 @@ $category_url= Posts::loadBreadCrumb();
 if ($category_url['title'] !== null) {
     $this->params['breadcrumbs'][] = ['label' => $category_url['title'],
         'url' => $category_url['url']];
-
 }
 
 $this->params['breadcrumbs'][] = $this->title;
@@ -45,23 +44,36 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="article-box" >
 
-        <div class="featured-image">
-            <p>
-                    <img
-                    src="<?= $model->image_url ?>"
-            </p>
-        </div>
         <div class="content-big">
-            <h3><?= $model->title ?></h3>
+            <h3><?= Html::encode($model->title) ?></h3>
+            <div class="featured-image">
+                    <img
+                            src="<?= ($model->image_url)?>"
+                            alt="<?= Html::encode($model->title) ?>"
+                      >
+            </div>
+
             <h5 class="storytitle" >
                 <p>
                     <?= Yii::t('app', 'Published on') ?>:
                     <?= date('d-m-Y',$model->created_at) ?>
-                </p>
-                <p><?= Yii::t('app', 'Author') ?>:
-                    <?= $model->author->username ?>
+               |
+<!--                <p>-->
+                    <?= Yii::t('app', 'Author') ?>:
+                    <?= Html::encode($model->author->username) ?>
+<!--                </p>-->
+               |
+                    <?= Yii::t('app', 'Viewed') ?>:
+                    <?= $model->viewed ?>
+               |
+
+                    <?= Yii::t('app', 'Category') ?>:
+                    <?= Html::a(Html::encode($model->category->title), ['category/view', 'id' =>
+                        $model->category->id]) ?>
+
                 </p>
 
+                <b class="icon-user"><a href="//www.yaplakal.com/members/member328581.html">SESHOK</a></b>
             </h5>
             <h4>
                     <?= $model->content; ?>
@@ -69,14 +81,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
         </div>
 
-        <h4 class="storytitle" >
-        <p>
-            <?= Yii::t('app', 'Category') ?>:
-            <?= Html::a($model->category->title, ['category/view', 'id' =>
-                $model->category->id]) ?>
-        </p>
 
-        </h4>
         <div class="tags">
             <?php
             $tags = [];
