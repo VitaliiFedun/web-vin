@@ -7,18 +7,24 @@ use yii\widgets\ActiveForm;
 use common\models\Posts;
 use vova07\imperavi\Widget;
 
-Yii::$app->view->registerCssFile('/services/css/quill.snow.css', ['yii\web\CssAsset']);
-Yii::$app->view->registerJsFile('/services/files/quill.min.js',['yii\web\JsAsset']);
+//Yii::$app->view->registerCssFile('/services/css/quill.snow.css', ['yii\web\CssAsset']);
+//Yii::$app->view->registerJsFile('/services/files/quill.min.js',['yii\web\JsAsset']);
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Posts */
 /* @var $form yii\widgets\ActiveForm */
+/* @var $comments common\models\Comments */
+/* @var $authors yii\db\ActiveRecord[] */
+/* @var $category yii\db\ActiveRecord[] */
+/* @var $tags yii\db\ActiveRecord[] */
+
+
 ?>
 
 <div class="posts-form" xmlns:>
 
     <?php $form = ActiveForm::begin(); ?>
-
+    <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
     <?= $form->field($model, 'image_url')->widget(Widget::className(), [
 
         'settings' => [
@@ -44,8 +50,26 @@ Yii::$app->view->registerJsFile('/services/files/quill.min.js',['yii\web\JsAsset
         ArrayHelper::map($authors, 'id', 'username')
     ) ?>
 
+    <?= $form->field($model, 'anons')->widget(Widget::className(), [
 
-    <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+        'settings' => [
+            'lang' => 'en',
+            'minHeight' => 200,
+            'imageUpload' => Url::to(['/posts/image-upload']),
+            'imageManagerJson' => Url::to(['/posts/images-get']),
+            'fileUpload' => Url::to(['posts/file-upload']),
+            'fileManagerJson' => Url::to(['/posts/files-get']),
+
+            'plugins' => [
+//                'imagemanager',
+//                'filemanager',
+
+            ],
+        ],
+    ]);
+    ?>
+
+
      <?= $form->field($model, 'content')->widget(Widget::className(), [
 
         'settings' => [

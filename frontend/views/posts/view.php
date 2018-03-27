@@ -1,20 +1,18 @@
 <?php
 
 use yii\helpers\Html;
-//use yii\widgets\DetailView;
+use yii\helpers\HtmlPurifier;
 use common\models\Posts;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Posts */
-
-//use common\models\Comment;
-//use common\models\TagPost;
-
-/* @var $model common\models\Posts */
-/* @var  common\models\CommentForm $commentForm */
-/* @var \common\models\TagPost $post */
+/* @var $commentForm common\models\CommentForm  */
+/* @var $tags common\models\Tags  */
+/* @var $posts common\models\Posts  */
 
 
+
+Yii::$app->view->registerCssFile('/blog/css/styles.css', ['yii\web\CssAsset']);
 
 
 $this->title = $model->title;
@@ -27,8 +25,9 @@ if ($category_url['title'] !== null) {
 
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="posts-view">
+<!--<div class="posts-view">-->
 
+<div class="col-sm-10 post-index blog-sidebar">
 <!--    <h1>--><?//= Html::encode($this->title) ?><!--</h1>-->
 
 <!--    <p>-->
@@ -46,15 +45,22 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <div class="content-big">
             <h3><?= Html::encode($model->title) ?></h3>
+           <div class="image-anons">
             <div class="featured-image">
-                    <img
-                            src="<?= ($model->image_url)?>"
-                            alt="<?= Html::encode($model->title) ?>"
-                      >
+                <img    width  = "270px" height="auto"
+                        src    ="<?= $model->image_url ?>"
+                        alt    = "<?= $model->title ?>"
+                        class  = 'attachment-square size-square wp-post-image'
+                />
             </div>
+               <div class="featured-image left-padding">
+                   <?= $model->anons ?>
+               </div>
+
+           </div>
 
             <h5 class="storytitle" >
-                <p>
+<!--                <p>-->
                     <?= Yii::t('app', 'Published on') ?>:
                     <?= date('d-m-Y',$model->created_at) ?>
                |
@@ -71,12 +77,11 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?= Html::a(Html::encode($model->category->title), ['category/view', 'id' =>
                         $model->category->id]) ?>
 
-                </p>
+<!--                </p>-->
 
-                <b class="icon-user"><a href="//www.yaplakal.com/members/member328581.html">SESHOK</a></b>
             </h5>
             <h4>
-                    <?= $model->content; ?>
+                    <?= HtmlPurifier::process($model->content); ?>
             </h4>
 
         </div>
@@ -100,6 +105,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     </div>
 
+
     <div class="comments">
         <?php foreach($model->getPublishedComments()->models as $comment) : ?>
             <div class="comment">
@@ -117,3 +123,9 @@ $this->params['breadcrumbs'][] = $this->title;
     ]) ?>
 
 </div>
+<?php echo $this->render('_sidebar', [
+    'model' => $model,
+    'posts' => $posts,
+    'categories' => \common\models\Categories::find()->all(),
+    'tags' => \common\models\Tags::find()->all(),
+]); ?>

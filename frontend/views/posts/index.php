@@ -1,17 +1,16 @@
 <?php
 
 use yii\helpers\Html;
-//use yii\widgets\ListView;
 use yii\widgets\LinkPager;
-//use yii\helpers\ArrayHelper;
-//use  yii\widgets\Breadcrumbs;
 use common\models\Posts;
-//Yii::$app->view->registerCssFile('/services/css/styles.css', ['yii\web\CssAsset']);
+
 Yii::$app->view->registerCssFile('/blog/css/styles.css', ['yii\web\CssAsset']);
 
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\PostsSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+/* @var $posts common\models\Posts */
+/* @var $post common\models\Posts */
 
 $this->title = Yii::t('app', 'All Posts');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Blog'), 'url' => ['posts/index']];
@@ -48,30 +47,41 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
     </div>
 </div>
-<div class="col-sm-2 col-sm-offset blog-sidebar">
-    <h2><?= Yii::t('app', 'Categories') ?></h2>
-    <ul>
-        <?php
-        foreach ($categories->models as $category) {
-            echo $this->render('//categories/shortViewCategory', [
-                'model' => $category
-            ]);
-        }
-        ?>
-    </ul>
 
-</div>
-<div class="col-sm-2 col-sm-offset blog-sidebar">
-    <h2><?= Yii::t('frontend', 'Tags') ?></h2>
-    <ul>
-        <?php
-        foreach ($tags as $tag) {
-            echo $this->render('//tags/shortViewTag', [
-                'model' => $tag
-            ]);
-        }
-        ?>
-    </ul>
-</div>
+ <?php echo $this->render('_sidebar', [
+     'model' => $model,
+     'posts' => $posts,
+//     'categories' => $categories,
+//     'tags' => $tags,
+     'categories' => \common\models\Categories::find()->all(),
+     'tags' => \common\models\Tags::find()->all(),
+
+ ]); ?>
+
+<!--<div class="col-sm-2 col-sm-offset blog-sidebar">-->
+<!--    <h2>--><?//= Yii::t('app', 'Categories') ?><!--</h2>-->
+<!--    <ul>-->
+<!--        --><?php
+//        foreach ($categories->models as $category) {
+//            echo $this->render('//categories/shortViewCategory', [
+//                'model' => $category
+//            ]);
+//        }
+//        ?>
+<!--    </ul>-->
+<!---->
+<!--</div>-->
+<!--<div class="col-sm-2 col-sm-offset blog-sidebar">-->
+<!--    <h2>--><?//= Yii::t('frontend', 'Tags') ?><!--</h2>-->
+<!--    <ul>-->
+<!--        --><?php
+//        foreach ($tags as $tag) {
+//            echo $this->render('//tags/shortViewTag', [
+//                'model' => $tag
+//            ]);
+//        }
+//        ?>
+<!--    </ul>-->
+<!--</div>-->
 
 

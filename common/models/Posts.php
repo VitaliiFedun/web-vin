@@ -19,18 +19,31 @@ use yii\web\NotFoundHttpException;
  *
  * @property int $id
  * @property string $title
+ * @property string $image_url
+ * @property string $anons
  * @property string $content
- * @property string $author_id автор
- * @property int $category_id
- * @property int $status
  * @property int $viewed
+ * @property int $category_id
+ * @property string $author_id автор
+ * @property int $status
  * @property string $created_at
  * @property string $updated_at
- * @property string $image_url
  *
  * @property User $author
  * @property Categories $category
  * @property Comments $comments
+
+ *`id`
+ * `title`
+ * `image_url`
+ * `anons`
+ * `content`
+ * `viewed`
+ * `category_id`
+ * `author_id`
+ * `status`
+ * `created_at`
+ * `updated_at`
 
  */
 class Posts extends ActiveRecord
@@ -86,8 +99,8 @@ class Posts extends ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'content', 'category_id', 'status'], 'required'],
-            [['content','image_url'], 'string'],
+            [['title', 'content', 'category_id', 'status','anons'], 'required'],
+            [['content','image_url','anons'], 'string'],
             [['category_id', 'status', 'author_id','viewed'], 'integer'],
             [['created_at', 'updated_at', 'tags'], 'safe'],
             [['title'], 'string', 'max' => 255],
@@ -103,6 +116,8 @@ class Posts extends ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'title' => Yii::t('app', 'Title'),
+            'image_url' => Yii::t('app', 'Image Url'),
+            'anons' => Yii::t('app', 'Anons'),
             'content' => Yii::t('app', 'Content'),
             'status' => Yii::t('app', 'Status'),
             'category_id' => Yii::t('app', 'Category ID'),
@@ -110,7 +125,7 @@ class Posts extends ActiveRecord
             'author_id' => Yii::t('app', 'Author ID'),
             'created_at' => Yii::t('app', 'Created At'),
             'updated_at' => Yii::t('app', 'Updated At'),
-            'image_url' => Yii::t('app', 'Image Url'),
+
         ];
     }
 
@@ -342,7 +357,7 @@ class Posts extends ActiveRecord
     }
     public function beforeSave($insert)
     {
-        preg_match('/http:\/\/[^\s\Z]+/i',
+        preg_match('/(http|https|ftp|ftps)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?(jpg|png|gif|jpeg)/',
             $this->image_url, $matches);
         $this->image_url = $matches[0];
         return parent::beforeSave($insert);

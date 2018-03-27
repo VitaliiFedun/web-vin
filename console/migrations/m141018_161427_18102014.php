@@ -23,6 +23,7 @@ class m141018_161427_18102014 extends Migration
         $this->createTable(Posts::tableName(), [
             'id' => $this->primaryKey(),
             'title' => $this->string()->notNull(),
+            'image_url'=> $this->string()->notNull(),
             'anons' => $this->text()->notNull(),
             'content' => $this->text()->notNull(),
             'viewed' => $this->integer()->notNull()->defaultValue(-1),

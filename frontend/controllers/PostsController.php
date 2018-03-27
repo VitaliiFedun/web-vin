@@ -12,6 +12,7 @@ use common\models\Posts;
 //use app\models\PostsSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+//use yii\base\ErrorException;
 use yii\filters\VerbFilter;
 //use yii\helpers\ArrayHelper;
 use common\models\CommentForm;
@@ -163,7 +164,9 @@ class PostsController extends Controller
             return $this->redirect(['index']);
         }
 
-        $post->delete();
+            $post->delete();
+
+
         Comments::deleteAll('post_id='.$id);
 //        Tags::updateFrequency($this->tags, '');
 

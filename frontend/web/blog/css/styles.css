@@ -259,6 +259,19 @@ Author URI: http://www.this-play.nl
         -webkit-box-pack: center;
         justify-content: center
     }
+    .image-anons {
+        display: -webkit-box;
+        display: flex;
+        /*flex-wrap: wrap;*/
+
+        /*-webkit-box-pack: center;*/
+        /*justify-content: center*/
+    }
+    .featured-image.left-padding {
+        padding-left: 20px;
+        /*border: #1b1b1b;*/
+        /*border-width: 1px;*/
+    }
 
     .bigasslink, .button {
         display: inline-block
