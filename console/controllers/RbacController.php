@@ -9,36 +9,65 @@
 namespace console\controllers;
 use Yii;
 use yii\console\Controller;
-use common\components\rbac\UserRoleRule;
-class RbacController extends Controller
-{
-    public function actionInit()
-    {
+/**
+ * Инициализатор RBAC выполняется в консоли php yii rbac/init
+ */
+class RbacController extends Controller {
+
+    public function actionInit() {
         $auth = Yii::$app->authManager;
-        $auth->removeAll(); //удаляем старые данные
-        //Создадим для примера права для доступа к админке
-        $dashboard = $auth->createPermission('dashboard');
-        $dashboard->description = 'Админ панель';
-        $auth->add($dashboard);
-        //Включаем наш обработчик
-        $rule = new UserRoleRule();
-        $auth->add($rule);
-        //Добавляем роли
-        $user = $auth->createRole('user');
-        $user->description = 'Пользователь';
-        $user->ruleName = $rule->name;
-        $auth->add($user);
-        $moder = $auth->createRole('moderator');
-        $moder->description = 'Модератор';
-        $moder->ruleName = $rule->name;
-        $auth->add($moder);
-        //Добавляем потомков
-        $auth->addChild($moder, $user);
-        $auth->addChild($moder, $dashboard);
+
+        $auth->removeAll(); //На всякий случай удаляем старые данные из БД...
+
+        // Создадим роли админа и редактора новостей
         $admin = $auth->createRole('admin');
-        $admin->description = 'Администратор';
-        $admin->ruleName = $rule->name;
+        $editor = $auth->createRole('editor');
+
+        // запишем их в БД
         $auth->add($admin);
-        $auth->addChild($admin, $moder);
+        $auth->add($editor);
+
+        // Создаем наше правило, которое позволит проверить автора новости
+        $authorRule = new \common\components\rbac\AuthorRule;
+
+        // Запишем его в БД
+        $auth->add($authorRule);
+
+        // Создаем разрешения. Например, просмотр админки viewAdminPage и редактирование новости updateNews
+        $viewAdminPage = $auth->createPermission('viewAdminPage');
+        $viewAdminPage->description = 'Просмотр админки';
+
+        $updateNews = $auth->createPermission('updateNews');
+        $updateNews->description = 'Редактирование новости';
+
+        // Создадим еще новое разрешение «Редактирование собственной новости» и ассоциируем его с правилом AuthorRule
+        $updateOwnNews = $auth->createPermission('updateOwnNews');
+        $updateOwnNews->description = 'Редактирование собственной новости';
+
+        // Указываем правило AuthorRule для разрешения updateOwnNews.
+        $updateOwnNews->ruleName = $authorRule->name;
+
+        // Запишем все разрешения в БД
+        $auth->add($viewAdminPage);
+        $auth->add($updateNews);
+        $auth->add($updateOwnNews);
+
+        // Теперь добавим наследования. Для роли editor мы добавим разрешение updateOwnNews (редактировать собственную новость),
+        // а для админа добавим собственные разрешения viewAdminPage и updateNews (может смотреть админку и редактировать любую новость)
+
+        // Роли «Редактор новостей» присваиваем разрешение «Редактирование собственной новости»
+        $auth->addChild($editor,$updateOwnNews);
+
+        // админ имеет собственное разрешение - «Редактирование новости»
+        $auth->addChild($admin, $updateNews);
+
+        // Еще админ имеет собственное разрешение - «Просмотр админки»
+        $auth->addChild($admin, $viewAdminPage);
+
+        // Назначаем роль admin пользователю с ID 1
+        $auth->assign($admin, 1);
+
+        // Назначаем роль editor пользователю с ID 2
+        $auth->assign($editor, 2);
     }
 }

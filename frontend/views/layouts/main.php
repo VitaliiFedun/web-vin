@@ -31,6 +31,9 @@ AppAsset::register($this);
         <title><?= Html::encode($this->title) ?></title>
         <?php $this->head() ?>
     </head>
+    <?php
+define('HTTPS_SERVER', 'https://web-vin.com/');
+?>
     <body>
     <?php $this->beginBody() ?>
     <?= (Yii::$app->user->isGuest ? LoginFormWidget::widget([]) : ''); ?>

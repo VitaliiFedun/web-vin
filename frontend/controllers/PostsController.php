@@ -17,7 +17,8 @@ use yii\filters\VerbFilter;
 //use yii\helpers\ArrayHelper;
 use common\models\CommentForm;
 use yii\helpers\Url;
-
+use yii\web\HttpException;
+//use yii\web\ForbiddenHttpException;
 
 
 
@@ -93,21 +94,30 @@ class PostsController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Posts();
+        if (Yii::$app->user->can('createPost'))
+        {
+            $model = new Posts();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-                'category' => Categories::find()->all(),
-                'tags' => Tags::find()->all(),
-                'authors' => User::find()->all()
-            ]);
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                return $this->render('create', [
+                    'model' => $model,
+                    'category' => Categories::find()->all(),
+                    'tags' => Tags::find()->all(),
+                    'authors' => User::find()->all()
+                ]);
+            }
+        }
+        else
+        {
+//            Yii::$app->session->setFlash('error', 'Access denied.');
+//            throw new ForbiddenHttpException('Access denied');
+            throw new HttpException(403,'Access denied');
         }
     }
 
-    /**
+    /*
      * Updates an existing Posts model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
@@ -116,21 +126,30 @@ class PostsController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        if (Yii::$app->user->can('updateOwnNews', ['news' => $id]))
+        {
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            $model = $this->findModel($id);
+
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+
+            return $this->render('update', [
+                'model' => $model,
+                'category' => Categories::find()->all(),
+                'tags' => Tags::find()->all(),
+                'authors' => User::find()->all(),
+                'comments' => Comments::find()->all(),
+            ]);
+        }
+        else
+        {
+            throw new HttpException(403, 'Access denied');
+//            throw new ForbiddenHttpException('Access denied');
         }
 
-        return $this->render('update', [
-            'model' => $model,
-            'category' => Categories::find()->all(),
-            'tags' => Tags::find()->all(),
-            'authors' => User::find()->all(),
-            'comments' => Comments::find()->all(),
-        ]);
     }
-
     /*
      * Deletes an existing Posts model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
@@ -164,7 +183,7 @@ class PostsController extends Controller
             return $this->redirect(['index']);
         }
 
-            $post->delete();
+        $post->delete();
 
 
         Comments::deleteAll('post_id='.$id);
@@ -225,7 +244,7 @@ class PostsController extends Controller
             ],
 
 
-          'image-upload' => [  //Добавляем возможность выбирать уже загружённые изображения
+            'image-upload' => [  //Добавляем возможность выбирать уже загружённые изображения
                 'class' => 'vova07\imperavi\actions\UploadFileAction',
                 'url' => 'http://web-vin.com/blog/images', // Directory URL address, where files are stored.
                 'path' => '@frontend/web/blog/images', // Or absolute path to directory where files are stored.

@@ -9,7 +9,13 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Modal;
-
+use yii\authclient\clients\Facebook;
+use yii\authclient\clients\GitHub;
+use yii\authclient\clients\Google;
+use yii\authclient\clients\LinkedIn;
+use yii\authclient\clients\Twitter;
+use yii\authclient\clients\GoogleHybrid;
+use yii\authclient\clients\GoogleOAuth;
 Modal::begin([
 //    'header'=>'<h4>Login</h4>',
     'header'=>'<h4>'.Yii::t('app','Login').'</h4>',
@@ -47,7 +53,6 @@ echo $form->field($model, 'rememberMe')->checkbox();
 
         </div>
     </div>
-
     <section class="main full">
 
         <div class="portlet" id="yw2">
@@ -55,40 +60,10 @@ echo $form->field($model, 'rememberMe')->checkbox();
                 <div class="portlet-title"><span><?=Yii::t('app','The entrance through social networks')?></span></div>
             </div>
             <div class="portlet-content">
-
-                <div id="uLogin"
-                     x-ulogin-params=
-                     "
-                             display=panel;
-                             fields=first_name,last_name,email,photo;
-                             providers= twitter, facebook, google;
-                             hidden=other;
-                             redirect_uri=http%3A%2F%2Fwww.planetatuninga.ru%2Fulogin%2Flogin%3Freturn%3D%252Flogin
-                           "
-                     style="position: relative;"
-                     data-ulogin-inited="1516778900726">
-                    <div class="ulogin-buttons-container" style="margin: 0px; padding: 0px; outline: none; border: none; border-radius: 0px; cursor: default; float: none; position: relative; display: inline-block; width: 210px; height: 32px; left: 0px; top: 0px; box-sizing: content-box; max-width: 100%; vertical-align: top; line-height: 0;">
-                        <div class="ulogin-button-twitter"
-                             data-uloginbutton="twitter"
-                             role="button" title="Twitter" style="margin: 0px 10px 10px 0px; padding: 0px; outline: none; border: none; border-radius: 0px; cursor: pointer; float: left; position: relative; display: inherit; width: 32px; height: 32px; left: 0px; top: 0px; box-sizing: content-box; background: url(&quot;https://ulogin.ru/version/2.0/img/providers-32-classic.png?version=img.2.0.0&quot;) 0px -172px / 32px no-repeat;">
-
-                        </div>
-                        <div class="ulogin-button-facebook" data-uloginbutton="facebook"
-                             role="button" title="Facebook" style="margin: 0px 10px 10px 0px; padding: 0px; outline: none; border: none; border-radius: 0px; cursor: pointer; float: left; position: relative; display: inherit; width: 32px; height: 32px; left: 0px; top: 0px; box-sizing: content-box; background: url(&quot;https://ulogin.ru/version/2.0/img/providers-32-classic.png?version=img.2.0.0&quot;) 0px -138px / 32px no-repeat;">
-
-                        </div>
-                        <div class="ulogin-button-google" data-uloginbutton="google"
-                             role="button" title="Google" style="margin: 0px 10px 10px 0px; padding: 0px; outline: none; border: none; border-radius: 0px; cursor: pointer; float: left; position: relative; display: inherit; width: 32px; height: 32px; left: 0px; top: 0px; box-sizing: content-box; background: url(&quot;https://ulogin.ru/version/2.0/img/providers-32-classic.png?version=img.2.0.0&quot;) 0px -206px / 32px no-repeat;">
-
-                        </div>
-                        <div class="ulogin-dropdown-button" style="margin: 0px 10px 10px 0px; padding: 0px; outline: none; border: none; border-radius: 0px; cursor: pointer; float: none; position: relative; display: inline-block; width: 32px; height: 32px; left: 0px; top: 0px; box-sizing: content-box; background: url(&quot;https://ulogin.ru/version/2.0/img/providers-32-classic.png?version=img.2.0.0&quot;) 0px -2px / 32px no-repeat; vertical-align: baseline;">
-
-                        </div>
-                    </div>
-                    <div style="margin: 0px; padding: 0px; outline: none; border-width: 5px; border-style: solid; border-color: transparent transparent rgb(102, 102, 102); border-image: initial; border-radius: 0px; cursor: default; float: none; position: absolute; display: none; width: 0px; height: 0px; left: 180px; top: 28px; box-sizing: content-box; z-index: 9999;">
-
-                    </div>
-                </div>
+                <?= yii\authclient\widgets\AuthChoice::widget([
+                    'baseAuthUrl' => ['site/auth'],
+                    'popupMode' => false,
+                ]) ?>
 
             </div>
         </div>

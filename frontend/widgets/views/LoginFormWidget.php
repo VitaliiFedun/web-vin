@@ -50,6 +50,10 @@ echo $form->field($model, 'rememberMe')->checkbox();
         </div>
     </div>
 
+<?= yii\authclient\widgets\AuthChoice::widget([
+    'baseAuthUrl' => ['site/auth'],
+    'popupMode' => false,
+]) ?>
     <section class="main full">
 
         <div class="portlet" id="yw2">
@@ -63,7 +67,7 @@ echo $form->field($model, 'rememberMe')->checkbox();
                      "
                              display=panel;
                              fields=first_name,last_name,email,photo;
-                             providers= twitter, facebook, google;
+                             providers= twitter, facebook, google, github;
                              hidden=other;
                              redirect_uri=http%3A%2F%2Fwww.planetatuninga.ru%2Fulogin%2Flogin%3Freturn%3D%252Flogin
                            "
@@ -83,6 +87,11 @@ echo $form->field($model, 'rememberMe')->checkbox();
                              role="button" title="Google" style="margin: 0px 10px 10px 0px; padding: 0px; outline: none; border: none; border-radius: 0px; cursor: pointer; float: left; position: relative; display: inherit; width: 32px; height: 32px; left: 0px; top: 0px; box-sizing: content-box; background: url(&quot;https://ulogin.ru/version/2.0/img/providers-32-classic.png?version=img.2.0.0&quot;) 0px -206px / 32px no-repeat;">
 
                         </div>
+                        <div class="ulogin-button-github" data-uloginbutton="github"
+                             role="button" title="GitHub" style="margin: 0px 10px 10px 0px; padding: 0px; outline: none; border: none; border-radius: 0px; cursor: pointer; float: left; position: relative; display: inherit; width: 32px; height: 32px; left: 0px; top: 0px; box-sizing: content-box; background: url(&quot;https://ulogin.ru/version/2.0/img/providers-32-classic.png?version=img.2.0.0&quot;) 0px -206px / 32px no-repeat;">
+
+                        </div>
+
                         <div class="ulogin-dropdown-button" style="margin: 0px 10px 10px 0px; padding: 0px; outline: none; border: none; border-radius: 0px; cursor: pointer; float: none; position: relative; display: inline-block; width: 32px; height: 32px; left: 0px; top: 0px; box-sizing: content-box; background: url(&quot;https://ulogin.ru/version/2.0/img/providers-32-classic.png?version=img.2.0.0&quot;) 0px -2px / 32px no-repeat; vertical-align: baseline;">
 
                         </div>

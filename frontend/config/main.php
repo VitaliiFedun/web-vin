@@ -23,11 +23,26 @@ return [
         'assetManager'=>[
             'class'=>'yii\web\AssetManager',
             'linkAssets'=>true,
+            'basePath' => '@webroot/assets',
+            'baseUrl' => '@web/assets'
         ],
 
         'request' => [
             'csrfParam' => '_csrf-frontend',
+            'baseUrl' => '',
+
         ],
+/*
+ * 'assetManager' => [
+             'basePath' => '@webroot/assets',
+             'baseUrl' => '@web/assets'
+        ],
+        'request' => [
+            'baseUrl' => ''
+        ]
+ */
+
+
         'user' => [
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
@@ -69,19 +84,24 @@ return [
             'class' => 'yii\authclient\Collection',
             'clients' => [
                 'google' => [
-                    'class' => 'yii\authclient\clients\GoogleOAuth',
-                    'clientId' => 'google_client_id',
-                    'clientSecret' => 'google_client_secret',
+                    'class' => 'yii\authclient\clients\Google',
+                    'clientId' => $params['google_clientId'],
+                    'clientSecret' => $params['google_clientSecret'],
                 ],
                 'twitter' => [
                     'class' => 'yii\authclient\clients\Twitter',
-                    'consumerKey' => 'twitter_consumer_key',
-                    'consumerSecret' => 'twitter_consumer_secret',
+                    'consumerKey' => $params['twitter_consumerKey'],
+                    'consumerSecret' => $params[twitter_consumerSecret],
                 ],
                 'facebook' => [
                     'class' => 'yii\authclient\clients\Facebook',
-                    'clientId' => 'xxxxxx',
-                    'clientSecret' => 'xxxxxx',
+                    'clientId' => $params[facebook_clientId],
+                    'clientSecret' => $params[facebook_clientSecret],
+                ],
+                'github' => [
+                    'class'        => 'yii\authclient\clients\GitHub',
+                    'clientId'     => $params['github_CLIENT_ID'],
+                    'clientSecret' => $params['github_CLIENT_SECRET'],
                 ],
             ],
         ],

@@ -19,16 +19,25 @@ class m130524_201442_init extends \yii\db\Migration
             'password_reset_token' => $this->string(),
             'email' => $this->string()->notNull(),
             'role' => $this->smallInteger()->notNull()->defaultValue(10),
-
             'status' => $this->smallInteger()->notNull()->defaultValue(10),
             'created_at' => $this->integer()->notNull(),
             'updated_at' => $this->integer()->notNull(),
 
         ], $tableOptions);
+        $this->createTable(Auth::tableName(), [
+            'id' => $this->primaryKey(),
+            'user_id' => $this->integer()->notNull(),
+            'source' => $this->string()->notNull(),
+            'source_id' => $this->string()->notNull(),
+        ],$tableOptions);
+
+        $this->addForeignKey('fk-auth-user_id-user-id', Auth::tableName(), 'user_id', User::tableName(), 'id', 'CASCADE', 'CASCADE');
     }
 
     public function down()
     {
+        $this->dropTable(Auth::tableName());
         $this->dropTable(User::tableName());
+
     }
 }
