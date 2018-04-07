@@ -14,7 +14,8 @@ use frontend\widgets\SignupFormWidget;
 use frontend\widgets\FBFWidget;
 //use frontend\widgets\Lang;
 //use frontend\widgets\OcrFormWidget;
-use frontend\widgets\MultiLang\MultiLang;
+
+//use frontend\widgets\MultiLang\MultiLang;
 
 
 
@@ -53,22 +54,23 @@ define('HTTPS_SERVER', 'https://web-vin.com/');
             ['label' => Yii::t('app','On-line services'), 'url' => ['/services/index']],
             ['label' => Yii::t('app','Blog'),             'url' => ['/posts/index']],
             ['label' => Yii::t('app','Contact'), 'url' => '#', 'options' => ['data-toggle' => 'modal', 'data-target' => '#myModal']],
+            ['label' => Yii::t('app','Terms of use'), 'url' => ['/site/termsofuse']],
+
         ];
         if (Yii::$app->user->isGuest) {
             $menuItems[] = ['label' => Yii::t('app','Sign up'), 'url' => '#', 'options' => ['data-toggle' => 'modal', 'data-target' => '#signup-modal']];
-            $menuItems[] = ['label' => Yii::t('app','Social'), 'url' => ['/site/social']];
             $menuItems[] = ['label' => Yii::t('app','Login'), 'url' => '#', 'options' => ['data-toggle' => 'modal', 'data-target' => '#login-modal']];
         } else {
-
             $menuItems[] =
-            ['label' => Yii::$app->user->identity->username, 'items' => [
-                ['label' => Yii::t('app','Categories'), 'url' => ['/categories']],
-                ['label' => Yii::t('app','Posts'), 'url' => ['/posts']],
-                ['label' => Yii::t('app','Comments'), 'url' => ['/comments']],
+            ['label' => '<img src="'.(Yii::$app->user->identity->avatar_url).'" class="user-image" alt="User Image" ><span>'.
+          ((Yii::$app->user->identity->username) === null?'Anonimus':(Yii::$app->user->identity->username)).'</span>',
 
-                ['label' => '',
-                    'options'=>['class'=>'divider'],
-
+                'items' =>
+                [
+                    ['label' => Yii::t('app','Categories'), 'url' => ['/categories']],
+                    ['label' => Yii::t('app','Posts'), 'url' => ['/posts']],
+                    ['label' => Yii::t('app','Comments'), 'url' => ['/comments']],
+                    ['label' => '','options'=>['class'=>'divider'],
                 ],
 
                 [
@@ -79,15 +81,19 @@ define('HTTPS_SERVER', 'https://web-vin.com/');
             ];
 
         }
-        echo Nav::widget([
-            'options' => ['class' => 'navbar-nav navbar-right'],
+
+        echo Nav::widget(
+        [
+                'options' => ['class' => 'navbar-nav navbar-right'],
             'items' => $menuItems,
-        ]);
+            'encodeLabels' => false,
+        ]
+        );
         NavBar::end();
 
         ?>
 
-        <?php echo MultiLang::widget(['cssClass'=>'pull-right language']); ?>
+<!--        --><?php //echo MultiLang::widget(['cssClass'=>'pull-right language']); ?>
 <!--        --><?//= Lang::widget();?>
 
         <div class="container">
@@ -102,7 +108,7 @@ define('HTTPS_SERVER', 'https://web-vin.com/');
 
     <footer class="footer">
         <div class="container">
-            <p class="pull-left">© <?=Yii::$app->components[name_brand]?> <?= date('Y') ?></p>
+            <p class="pull-left">© <?=Yii::$app->components['name_brand']?> <?= date('Y') ?></p>
 
         </div>
     </footer>

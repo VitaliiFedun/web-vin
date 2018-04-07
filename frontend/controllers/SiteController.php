@@ -3,6 +3,8 @@ namespace frontend\controllers;
 
 use Yii;
 //use yii\base\InvalidParamException;
+use yii\authclient\clients\Google;
+use yii\authclient\clients\Twitter;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -72,7 +74,9 @@ class SiteController extends Controller
             'auth' => [
                 'class' => 'yii\authclient\AuthAction',
                 'successCallback' => [$this, 'onAuthSuccess'],
-            ],        ];
+            ],
+
+            ];
     }
     public function onAuthSuccess($client)
     {
@@ -95,10 +99,46 @@ class SiteController extends Controller
                     ]);
                 } else {
                     $password = Yii::$app->security->generateRandomString(6);
+                    $source_service = $client->getId();
+                    if($source_service =='facebook') {
+                        $username = $attributes['name'];
+                        $email = $attributes['email'];
+                        $avatar = 'https://graph.facebook.com/'.(string)$attributes['id'].'/picture?type=small';
+
+                        //                        To get a user profile picture of a specific size, call
+//https://graph.facebook.com/USER_ID/picture?type=SIZE
+//where SIZE should be replaced with one of the words
+//
+//square
+//small
+//normal
+//large
+//depending on the size you want.
+//
+
+                    }
+                    if($source_service =='google') {
+                        $username = $attributes['displayName'];
+                        $email = $attributes['emails'][0][value];
+                        $avatar = $attributes['image'][0][url];
+                    }
+                    if($source_service =='twitter') {
+                        $username = $attributes['screen_name'];
+                        $email = $attributes['email'];
+                        $avatar = $attributes['profile_image_url_https'];
+                    }
+                    if($source_service == 'github') {
+                        $username = $attributes['login'];
+                        $email = $attributes['email'];
+                        $avatar = $attributes['avatar_url'];
+                    }
+
+
                     $user = new User([
-                        'username' => $attributes['login'],
-                        'email' => $attributes['email'],
+                        'username' => $username,  // ($attributes['login']===null?$attributes['screen_name']:$attributes['login']),
+                        'email' => $email, //$attributes['email'],
                         'password' => $password,
+                        'avatar_url' => $avatar,
                     ]);
                     $user->generateAuthKey();
                     $user->generatePasswordResetToken();
@@ -130,6 +170,17 @@ class SiteController extends Controller
                 $auth->save();
             }
         }
+    }
+
+    /**
+     * Displays Terms of use page.
+     *
+     * @return mixed
+     */
+
+    public function actionTermsofuse()
+    {
+        return $this->render('terms_of_use');
     }
     /**
      * Displays homepage.

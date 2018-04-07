@@ -18,7 +18,7 @@ class LoginFormWidget extends Widget {
     public function run() {
         if (Yii::$app->user->isGuest) {
             $model = new LoginForm();
-            return $this->render('loginFormWidget', [
+            return $this->render('loginFormWidgetView', [
                 'model' => $model,
             ]);
         } else {

@@ -117,7 +117,7 @@ class PostsController extends Controller
         }
     }
 
-    /*
+    /**
      * Updates an existing Posts model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
@@ -150,7 +150,7 @@ class PostsController extends Controller
         }
 
     }
-    /*
+    /**
      * Deletes an existing Posts model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id

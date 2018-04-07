@@ -22,6 +22,12 @@ class SiteController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
+                        'actions' => [ 'auth' ],
+                        'allow'   => true,
+                    ],
+
+
+                    [
                         'actions' => ['login', 'error'],
                         'allow' => true,
                     ],
@@ -50,7 +56,73 @@ class SiteController extends Controller
             'error' => [
                 'class' => 'yii\web\ErrorAction',
             ],
+            'auth' => [
+                'class' => 'yii\authclient\AuthAction',
+                'successCallback' => [$this, 'onAuthSuccess'],
+            ],
+
         ];
+    }
+    /* @var $auth Auth */
+    public function onAuthSuccess($client)
+    {
+        $attributes = $client->getUserAttributes();
+
+
+        $auth = Auth::find()->where([
+            'source' => $client->getId(),
+            'source_id' => $attributes['id'],
+        ])->one();
+
+        if (Yii::$app->user->isGuest) {
+            if ($auth) { // авторизация
+                $user = $auth->user;
+                Yii::$app->user->login($user);
+            } else { // регистрация
+                if (isset($attributes['email']) && User::find()->where(['email' => $attributes['email']])->exists()) {
+                    Yii::$app->getSession()->setFlash('error', [
+                        Yii::t('app',
+                            "A user with such an email as in {client} already exists, but is not connected with it. To get started, log on to the site using e-mail, in order to link it.",
+//                            "Пользователь с такой электронной почтой как в {client} уже существует, но с ним не связан. Для начала войдите на сайт использую электронную почту, для того, что бы связать её.",
+                            ['client' => $client->getTitle()]),
+                    ]);
+                } else {
+                    $password = Yii::$app->security->generateRandomString(6);
+                    $user = new User([
+                        'username' => ($attributes['login']===null?$attributes['screen_name']:$attributes['login']),
+                        'email' => $attributes['email'],
+                        'password' => $password,
+                    ]);
+                    $user->generateAuthKey();
+                    $user->generatePasswordResetToken();
+                    $transaction = $user->getDb()->beginTransaction();
+                    if ($user->save()) {
+                        $auth = new Auth([
+                            'user_id' => $user->id,
+                            'source' => $client->getId(),
+                            'source_id' => (string)$attributes['id'],
+                        ]);
+                        if ($auth->save()) {
+                            $transaction->commit();
+                            Yii::$app->user->login($user);
+                        } else {
+                            print_r($auth->getErrors());
+                        }
+                    } else {
+                        print_r($user->getErrors());
+                    }
+                }
+            }
+        } else { // Пользователь уже зарегистрирован
+            if (!$auth) { // добавляем внешний сервис аутентификации
+                $auth = new Auth([
+                    'user_id' => Yii::$app->user->id,
+                    'source' => $client->getId(),
+                    'source_id' => $attributes['id'],
+                ]);
+                $auth->save();
+            }
+        }
     }
 
     /**
@@ -100,8 +172,8 @@ class SiteController extends Controller
             return
 //                'url' => '#', 'options' => ['data-toggle' => 'modal', 'data-target' => '#login-modal']];
                 $this->render('login', [
-                'model' => $model,
-            ]);
+                    'model' => $model,
+                ]);
         }
     }
 

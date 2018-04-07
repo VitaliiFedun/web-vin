@@ -141,7 +141,7 @@ return [
 //     'Status' => 'Статус',
 //     'Category ID' => 'ID категорії',
      'Viewed' => 'Переглядів',
-//     'Author ID' => 'ID Автора',
+     'Terms of use' => 'Умови використання',
      'Created At' => 'Створено',
      'Updated At' => 'Оновлено',
      'Image Url' => 'Малюнок',

@@ -17,6 +17,9 @@ use yii\web\IdentityInterface;
  * @property string $email
  * @property string $auth_key
  * @property integer $status
+ * @property string $bind_to_ip
+ * @property string $registration_ip
+ * @property string avatar_url
  * @property integer $created_at
  * @property integer $updated_at
  * @property string $password write-only password
@@ -25,6 +28,8 @@ class User extends ActiveRecord implements IdentityInterface
 {
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE = 10;
+    const STATUS_BANNED = 20;
+
 
     const ROLE_USER = 1;
     const ROLE_MODER = 5;
@@ -55,7 +60,10 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return [
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
-            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
+            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED, self::STATUS_BANNED]],
+            ['bind_to_ip', 'validateBindToIp'],
+            ['bind_to_ip', 'trim'],
+            ['bind_to_ip', 'string', 'max' => 255],
         ];
     }
 
@@ -189,4 +197,94 @@ class User extends ActiveRecord implements IdentityInterface
     {
         $this->password_reset_token = null;
     }
+    /**
+     * Make sure user will not deactivate himself and superadmin could not demote himself
+     * Also don't let non-superadmin edit superadmin
+     *
+     * @inheritdoc
+     */
+    public function beforeSave($insert)
+    {
+        if ( $insert )
+        {
+                $this->registration_ip = $this->getRealIp();
+        }
+        return parent::beforeSave($insert);
+    }
+    public static function getRealIP()
+    {
+//        if (!empty($_SERVER['HTTP_CLIENT_IP']))
+//            $ip = $_SERVER['HTTP_CLIENT_IP'];
+//        elseif ( !empty($_SERVER['HTTP_X_FORWARDED_FOR']) )
+//            $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+//        else
+//            $ip = $_SERVER['REMOTE_ADDR'];
+//        return $ip;
+
+//        $ipaddress = '';
+        if (getenv('HTTP_CLIENT_IP'))
+            $ipaddress = getenv('HTTP_CLIENT_IP');
+        else if(getenv('HTTP_X_FORWARDED_FOR'))
+            $ipaddress = getenv('HTTP_X_FORWARDED_FOR');
+        else if(getenv('HTTP_X_FORWARDED'))
+            $ipaddress = getenv('HTTP_X_FORWARDED');
+        else if(getenv('HTTP_FORWARDED_FOR'))
+            $ipaddress = getenv('HTTP_FORWARDED_FOR');
+        else if(getenv('HTTP_FORWARDED'))
+            $ipaddress = getenv('HTTP_FORWARDED');
+        else if(getenv('REMOTE_ADDR'))
+            $ipaddress = getenv('REMOTE_ADDR');
+        else
+            $ipaddress = 'UNKNOWN';
+
+        return $ipaddress;
+
+    }
+
+
+
+
+    /**
+     * getStatusList
+     * @return array
+     */
+    public static function getStatusList()
+    {
+        return array(
+            self::STATUS_ACTIVE   => Yii::t('frontend', 'Active'),
+            self::STATUS_INACTIVE => Yii::t('frontend', 'Inactive'),
+            self::STATUS_BANNED   => Yii::t('frontend', 'Banned'),
+        );
+    }
+    /**
+     * getStatusValue
+     *
+     * @param string $val
+     *
+     * @return string
+     */
+    public static function getStatusValue($val)
+    {
+        $ar = self::getStatusList();
+        return isset( $ar[$val] ) ? $ar[$val] : $val;
+    }
+    /**
+     * Validate bind_to_ip attr to be in correct format
+     */
+    public function validateBindToIp()
+    {
+        if ( $this->bind_to_ip )
+        {
+            $ips = explode(',', $this->bind_to_ip);
+            foreach ($ips as $ip)
+            {
+                if ( !filter_var(trim($ip), FILTER_VALIDATE_IP) )
+                {
+                    $this->addError('bind_to_ip', Yii::t('frontend', "Wrong format. Enter valid IPs separated by comma"));
+                }
+            }
+        }
+    }
+
+
 }

@@ -83,26 +83,35 @@ return [
         'authClientCollection' => [
             'class' => 'yii\authclient\Collection',
             'clients' => [
+                'facebook' => [
+                    'class' => 'yii\authclient\clients\Facebook',
+                    'clientId' => $params['facebook_clientId'],
+                    'clientSecret' => $params['facebook_clientSecret'],
+                    'authUrl' => 'https://www.facebook.com/dialog/oauth?display=popup&scope=email',
+
+                ],
                 'google' => [
                     'class' => 'yii\authclient\clients\Google',
                     'clientId' => $params['google_clientId'],
                     'clientSecret' => $params['google_clientSecret'],
+                    'authUrl' => 'https://accounts.google.com/o/oauth2/auth?display=popup&type=web_server&',
                 ],
                 'twitter' => [
                     'class' => 'yii\authclient\clients\Twitter',
                     'consumerKey' => $params['twitter_consumerKey'],
-                    'consumerSecret' => $params[twitter_consumerSecret],
+                    'consumerSecret' => $params['twitter_consumerSecret'],
                 ],
-                'facebook' => [
-                    'class' => 'yii\authclient\clients\Facebook',
-                    'clientId' => $params[facebook_clientId],
-                    'clientSecret' => $params[facebook_clientSecret],
-                ],
+
                 'github' => [
                     'class'        => 'yii\authclient\clients\GitHub',
                     'clientId'     => $params['github_CLIENT_ID'],
                     'clientSecret' => $params['github_CLIENT_SECRET'],
                 ],
+//                'linkedin' => [
+//                    'class' => 'yii\authclient\clients\LinkedIn',
+//                    'clientId' => 'linkedin_client_id',
+//                    'clientSecret' => 'linkedin_client_secret',
+//                ],
             ],
         ],
 

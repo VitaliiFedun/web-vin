@@ -53,4 +53,7 @@ return [
     'Submit' => 'Відправити',
     'Tags' => 'Теги',
     'Posts Tagged with'=>'Пости з тегом',
+    "A user with such an email as in {client} already exists, but is not connected with it. To get started, log on to the site using e-mail, in order to link it." =>
+    "Користувач з такою електронною адресою як в {client} вже існує, проте с ним не повязаний. Зайдіть на сайт з використанням электронної пошти, для того, що б зв'язати її.",
+
 ];
