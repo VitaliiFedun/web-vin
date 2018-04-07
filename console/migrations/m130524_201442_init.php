@@ -18,7 +18,7 @@ class m130524_201442_init extends \yii\db\Migration
             'password_hash' => $this->string()->notNull(),
             'password_reset_token' => $this->string(),
             'email' => $this->string()->notNull(),
-            'registration_ip'=> $this->varchar(15),
+            'registration_ip'=> $this->string(15),
             'bind_to_ip' => $this->string(),
             'avatar_url' => $this->string(),
             'role' => $this->smallInteger()->notNull()->defaultValue(10),
