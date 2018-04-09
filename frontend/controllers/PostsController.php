@@ -126,7 +126,7 @@ class PostsController extends Controller
      */
     public function actionUpdate($id)
     {
-        if (Yii::$app->user->can('updateOwnNews', ['news' => $id]))
+        if (Yii::$app->user->can('updateOwnPosts', ['posts' => $id]))
         {
 
             $model = $this->findModel($id);

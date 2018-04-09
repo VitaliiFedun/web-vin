@@ -16,9 +16,15 @@ body {
 
 .footer {
     height: 60px;
-    background-color: #f5f5f5;
-    border-top: 1px solid #ddd;
+    background-color:  #190773;
+    border-top: 1px solid #8170d8;
     padding-top: 20px;
+}
+
+.footer > .container {
+    color: #fff;
+    /*background-color: #624ad8;*/
+
 }
 
 .jumbotron {
@@ -36,6 +42,62 @@ body {
 .not-set {
     color: #c55;
     font-style: italic;
+}
+.navbar,
+.dropdown:active,
+.dropdown-toggle,
+.dropdown-menu,
+.dropdown-menu > li,
+.dropdown-menu > li > a
+{
+    color: #fff;
+    background-color: #3016B0;
+    border-color: #3016B0;
+}
+.navbar-inverse .navbar-brand {
+    color: #fff;
+}
+
+.navbar-inverse  .navbar-nav > li > a {
+    color: #fff;
+}
+
+
+.navbar-inverse .navbar-nav > .active > a,
+.navbar-inverse .navbar-nav > .active > a:focus {
+    color: #FFEF00;
+    background-color: #7921b0;
+}
+.navbar-inverse .navbar-nav > .active > a:hover
+{
+    color: #fff340;
+    background-color: #624ad8 ;
+
+}
+.navbar-inverse .navbar-nav > .open > a,
+.navbar-inverse .navbar-nav > .open > a:hover,
+.navbar-inverse .navbar-nav > .open > a:focus {
+    color: #fff340;
+    background-color: #3016B0;
+}
+.navbar-inverse .navbar-nav > li:hover,
+.navbar-inverse .navbar-nav > .open > a:hover,
+.navbar-inverse .navbar-nav > .open > li:hover,
+.navbar-inverse .navbar-nav > li  > a:hover,
+
+.dropdown-menu > li > a:hover,
+.dropdown-menu > li > a:focus
+
+{
+    color: #fff340;
+    background-color:  #8170d8  ;
+
+}
+
+.navbar-inverse .navbar-brand:hover {
+    color: #fff340;
+    background-color:  #8170d8  ;
+
 }
 
 /* add sorting icons to gridview sort links */
@@ -125,7 +187,7 @@ a.desc:after {
     color: #ccc;
     content: "\00bb ";
 }
-.blog-sidebar, .breadcrumb, .footer > .container {
+.blog-sidebar, .breadcrumb {
     box-shadow: 5px 5px 10px rgba(0, 0, 0, .3);
 }
 .article code, .article pre {
@@ -150,11 +212,11 @@ h1 {
     margin-right: 10px;
     margin-top: -2px;
 }
-@media (max-width: 767px) {
-   .user-image {
-        float: none;
-        margin-right: 0;
-        margin-top: -8px;
-        line-height: 10px;
-    }
-}
+/*@media (max-width: 767px) {*/
+   /*.user-image {*/
+        /*float: none;*/
+        /*margin-right: 0;*/
+        /*margin-top: -8px;*/
+        /*line-height: 10px;*/
+    /*}*/
+/*}*/

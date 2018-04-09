@@ -63,7 +63,7 @@ define('HTTPS_SERVER', 'https://web-vin.com/');
         } else {
             $menuItems[] =
             ['label' => '<img src="'.(Yii::$app->user->identity->avatar_url).'" class="user-image" alt="User Image" ><span>'.
-          ((Yii::$app->user->identity->username) === null?'Anonimus':(Yii::$app->user->identity->username)).'</span>',
+          ((Yii::$app->user->identity->username) === null?'Anonimus':Html::encode((Yii::$app->user->identity->username))).'</span>',
 
                 'items' =>
                 [
@@ -107,7 +107,7 @@ define('HTTPS_SERVER', 'https://web-vin.com/');
     </div>
 
     <footer class="footer">
-        <div class="container">
+        <div class="container footer-container ">
             <p class="pull-left">© <?=Yii::$app->components['name_brand']?> <?= date('Y') ?></p>
 
         </div>
