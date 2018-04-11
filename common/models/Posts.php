@@ -65,6 +65,7 @@ class Posts extends ActiveRecord
      */
     const STATUS_Pending_Approval = 3; /*'pending_approval';*/
 
+    const STATUS_DELETED = 4;
 
     public static $statuses = [
 
@@ -72,6 +73,8 @@ class Posts extends ActiveRecord
         self::STATUS_PUBLISHED => 'published',
         self::STATUS_ARCHIVES => 'archives',
         self::STATUS_Pending_Approval => 'pending_approval',
+        self::STATUS_DELETED => 'deleted',
+
 
     ];
     /**

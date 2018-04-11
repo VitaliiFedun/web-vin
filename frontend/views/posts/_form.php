@@ -95,8 +95,8 @@ use vova07\imperavi\Widget;
     ) ?>
 
     <?= $form->field($model, 'status')->dropDownList(
-        Posts::$statuses
-    ) ?>
+        Posts::$statuses )
+    ?>
 
     <?= $form->field($model, 'tags')->checkboxList(
         ArrayHelper::map($tags, 'id', 'title'),

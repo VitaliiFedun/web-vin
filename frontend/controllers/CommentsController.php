@@ -14,6 +14,9 @@ use yii\db\Expression;
 
 
 /**
+ * Контроллер "Комментарий".
+ */
+/**
  * CommentsController implements the CRUD actions for Comments model.
  */
 class CommentsController extends Controller
@@ -33,22 +36,40 @@ class CommentsController extends Controller
         ];
     }
 
+    public function actionAdd0()
+    {
+        $model = new Comments();
+        $commentForm = new CommentForm(Url::to(['comment/add', 'id' => Yii::$app->request->get('id')]));
+        $model->post_id = Yii::$app->request->get('id');
+
+        if (Yii::$app->user instanceof User) {
+            $model->author_id = Yii::$app->user->getIdentity()->getId();
+        }
+
+        if ($commentForm->save($model, Yii::$app->request->post('CommentForm'))) {
+            return $this->redirect(['post/view', 'id' => Yii::$app->request->get('id')]);
+        } else {
+            return $this->render('create', [
+                'model' => $commentForm
+            ]);
+        }
+    }
     public function actionAdd()
     {
         $model = new Comments();
-
         $commentForm = new CommentForm(Url::to(['comments/add', 'id' => Yii::$app->request->get('id')]));
         $model->post_id = Yii::$app->request->get('id');
 
 //        if (Yii::$app->user instanceof User) {
-          $model->author_id = Yii::$app->user->getIdentity()->getId();
+          $model->author_id = Yii::$app->user->identity->id;
 //        }
-          $model->created_at = time();
+//          $model->created_at = time();
+//          $model->updated_at = time();
 //          $param=Yii::$app->request->post('CommentForm');
 //          $ret_value=$commentForm->save($model, $param);
         if ($commentForm->save($model, Yii::$app->request->post('CommentForm')))
         {
-            return $this->redirect(['post/view', 'id' => Yii::$app->request->get('id')]);
+            return $this->redirect(['posts/view', 'id' => Yii::$app->request->get('id')]);
         } else {
             return $this->render('create', [
                 'model' => $commentForm

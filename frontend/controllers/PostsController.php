@@ -94,9 +94,12 @@ class PostsController extends Controller
      */
     public function actionCreate()
     {
-        if (Yii::$app->user->can('createPost'))
+//        if (Yii::$app->user->can('createPost'))
+        if (true)
         {
             $model = new Posts();
+            $model->status = Posts::STATUS_PUBLISHED;
+            $model->author_id = Yii::$app->user->id;
 
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
@@ -126,7 +129,7 @@ class PostsController extends Controller
      */
     public function actionUpdate($id)
     {
-        if (Yii::$app->user->can('updateOwnPosts', ['posts' => $id]))
+        if (Yii::$app->user->can('updatePosts', ['posts' => $id]))
         {
 
             $model = $this->findModel($id);

@@ -28,8 +28,8 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'title')->textInput(['maxlength' => 255]) ?>
     <?= $form->field($model, 'content')->textarea(['maxlength' => 255]) ?>
     <?= $form->field($model, 'publish_status')->dropDownList([ 'moderate' => 'Moderate', 'publish' => 'Publish', ], ['prompt' => '']) ?>
-    <?= $form->field($model, 'post_id')->textInput() ?>
-    <?= $form->field($model, 'author_id')->textInput() ?>
+    <?= $form->field($model, 'post_id')->hiddenInput()->label(false) ?>
+    <?= $form->field($model, 'author_id')->hiddenInput()->label(false) ?>
     <?= $form->field($model, 'created_at')->hiddenInput()->label(false) ?>
     <?= $form->field($model, 'updated_at')->hiddenInput()->label(false) ?>
 
@@ -41,44 +41,3 @@ use yii\widgets\ActiveForm;
 
 </div>
 
-
-<?//
-//
-//
-//use yii\helpers\Html;
-//use yii\widgets\ActiveForm;
-//
-///* @var $this yii\web\View */
-///* @var $model app\models\Comments */
-///* @var $form yii\widgets\ActiveForm */
-///* @var \frontend\models\CommentForm $model */
-//
-//?>
-<!---->
-<!--<div class="comments-form">-->
-<!---->
-<!--    --><?php //$form = ActiveForm::begin(); ?>
-<!---->
-<!--    --><?//= $form->field($model, 'pid')->textInput() ?>
-<!---->
-<!--    --><?//= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
-<!---->
-<!--    --><?//= $form->field($model, 'content')->textInput(['maxlength' => true]) ?>
-<!---->
-<!--    --><?//= $form->field($model, 'publish_status')->dropDownList([ 'moderate' => 'Moderate', 'publish' => 'Publish', ], ['prompt' => '']) ?>
-<!---->
-<!--    --><?//= $form->field($model, 'post_id')->textInput() ?>
-<!---->
-<!--    --><?//= $form->field($model, 'author_id')->textInput() ?>
-<!---->
-<!--    --><?//= $form->field($model, 'created_at')->textInput() ?>
-<!---->
-<!--    --><?//= $form->field($model, 'updated_at')->textInput() ?>
-<!---->
-<!--    <div class="form-group">-->
-<!--        --><?//= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
-<!--    </div>-->
-<!---->
-<!--    --><?php //ActiveForm::end(); ?>
-<!---->
-<!--</div>-->

@@ -18,6 +18,11 @@ class FBFWidget extends Widget
     public function run()
     {
         $model = new ContactForm();
+        if (!Yii::$app->user->isGuest )
+        {
+            $model->name = Yii::$app->user->identity->username;
+            $model->email = Yii::$app->user->identity->email;
+        }
         if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
             Yii::$app->session->setFlash('contactFormSubmitted');
         }

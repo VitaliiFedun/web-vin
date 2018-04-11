@@ -3,6 +3,10 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
+use yii\db\ActiveQuery;
+
 use yii\web\NotFoundHttpException;
 
 //use common\models\User;
@@ -50,7 +54,8 @@ class Comments extends \yii\db\ActiveRecord
     {
         return [
             [['pid', 'post_id', 'author_id', 'created_at', 'updated_at'], 'integer'],
-            [['title', 'content', 'created_at', 'updated_at'], 'required'],
+            [['title', 'content'], 'required'],
+            [['created_at', 'updated_at'], 'safe'],
             [['publish_status'], 'string'],
             [['title', 'content'], 'string', 'max' => 255],
             [['post_id'], 'exist', 'skipOnError' => true, 'targetClass' => Posts::className(), 'targetAttribute' => ['post_id' => 'id']],
@@ -73,6 +78,20 @@ class Comments extends \yii\db\ActiveRecord
             'author_id' => Yii::t('app', 'Author ID'),
             'created_at' => Yii::t('app', 'Created At'),
             'updated_at' => Yii::t('app', 'Updated At'),
+        ];
+    }
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::className(),
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+                ],
+                // если вместо метки времени UNIX используется datetime:
+//                'value' => new Expression('NOW()'),
+            ],
         ];
     }
 

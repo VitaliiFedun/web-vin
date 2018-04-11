@@ -45,15 +45,35 @@ class CommentForm extends Model
      * @var string заголовок комментария
      */
     public $title;
+
     /**
      * @var string контент комментария
      */
     public $content;
 
+    /**
+     * @var string контент комментария
+     */
     public $publish_status;
+
+    /**
+     * @var int/null
+     */
     public $post_id;
+
+    /**
+     * @var int/null
+     */
     public $author_id;
+
+    /**
+     * @var int/null
+     */
     public $created_at;
+
+    /**
+     * @var int/null
+     */
     public $updated_at;
     /**
      * @inheritdoc
@@ -76,8 +96,8 @@ class CommentForm extends Model
             [['title', 'content', ], 'required'],
             [['publish_status'], 'string'],
             [['title', 'content'], 'string', 'max' => 255],
-//            [['post_id'], 'exist', 'skipOnError' => true, 'targetClass' => Posts::className(), 'targetAttribute' => ['post_id' => 'id']],
-//            [['author_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['author_id' => 'id']],
+            [['post_id'], 'exist', 'skipOnError' => true, 'targetClass' => Posts::className(), 'targetAttribute' => ['post_id' => 'id']],
+            [['author_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['author_id' => 'id']],
         ];
     }
 
@@ -120,7 +140,7 @@ class CommentForm extends Model
      * @throws NotFoundHttpException
      * @return Comment
      */
-    public function save($comment, array $data)
+    public function save(Comments $comment, array $data)
     {
         $tmp = $comment;
         $isLoad = $comment->load([
@@ -128,10 +148,10 @@ class CommentForm extends Model
             'title' => $data['title'],
             'content' => $data['content'],
 			'publish_status' => $data['publish_status'],
-            'post_id' => $data['post_id'],
-            'author_id' => $data['author_id'],
-            'created_at' => $data['created_at'],
-            'updated_at' => $data['updated_at'],
+//            'post_id' => $data['post_id'],
+//            'author_id' => $data['author_id'],
+//            'created_at' => $data['created_at'],
+//            'updated_at' => $data['updated_at'],
 			
 
         ], '');

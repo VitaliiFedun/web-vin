@@ -28,60 +28,56 @@ $this->params['breadcrumbs'][] = $this->title;
 <!--<div class="posts-view">-->
 
 <div class="col-sm-10 post-index blog-sidebar">
-<!--    <h1>--><?//= Html::encode($this->title) ?><!--</h1>-->
+    <!--    <h1>--><?//= Html::encode($this->title) ?><!--</h1>-->
 
-<!--    <p>-->
-        <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-<!--        --><?//= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
-//            'class' => 'btn btn-danger',
-//            'data' => [
-//                'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
-//                'method' => 'post',
-//            ],
-//        ]) ?>
-<!--    </p>-->
+    <!--    <p>-->
+    <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+    <!--        --><?//= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
+    //            'class' => 'btn btn-danger',
+    //            'data' => [
+    //                'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
+    //                'method' => 'post',
+    //            ],
+    //        ]) ?>
+    <!--    </p>-->
 
     <div class="article-box" >
 
         <div class="content-big">
             <h3><?= Html::encode($model->title) ?></h3>
-           <div class="image-anons">
-            <div class="featured-image">
-                <img    width  = "270px" height="auto"
-                        src    ="<?= $model->image_url ?>"
-                        alt    = "<?= $model->title ?>"
-                        class  = 'attachment-square size-square wp-post-image'
-                />
-            </div>
-               <div class="featured-image left-padding">
-                   <?= $model->anons ?>
-               </div>
+            <div class="image-anons">
+                <div class="featured-image">
+                    <img    width  = "270px" height="auto"
+                            src    ="<?= $model->image_url ?>"
+                            alt    = "<?= $model->title ?>"
+                            class  = 'attachment-square size-square wp-post-image'
+                    />
+                </div>
+                <div class="featured-image left-padding">
+                    <?= $model->anons ?>
+                </div>
 
-           </div>
+            </div>
 
             <h5 class="storytitle" >
-<!--                <p>-->
-                    <?= Yii::t('app', 'Published on') ?>:
-                    <?= date('d-m-Y',$model->created_at) ?>
-               |
-<!--                <p>-->
-                    <?= Yii::t('app', 'Author') ?>:
-                    <?= Html::encode($model->author->username) ?>
-<!--                </p>-->
-               |
-                    <?= Yii::t('app', 'Viewed') ?>:
-                    <?= $model->viewed ?>
-               |
+                <?= Yii::t('app', 'Published on') ?>:
+                <?= date('d-m-Y',$model->created_at) ?>
+                |
+                <?= Yii::t('app', 'Author') ?>:
+                <?= Html::encode($model->author->username) ?>
+                |
+                <?= Yii::t('app', 'Viewed') ?>:
+                <?= $model->viewed ?>
+                |
 
-                    <?= Yii::t('app', 'Category') ?>:
-                    <?= Html::a(Html::encode($model->category->title), ['category/view', 'id' =>
-                        $model->category->id]) ?>
+                <?= Yii::t('app', 'Category') ?>:
+                <?= Html::a(Html::encode($model->category->title), ['category/view', 'id' =>
+                    $model->category->id]) ?>
 
-<!--                </p>-->
 
             </h5>
             <h4>
-                    <?= HtmlPurifier::process($model->content); ?>
+                <?= HtmlPurifier::process($model->content); ?>
             </h4>
 
         </div>
@@ -115,7 +111,7 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
 
             <?php echo Html::a(Yii::t('app','Add comment'),['comments/add', 'id' => $comment->id],['class' => 'btn btn-success']); ?>
-               <?php endforeach; ?>
+        <?php endforeach; ?>
     </div>
 
     <?= $this->render('../comments/_form', [
