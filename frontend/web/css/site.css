@@ -187,7 +187,8 @@ a.desc:after {
     color: #ccc;
     content: "\00bb ";
 }
-.blog-sidebar, .breadcrumb {
+/*.blog-sidebar, */
+.breadcrumb {
     box-shadow: 5px 5px 10px rgba(0, 0, 0, .3);
 }
 .article code, .article pre {

@@ -173,6 +173,17 @@ class User extends ActiveRecord implements IdentityInterface
     {
         $this->password_hash = Yii::$app->security->generatePasswordHash($password);
     }
+    public function getAvatar()
+    {
+        return  $this->avatar_url;
+        // your custom code
+    }
+
+    public function getUsername()
+    {
+        return $this->username;
+        // your custom code
+    }
 
     /**
      * Generates "remember me" authentication key

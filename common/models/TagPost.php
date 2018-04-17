@@ -3,6 +3,8 @@
 namespace common\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
+use yii\data\ActiveDataProvider;
 
 /**
  * This is the model class for table "{{%post_tag}}".
@@ -59,4 +61,6 @@ class TagPost extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Tags::className(), ['id' => 'tag_id']);
     }
+
 }
+

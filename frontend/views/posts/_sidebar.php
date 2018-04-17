@@ -10,23 +10,21 @@
 /* @var $categories common\models\Categories  */
 
 ?>
+<!--<div class="content" >-->
+    <div class="col-sm-2">
+        <div class="blog-sidebar">
+        <h3><?= Yii::t('app', 'Categories').':' ?></h3>
+        <?php
+        foreach ($categories as $category) {
+            echo $this->render('//categories/shortViewCategory', [
+                'model' => $category
+            ]);
+        }
+        ?>
+        </div>
 
-<div class="col-sm-2 col-sm-offset blog-sidebar">
-    <h2><?= Yii::t('app', 'Categories') ?></h2>
-<ul>
-    <?php
-    foreach ($categories as $category) {
-        echo $this->render('//categories/shortViewCategory', [
-            'model' => $category
-        ]);
-    }
-    ?>
-</ul>
-
-</div>
-<div class="col-sm-2 col-sm-offset blog-sidebar">
-    <h2><?= Yii::t('frontend', 'Tags') ?></h2>
-    <ul>
+    <div class="blog-sidebar">
+        <h3><?= Yii::t('frontend', 'Tags').':' ?></h3>
         <?php
         foreach ($tags as $tag) {
             echo $this->render('//tags/shortViewTag', [
@@ -34,5 +32,5 @@
             ]);
         }
         ?>
-    </ul>
+    </div>
 </div>

@@ -9,6 +9,11 @@ $params = array_merge(
 return [
     'id' => 'app_myblog',
 	'language'=>'uk-UK',
+    'modules' => [
+        'comment' => [
+            'class' => 'yii2mod\comments\Module',
+        ],
+    ],
 
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],

@@ -3,48 +3,32 @@
 namespace common\models;
 
 use Yii;
-use yii\behaviors\TimestampBehavior;
-use yii\db\ActiveRecord;
-use yii\db\ActiveQuery;
 
-use yii\web\NotFoundHttpException;
-
-//use common\models\User;
 /**
- * This is the model class for table "blog_comment".
+ * This is the model class for table "{{%comment}}".
  *
  * @property int $id
- * @property int $pid
- * @property string $title
+ * @property string $entity
+ * @property int $entityId
  * @property string $content
- * @property string $publish_status
- * @property int $post_id
- * @property int $author_id
- * @property int $created_at
- * @property int $updated_at
- *
- * @property Posts $post
- * @property User $author
+ * @property int $parentId
+ * @property int $level
+ * @property int $createdBy
+ * @property int $updatedBy
+ * @property string $relatedTo
+ * @property string $url
+ * @property int $status
+ * @property int $createdAt
+ * @property int $updatedAt
  */
 class Comments extends \yii\db\ActiveRecord
 {
-    /**
-     * РЎС‚Р°С‚СѓСЃ РєРѕРјРјРµРЅС‚Р°СЂРёСЏ "РќР° РјРѕРґРµСЂР°С†РёРё"
-     */
-    const STATUS_MODERATE = 'moderate';
-    /**
-     * РЎС‚Р°С‚СѓСЃ РєРѕРјРјРµРЅС‚Р°СЂРёСЏ "РћРїСѓР±Р»РёРєРѕРІР°РЅ"
-     */
-    const STATUS_PUBLISHED = 'publish';
-
-
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
         return '{{%comment}}';
-//        return 'blog_comment';
     }
 
     /**
@@ -53,13 +37,11 @@ class Comments extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['pid', 'post_id', 'author_id', 'created_at', 'updated_at'], 'integer'],
-            [['title', 'content'], 'required'],
-            [['created_at', 'updated_at'], 'safe'],
-            [['publish_status'], 'string'],
-            [['title', 'content'], 'string', 'max' => 255],
-            [['post_id'], 'exist', 'skipOnError' => true, 'targetClass' => Posts::className(), 'targetAttribute' => ['post_id' => 'id']],
-            [['author_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['author_id' => 'id']],
+            [['entity', 'entityId', 'content', 'createdBy', 'updatedBy', 'relatedTo', 'createdAt', 'updatedAt'], 'required'],
+            [['entityId', 'parentId', 'level', 'createdBy', 'updatedBy', 'status', 'createdAt', 'updatedAt'], 'integer'],
+            [['content', 'url'], 'string'],
+            [['entity'], 'string', 'max' => 10],
+            [['relatedTo'], 'string', 'max' => 500],
         ];
     }
 
@@ -69,72 +51,19 @@ class Comments extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'pid' => Yii::t('app', 'Pid'),
-            'title' => Yii::t('app', 'Title'),
-            'content' => Yii::t('app', 'Content'),
-            'publish_status' => Yii::t('app', 'Publish Status'),
-            'post_id' => Yii::t('app', 'Post ID'),
-            'author_id' => Yii::t('app', 'Author ID'),
-            'created_at' => Yii::t('app', 'Created At'),
-            'updated_at' => Yii::t('app', 'Updated At'),
+            'id' => Yii::t('frontend', 'ID'),
+            'entity' => Yii::t('frontend', 'Entity'),
+            'entityId' => Yii::t('frontend', 'Entity ID'),
+            'content' => Yii::t('frontend', 'Content'),
+            'parentId' => Yii::t('frontend', 'Parent ID'),
+            'level' => Yii::t('frontend', 'Level'),
+            'createdBy' => Yii::t('frontend', 'Created By'),
+            'updatedBy' => Yii::t('frontend', 'Updated By'),
+            'relatedTo' => Yii::t('frontend', 'Related To'),
+            'url' => Yii::t('frontend', 'Url'),
+            'status' => Yii::t('frontend', 'Status'),
+            'createdAt' => Yii::t('frontend', 'Created At'),
+            'updatedAt' => Yii::t('frontend', 'Updated At'),
         ];
     }
-    public function behaviors()
-    {
-        return [
-            [
-                'class' => TimestampBehavior::className(),
-                'attributes' => [
-                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
-                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
-                ],
-                // если вместо метки времени UNIX используется datetime:
-//                'value' => new Expression('NOW()'),
-            ],
-        ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getPost()
-    {
-        return $this->hasOne(Posts::className(), ['id' => 'post_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getAuthor()
-    {
-        return $this->hasOne(User::className(), ['id' => 'author_id']);
-    }
-    /*
-     * Р’РѕР·РІСЂР°С‰Р°РµС‚ РєРѕРјРјРµРЅС‚Р°СЂРёР№.
-     * @param int $id РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РєРѕРјРјРµРЅС‚Р°СЂРёСЏ
-     * @throws NotFoundHttpException
-     * @return Comments
-     */
-    public function getComment($id)
-    {
-        if (
-            ($model = Comments::findOne($id)) !== null &&
-            $model->isPublished()
-        ) {
-            return $model;
-        } else {
-            throw new NotFoundHttpException('The requested post does not exist.');
-        }
-    }
-
-    /**
-     * РћРїСѓР±Р»РёРєРѕРІР°РЅ Р»Рё РєРѕРјРјРµРЅС‚Р°СЂРёР№.
-     * @return bool
-     */
-    protected function isPublished()
-    {
-        return $this->publish_status === self::STATUS_PUBLISHED;
-    }
-
 }

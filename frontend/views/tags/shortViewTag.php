@@ -12,5 +12,5 @@
 <?php
 if ($model->getPublishedPosts()->count>0)
 { ?>
-<li><?= \yii\helpers\Html::a($model->title.' - ('.$model->getPublishedPosts()->count.')', ['tags/show', 'id' => $model->id])?></li>
+<p><?= \yii\helpers\Html::a($model->title.' - ('.$model->getPublishedPosts()->count.')', ['posts/viewtag', 'id' => $model->id])?></p>
 <?php } ?>

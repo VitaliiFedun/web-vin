@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use common\models\Categories;
 use common\models\Comments;
 //use app\models\TagPost;
+use common\models\TagPost;
 use common\models\Tags;
 use common\models\User;
 use Yii;
@@ -56,7 +57,7 @@ class PostsController extends Controller
 
         $category_url = [];
         Posts::saveBreadCrumb($category_url);
-
+        Posts::setEmptyPromt(($posts->count>0)?'':Yii::t('app', "Sorry! Fost's is empty"));
         $posts->setPagination([
             'pageSize' => Yii::$app->params['pageSize']
         ]);
@@ -86,6 +87,90 @@ class PostsController extends Controller
             'tags' => new Tags(),
         ]);
     }
+
+    /**
+     * Displays a single Posts model.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionViewcategory($id)
+        // yii\web\Controller гарантирует, что $id будет скаляром
+    {
+        $category = Categories::findOne(['id' => $id]);
+        if ($category !== null) {
+
+
+            $category_url['title'] = Yii::t('app', 'Category') . ': ' . Yii::t('app', $category->title);
+            $category_url['url'] = ['posts/viewcategory', 'id' => $category->id];
+            $category_url['id'] = $category->id;
+            Posts::saveBreadCrumb($category_url);
+            $posts = $category->getPosts($id);
+            Posts::setEmptyPromt(($posts->getCount()>0)?'':Yii::t('app', 'Category is empty'));
+            $posts->setPagination([
+                'pageSize' => Yii::$app->params['pageSize']
+            ]);
+
+            return $this->render('index', [
+                'category' => $category, //->getCategory($id),
+                'posts' => $posts,
+                'categories' => $category->getCategories(),
+                'tags' => Tags::find()->all(),
+            ]);
+
+        }
+        else
+        {
+            throw new HttpException(404,'Category with ID="'.$id.'" not found!');
+        }
+    }
+
+
+
+    /**
+     * Displays a single Posts model.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    // yii\web\Controller гарантирует, что $id будет скаляром
+    public function actionViewtag($id)
+    {
+        $posts = new Posts();
+//        $tagModel = new Tags();
+        $tags = new Tags();
+        $tag = $tags->getTag($id);
+
+        if (tag !== null) {
+            $category_url['title'] =Yii::t('app', 'Posts Tagged with') . ': ' .Yii::t('app', $tag->title);
+            $category_url['url'] = ['posts/viewtag', 'id' => $tag->id];
+            $category_url['id'] =   $tag->id;
+            Posts::saveBreadCrumb($category_url);
+
+            $posts = $tag->getPublishedPostsFromTagId($id);
+//            $tag->getTagPosts()-> $posts->getPublishedPostsByTagId($id);
+//            $tag->getPublishedPosts();
+
+            Posts::setEmptyPromt(($posts->count>0)?'':Yii::t('app', 'Posts Tagged is empty'));
+            $posts->setPagination([
+                'pageSize' => Yii::$app->params['pageSize']
+            ]);
+
+            return $this->render('index', [
+//                'category' => $category, //->getCategory($id),
+                'posts' => $posts,
+                'categories' => Categories::find()->all(),
+                'tags' => Tags::find()->all(),
+            ]);
+
+        }
+        else
+        {
+            throw new HttpException(404,'Category with ID="'.$id.'" not found!');
+        }
+    }
+
+
 
     /**
      * Creates a new Posts model.
@@ -224,21 +309,21 @@ class PostsController extends Controller
 //               а в редакторе, в src изображения прописал url.
             'images-get' => [  //Добавляем возможность выбирать уже загружённые изображения
                 'class' => 'vova07\imperavi\actions\GetImagesAction',
-                'url' => 'http://web-vin.com/blog/images', // Directory URL address, where files are stored.
+                'url' => 'https://web-vin.com/blog/images', // Directory URL address, where files are stored.
                 'path' => '@frontend/web/blog/images', // Or absolute path to directory where files are stored.
                 'options' => ['only' => ['*.jpg', '*.jpeg', '*.png', '*.gif', '*.ico']], // These options are by default.
 
             ],
             'files-get' => [ //Добавляем возможность выбирать уже загружённые файлы
                 'class' => 'vova07\imperavi\actions\GetFilesAction',
-                'url' => 'http://web-vin.com/blog/images', // Directory URL address, where files are stored.
+                'url' => 'https://web-vin.com/blog/images', // Directory URL address, where files are stored.
                 'path' => '@frontend/web/blog/images', // Or absolute path to directory where files are stored.
 //                'options' => ['only' => ['*.txt', '*.md']], // These options are by default.
 
             ],
             'file-upload' => [  //Загрузка файла
                 'class' => 'vova07\imperavi\actions\UploadFileAction',
-                'url' => 'http://web-vin.com/blog/images', // Directory URL address, where files are stored.
+                'url' => 'https://web-vin.com/blog/images', // Directory URL address, where files are stored.
                 'path' => '@frontend/web/blog/images', // Or absolute path to directory where files are stored.
                 'uploadOnlyImage' => false, // For any kind of files uploading.
 //                'createDirectory' => true,
@@ -249,7 +334,7 @@ class PostsController extends Controller
 
             'image-upload' => [  //Добавляем возможность выбирать уже загружённые изображения
                 'class' => 'vova07\imperavi\actions\UploadFileAction',
-                'url' => 'http://web-vin.com/blog/images', // Directory URL address, where files are stored.
+                'url' => 'https://web-vin.com/blog/images', // Directory URL address, where files are stored.
                 'path' => '@frontend/web/blog/images', // Or absolute path to directory where files are stored.
 
             ],

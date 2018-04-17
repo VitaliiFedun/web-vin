@@ -95,29 +95,22 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= implode($tags, ', ') ?>
         </div>
 
-        <?php echo Html::a(Yii::t('app','Permalink'),['post/view', 'id' => $model->id]); ?> |
-        <?php echo Html::a(Yii::t('app','Comments ')."({$model->commentCount})",$model->url.'#comments'); ?> |
+<!--        --><?php //echo Html::a(Yii::t('app','Permalink'),['post/view', 'id' => $model->id]); ?><!-- |-->
+<!--        --><?php //echo Html::a(Yii::t('app','Comments ')."({$model->commentCount})",$model->url.'#comments'); ?><!-- |-->
         <?=Yii::t('app','Last updated on')?> <?php echo date('d-m-Y H:i:s',$model->updated_at); ?>
 
     </div>
 
 
-    <div class="comments">
-        <?php foreach($model->getPublishedComments()->models as $comment) : ?>
-            <div class="comment">
-                <h3><?= htmlspecialchars($comment->title) ?></h3>
-                <div class="meta"><?= Yii::t('frontend', 'Author') ?>: <strong><?=isset($comment->author) ? $comment->author->username : null?></strong></div>
-                <div><?= htmlspecialchars($comment->content) ?></div>
-            </div>
 
-            <?php echo Html::a(Yii::t('app','Add comment'),['comments/add', 'id' => $comment->id],['class' => 'btn btn-success']); ?>
-        <?php endforeach; ?>
-    </div>
-
-    <?= $this->render('../comments/_form', [
-        'model' => $commentForm
-    ]) ?>
-
+    <?php echo \yii2mod\comments\widgets\Comment::widget([
+        'model' => $model,
+        'dataProviderConfig' => [
+            'pagination' => [
+                'pageSize' => 5
+            ],
+        ]
+    ]); ?>
 </div>
 <?php echo $this->render('_sidebar', [
     'model' => $model,

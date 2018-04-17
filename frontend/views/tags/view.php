@@ -22,6 +22,11 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="col-sm-8 post-index">
 
     <h1>Тэг: <?= Html::encode($this->title) ?></h1>
+    <div>
+        <?= LinkPager::widget([
+            'pagination' => $posts->getPagination()
+        ]) ?>
+    </div>
 
     <?php
     foreach ($posts->models as $postTag) {

@@ -6,51 +6,38 @@ use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\db\ActiveQuery;
-
 use yii\data\ActiveDataProvider;
-
 //use yii\db\Expression;
 use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
 
-//use common\models\User;
+
 /**
  * This is the model class for table "{{%post}}".
  *
  * @property int $id
  * @property string $title
- * @property string $image_url
  * @property string $anons
  * @property string $content
  * @property int $viewed
  * @property int $category_id
- * @property string $author_id автор
+ * @property int $author_id
  * @property int $status
- * @property string $created_at
- * @property string $updated_at
+ * @property int $created_at
+ * @property int $updated_at
+ * @property string $image_url
  *
+// * @property Comment[] $Comments
  * @property User $author
- * @property Categories $category
- * @property Comments $comments
-
- *`id`
- * `title`
- * `image_url`
- * `anons`
- * `content`
- * `viewed`
- * `category_id`
- * `author_id`
- * `status`
- * `created_at`
- * `updated_at`
-
+ * @property Category $category
+ * @property TagPost[] $tagPosts
  */
 class Posts extends ActiveRecord
 {
+
     /*
-    * Статус поста: черновие.
-    */
+* Статус поста: черновие.
+*/
     const STATUS_DRAFT = 0; /* 'draft';
      /*
      * Статус поста: опубликованн.
@@ -77,16 +64,13 @@ class Posts extends ActiveRecord
 
 
     ];
+
+
     /**
      * Список тэгов, закреплённых за постом.
      * @var array
      */
     protected $tags = [];
-
-
-//    public static $category_url = ['title'=>'','url'=>'','id'=>0];
-//    public static $tag_url = ['title'=>'test','url'=>'','id'=>0];
-
 
     /**
      * @inheritdoc
@@ -108,6 +92,18 @@ class Posts extends ActiveRecord
             [['created_at', 'updated_at', 'tags'], 'safe'],
             [['title'], 'string', 'max' => 255],
             [['status'], 'in', 'range'=>array(0,1,2,3)],
+
+
+
+
+//            
+//            [['title', 'anons', 'content', 'created_at', 'updated_at'], 'required'],
+//            [['anons', 'content'], 'string'],
+//            [['viewed', 'category_id', 'author_id', 'status', 'created_at', 'updated_at'], 'integer'],
+//            [['title'], 'string', 'max' => 255],
+//            [['image_url'], 'string', 'max' => 256],
+//            [['author_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['author_id' => 'id']],
+//            [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['category_id' => 'id']],
         ];
     }
 
@@ -117,19 +113,49 @@ class Posts extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'title' => Yii::t('app', 'Title'),
-            'image_url' => Yii::t('app', 'Image Url'),
-            'anons' => Yii::t('app', 'Anons'),
-            'content' => Yii::t('app', 'Content'),
-            'status' => Yii::t('app', 'Status'),
-            'category_id' => Yii::t('app', 'Category ID'),
-            'viewed' => Yii::t('app', 'Viewed'),
-            'author_id' => Yii::t('app', 'Author ID'),
-            'created_at' => Yii::t('app', 'Created At'),
-            'updated_at' => Yii::t('app', 'Updated At'),
-
+            'id' => Yii::t('frontend', 'ID'),
+            'title' => Yii::t('frontend', 'Title'),
+            'anons' => Yii::t('frontend', 'Anons'),
+            'content' => Yii::t('frontend', 'Content'),
+            'viewed' => Yii::t('frontend', 'Viewed'),
+            'category_id' => Yii::t('frontend', 'Category ID'),
+            'author_id' => Yii::t('frontend', 'Author ID'),
+            'status' => Yii::t('frontend', 'Status'),
+            'created_at' => Yii::t('frontend', 'Created At'),
+            'updated_at' => Yii::t('frontend', 'Updated At'),
+            'image_url' => Yii::t('frontend', 'Image Url'),
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getComments()
+    {
+        return $this->hasMany(Comments::className(), ['entityId' => 'id']);
+    }
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAuthor()
+    {
+        return $this->hasOne(User::className(), ['id' => 'author_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCategory()
+    {
+        return $this->hasOne(Categories::className(), ['id' => 'category_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTagPosts()
+    {
+        return $this->hasMany(TagPost::className(), ['post_id' => 'id']);
     }
 
     public function behaviors()
@@ -146,8 +172,6 @@ class Posts extends ActiveRecord
             ],
         ];
     }
-
-
 
     public static function cutStr($str, $length=100, $postfix='...')
     {
@@ -182,29 +206,6 @@ class Posts extends ActiveRecord
 //        save(false);
     }
 
-
-
-    /**
-     * @return ActiveQuery
-     */
-    public function getAuthor()
-    {
-        return $this->hasOne(User::className(), ['id' => 'author_id']);
-    }
-
-    public function getCategory()
-    {
-        return $this->hasOne(Categories::className(), ['id' => 'category_id']);
-    }
-    /**
-     * @return ActiveQuery
-     */
-
-    public function getComments()
-    {
-        return $this->hasMany(Comments::className(), ['post_id' => 'id']);
-    }
-
     /**
      * @return int
      */
@@ -213,7 +214,6 @@ class Posts extends ActiveRecord
         return $this->getComments()->count();
 
     }
-
     /**
      * Возвращает опубликованные комментарии
      * @return ActiveDataProvider
@@ -226,20 +226,13 @@ class Posts extends ActiveRecord
         ]);
     }
 
-
     /* ============   Tag    =========================== */
 
-/**
-* @return ActiveQuery
+    /**
+     * @return ActiveQuery
      * возвращать тэги, закреплённые за постом*
      * @return ActiveQuery
      **/
-    public function getTagPosts()
-    {
-        return $this->hasMany(TagPost::className(), ['post_id' => 'id']);
-    }
-
-
     /**
      * Устанавлиает тэги поста.
      * @param $tagsId
@@ -269,6 +262,7 @@ class Posts extends ActiveRecord
             TagPost::className(), ['post_id' => 'id']
         );
     }
+
     /* ============== end Tag =========================
     /**
      * Возвращает опубликованные посты
@@ -345,20 +339,16 @@ class Posts extends ActiveRecord
     {
         return $this->status === self::STATUS_PUBLISHED;
     }
-    /**
-     * Adds a new comment to this post.
-     * This method will set status and post_id of the comment accordingly.
-     * @param Comments the comment to be added
-     * @return boolean whether the comment is saved successfully
-     */
-    public function addComment(Comments $comment)
-    {
-        if(Yii::$app->params['commentNeedApproval'])
-            $comment->status=Comments::STATUS_MODERATE; /*STATUS_PENDING;*/
-        else
-            $comment->status=Comments::STATUS_PUBLISHED; /*STATUS_APPROVED;*/
-        $comment->post_id=$this->id;
-        return  $comment->save();
+
+    protected  static $empty_promt ='';
+
+
+    public function setEmptyPromt($promt){
+        self::$empty_promt=$promt;
+    }
+
+    public function  getEmptyPromt(){
+        return self::$empty_promt;
     }
 
 }

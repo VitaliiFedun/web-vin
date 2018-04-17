@@ -9,9 +9,6 @@ return [
     'components' => [
 
         'name_brand' => 'Web@Vin',
-        'cache' => [
-            'class' => 'yii\caching\FileCache',
-        ],
 //        'authManager' => [
 //            'class' => 'yii\rbac\PhpManager',
 //            'defaultRoles' => ['user','moder','admin'], //здесь прописываем роли
@@ -30,6 +27,14 @@ return [
         ],
         'i18n' => [
             'translations' => [
+                'yii2mod.comments' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'basePath' => '@common/messages',
+                    'sourceLanguage' => 'en-Us',
+                    'fileMap' => [
+                        'yii2mod.comments' => 'yii2modcomments.php'
+                    ],
+                ],
                 'app' => [
                     'class' => 'yii\i18n\PhpMessageSource',
                     'basePath' => '@common/messages',

@@ -21,7 +21,8 @@
         "phpmailer/phpmailer": "^6.0",
         "yiisoft/yii2-authclient": "^2.1",
         "dmstr/yii2-adminlte-asset": "^2.6",
-        "vova07/yii2-imperavi-widget": "*"
+        "vova07/yii2-imperavi-widget": "*",
+        "yii2mod/yii2-comments": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

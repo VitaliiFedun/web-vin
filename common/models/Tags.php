@@ -7,6 +7,7 @@ use yii\data\ActiveDataProvider;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii\web\NotFoundHttpException;
+use yii\helpers\ArrayHelper;
 
 /**
  * Модель тэгов.
@@ -71,6 +72,17 @@ class Tags extends ActiveRecord
      */
     public function getPublishedPosts()
     {
+//        $tagpost = $this->getTagPosts();
+//        $postarray = ArrayHelper::getColumn($tagpost,'post_id');
+//        return new ActiveDataProvider([
+//            'query' => Posts::findAll()
+//                ->where([
+//                    postarray,
+//                    'status' => Posts::STATUS_PUBLISHED
+//                ])
+//        ]);
+//
+
         return new ActiveDataProvider([
             'query' => $this->getTagPosts()
                 ->alias('tp')
@@ -78,6 +90,37 @@ class Tags extends ActiveRecord
                 ->where(['status' => Posts::STATUS_PUBLISHED])
                 ->orderBy(['created_at' => SORT_DESC])
         ]);
+    }
+    /**
+     * Возвращает опубликованные посты, связанные с тэгом.
+     * @return ActiveDataProvider
+     */
+    public function getPublishedPostsFromTagId($id)
+    {
+        $tagpost = TagPost::findAll(['tag_id'=>$id]); //  $this->getTagPosts();
+        $postarray = ArrayHelper::getColumn($tagpost,'post_id');
+//        $postarray = implode(', ',$postarray ) ЦЬОГО НЕ ПОТРІБНО!
+//       TO DO;
+
+
+        return new ActiveDataProvider([
+            'query' => Posts::find()
+                ->Where([
+                    'id' => $postarray,
+                    'status' => Posts::STATUS_PUBLISHED
+                ])
+                ->orderBy(['created_at' => SORT_DESC])
+        ]);
+
+
+
+//        return new ActiveDataProvider([
+//            'query' => $this->getTagPosts()
+//                ->alias('tp')
+//                ->leftJoin(Posts::tableName() . ' p', 'p.id = tp.post_id')
+//                ->where(['status' => Posts::STATUS_PUBLISHED])
+//                ->orderBy(['created_at' => SORT_DESC])
+//        ]);
     }
 
     /**

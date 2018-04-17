@@ -10,6 +10,6 @@
 ?>
 <?php
 if ($model->getPosts()->count>0) { ?>
-    <li><?= \yii\helpers\Html::a($model->title . ' - (' . $model->getPosts()->count . ')', ['categories/show', 'id' => $model->id]) ?></li>
+    <p><?= \yii\helpers\Html::a($model->title . ' - (' . $model->getPosts()->count . ')', ['posts/viewcategory', 'id' => $model->id]) ?></p>
 <?php } ?>
 
