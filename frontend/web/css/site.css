@@ -15,7 +15,7 @@ body {
 }
 
 .footer {
-    height: 60px;
+    height: 10.5em;
     background-color:  #190773;
     border-top: 1px solid #8170d8;
     padding-top: 20px;
@@ -23,7 +23,7 @@ body {
 
 .footer > .container {
     color: #fff;
-    /*background-color: #624ad8;*/
+    background-color: inherit;  /*#624ad8;*/
 
 }
 

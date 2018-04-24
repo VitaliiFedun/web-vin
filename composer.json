@@ -22,7 +22,8 @@
         "yiisoft/yii2-authclient": "^2.1",
         "dmstr/yii2-adminlte-asset": "^2.6",
         "vova07/yii2-imperavi-widget": "*",
-        "yii2mod/yii2-comments": "*"
+        "yii2mod/yii2-comments": "*",
+        "2amigos/yii2-tinymce-widget": "~1.1"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

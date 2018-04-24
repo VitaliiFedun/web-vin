@@ -22,7 +22,7 @@ use yii\helpers\HtmlPurifier;
                 href="<?= Url::to(['posts/view', 'id' => $model->id]) ?>">
 
               <img    width  = "270px" height="auto"
-                    src    ="<?= $model->image_url ?>"
+                    src    ="<?= $model->clear_image_url ?>"
                     alt    = "<?= $model->title ?>"
                     class  = 'attachment-square size-square wp-post-image'
               >

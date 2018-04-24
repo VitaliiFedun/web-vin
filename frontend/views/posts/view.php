@@ -1,4 +1,15 @@
 <?php
+// Подключаем стили бутстрапа:
+Yii::$app->view->registerCssFile("bootstrap/css/bootstrap.css", ['yii\web\CssAsset']);
+Yii::$app->view->registerCssFile("bootstrap/css/bootstrap-responsive.css", ['yii\web\CssAsset']);
+//Подключаем стили для подсветки кода:
+Yii::$app->view->registerCssFile("bootstrap/js/google-code-prettify/prettify.css", ['yii\web\CssAsset']);
+
+Yii::$app->view->registerJsFile("bootstrap/js/jquery.js",['yii\web\JsAsset']);
+Yii::$app->view->registerJsFile("bootstrap/js/google-code-prettify/prettify.js",['yii\web\JsAsset']);
+Yii::$app->view->registerJsFile("bootstrap/js/bootstrap.js",['yii\web\JsAsset']);
+Yii::$app->view->registerJsFile("bootstrap/js/application.js",['yii\web\JsAsset']);
+
 
 use yii\helpers\Html;
 use yii\helpers\HtmlPurifier;
@@ -48,7 +59,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="image-anons">
                 <div class="featured-image">
                     <img    width  = "270px" height="auto"
-                            src    ="<?= $model->image_url ?>"
+                            src    ="<?= $model->clear_image_url ?>"
                             alt    = "<?= $model->title ?>"
                             class  = 'attachment-square size-square wp-post-image'
                     />

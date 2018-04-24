@@ -26,6 +26,7 @@ use yii\web\NotFoundHttpException;
  * @property int $created_at
  * @property int $updated_at
  * @property string $image_url
+ * @property string clear_image_url
  *
 // * @property Comment[] $Comments
  * @property User $author
@@ -87,7 +88,7 @@ class Posts extends ActiveRecord
     {
         return [
             [['title', 'content', 'category_id', 'status','anons'], 'required'],
-            [['content','image_url','anons'], 'string'],
+            [['content','image_url','clear_image_url','anons'], 'string'],
             [['category_id', 'status', 'author_id','viewed'], 'integer'],
             [['created_at', 'updated_at', 'tags'], 'safe'],
             [['title'], 'string', 'max' => 255],
@@ -124,6 +125,7 @@ class Posts extends ActiveRecord
             'created_at' => Yii::t('frontend', 'Created At'),
             'updated_at' => Yii::t('frontend', 'Updated At'),
             'image_url' => Yii::t('frontend', 'Image Url'),
+            'clear_image_url' => Yii::t('frontend', 'Image Url'),
         ];
     }
 
@@ -326,7 +328,7 @@ class Posts extends ActiveRecord
     {
         preg_match('/(http|https|ftp|ftps)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?(jpg|png|gif|jpeg)/',
             $this->image_url, $matches);
-        $this->image_url = $matches[0];
+        $this->clear_image_url = $matches[0];
         return parent::beforeSave($insert);
     }
 

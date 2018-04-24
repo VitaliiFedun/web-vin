@@ -39,16 +39,10 @@ class ServicesController extends Controller
 
     public function actionOcr()
     {
-        $model = new OcrForm();
-        if ($model->load(Yii::$app->request->post())) {
-            return $this->goHome();   /*TO DO*/
-        }
-
         return $this->render('ocr');
     }
     public function actionAudio()
     {
-
         return $this->render('audio');
     }
 

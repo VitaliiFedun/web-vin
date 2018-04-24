@@ -17,8 +17,6 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Blog'), 'url' => ['p
 $category_url = Posts:: loadBreadCrumb();
 if ($category_url['title'] !== null) {
     $this->title = Yii::t('app',  $category_url['title']);
-//      $this->params['breadcrumbs'][] = ['label' => $category_url['title'],
-//        'url' => $category_url['url']];
 
 }
 else

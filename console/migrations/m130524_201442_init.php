@@ -46,6 +46,7 @@ class m130524_201442_init extends \yii\db\Migration
             'id' => $this->primaryKey(),
             'title' => $this->string()->notNull(),
             'image_url'=> $this->string()->notNull(),
+            'clear_image_url'=> $this->string()->notNull(),
             'anons' => $this->text()->notNull(),
             'content' => $this->text()->notNull(),
             'viewed' => $this->integer()->notNull()->defaultValue(-1),
