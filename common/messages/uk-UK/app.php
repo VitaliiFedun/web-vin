@@ -87,7 +87,6 @@ return [
     'rememberMe' => "Запам'ятати мене",
     'Users' => 'Користувачі',
 
-//    'Blog' => 'Блог',
     'Body' => 'Повідомлення',
     'E-mail' => 'E-mail',
     'If you forgot your password you can' => 'Якщо забули пароль, то Ви можете',
@@ -113,38 +112,24 @@ return [
     'Verification Code' => 'Код перевірки',
     'About' => 'Про мене',
     'Administration' => 'Адмін-панель',
-//    'Author' => 'Автор',
-//    'Blog' => 'Блог',
-//    'Categories' => 'Категорії',
-//    'Category' => 'Категорія',
     'Contact' => 'Контакти',
     'Cancel' => 'Відмова',
-    'Feedback form' => "Форма зворотнього зв'язку",
+    'Feedback form' => "Зворотній зв'язок",
 
     'Close' => 'Закрити',
     'Logout' => 'Вихід',
     'Register' => 'Реєстрація',
 
     'More' => 'Читати дальше',
-//    'Posts' => 'Пости',
     'Posts Tagged with'=>'Пости з тегом',
-//    'Publish' => 'Опублікований',
-//    'Publish date' => 'Дата публикації',
     'Sign up' => 'Реєстрація',
     'Submit' => 'Відправити',
-//    'Verification Code' => 'Код перевірки',
-
-
-//     'ID' => 'ID',
-//     'Title' => 'Заголовок',
-//     'Content' => 'Зміст',
-//     'Status' => 'Статус',
-//     'Category ID' => 'ID категорії',
      'Viewed' => 'Переглядів',
      'Terms of use' => 'Умови використання',
      'Created At' => 'Створено',
      'Updated At' => 'Оновлено',
      'Image Url' => 'Малюнок',
+     'Thank you for contacting us. We will respond to you as soon as possible.' => "Дякуємо, що зв'язалися з нами. Ми відповімо вам найближчим часом.",
 
 
 ];

@@ -62,9 +62,15 @@ use yii\captcha\Captcha;
 
                 <?= $form->field($model, 'body')->textarea(['rows' => 6]) ?>
 
-                <?= $form->field($model, 'verifyCode')->widget(Captcha::className(), [
-                    'template' => '<div class="row"><div class="col-lg-3">{image}</div><div class="col-lg-6">{input}</div></div>',
-                ]) ?>
+<!--                --><?//= $form->field($model, 'verifyCode')->widget(Captcha::className(), [
+//                    'template' => '<div class="row"><div class="col-lg-3">{image}</div><div class="col-lg-6">{input}</div></div>',
+//                ]) ?>
+                <?php echo $form->field($model, 'verifyCode')->widget(
+                \brussens\yii2\extensions\recaptcha\Widget::className(), [
+                'options' => [
+                'id' => 'insert-unique-widget-id'
+                ]
+                ]); ?>
 
             </div>
             <div class="modal-footer">

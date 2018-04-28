@@ -23,7 +23,9 @@
         "dmstr/yii2-adminlte-asset": "^2.6",
         "vova07/yii2-imperavi-widget": "*",
         "yii2mod/yii2-comments": "*",
-        "2amigos/yii2-tinymce-widget": "~1.1"
+        "2amigos/yii2-tinymce-widget": "~1.1",
+        "kartik-v/yii2-social": "@dev",
+        "brussens/yii2-recaptcha": "@dev"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

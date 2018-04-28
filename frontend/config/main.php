@@ -13,6 +13,17 @@ return [
         'comment' => [
             'class' => 'yii2mod\comments\Module',
         ],
+        //========================
+
+        'social' => [
+            // the module class
+            'class' => 'kartik\social\Module',
+            // the global settings for the facebook widget
+            'facebook' => [
+                'appId' =>  $params['facebook_clientId'], //'FACEBOOK_APP_ID',
+            ],
+            ],
+        ///===============
     ],
 
     'basePath' => dirname(__DIR__),
@@ -121,6 +132,18 @@ return [
         ],
 
 
+    ],
+    'container' => [
+        'definitions' => [
+            \brussens\yii2\extensions\recaptcha\Widget::class => function($container, $params, $config) {
+                return new \brussens\yii2\extensions\recaptcha\Widget('6LdG-FUUAAAAAPQKQCDg2RHe1xzMGfXAsRaoOfLe', \Yii::$app->language, $config);
+            }
+        ],
+        'singletons' => [
+            \ReCaptcha\ReCaptcha::class => function($container, $params, $config) {
+                return new \ReCaptcha\ReCaptcha( '6LdG-FUUAAAAAJF1Dh013swt3qWXBdierCkWuDMY');
+            }
+        ]
     ],
     'params' => $params,
 ];

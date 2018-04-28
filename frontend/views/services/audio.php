@@ -30,10 +30,6 @@ $this->params['breadcrumbs'][] = $this->title
 
 ?>
 
-
-
-
-
 <div id="content">
     <div class="main-container">
         <section class="switchable switchable--switch bg--primary space--sm">

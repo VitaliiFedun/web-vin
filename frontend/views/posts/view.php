@@ -1,16 +1,17 @@
 <?php
 // Подключаем стили бутстрапа:
-Yii::$app->view->registerCssFile("bootstrap/css/bootstrap.css", ['yii\web\CssAsset']);
-Yii::$app->view->registerCssFile("bootstrap/css/bootstrap-responsive.css", ['yii\web\CssAsset']);
+//Yii::$app->view->registerCssFile("bootstrap/css/bootstrap.css", ['yii\web\CssAsset']);
+//Yii::$app->view->registerCssFile("bootstrap/css/bootstrap-responsive.css", ['yii\web\CssAsset']);
 //Подключаем стили для подсветки кода:
-Yii::$app->view->registerCssFile("bootstrap/js/google-code-prettify/prettify.css", ['yii\web\CssAsset']);
+//Yii::$app->view->registerCssFile("bootstrap/js/google-code-prettify/prettify.css", ['yii\web\CssAsset']);
 
-Yii::$app->view->registerJsFile("bootstrap/js/jquery.js",['yii\web\JsAsset']);
-Yii::$app->view->registerJsFile("bootstrap/js/google-code-prettify/prettify.js",['yii\web\JsAsset']);
-Yii::$app->view->registerJsFile("bootstrap/js/bootstrap.js",['yii\web\JsAsset']);
-Yii::$app->view->registerJsFile("bootstrap/js/application.js",['yii\web\JsAsset']);
+//Yii::$app->view->registerJsFile("bootstrap/js/jquery.js",['yii\web\JsAsset']);
+//Yii::$app->view->registerJsFile("bootstrap/js/google-code-prettify/prettify.js",['yii\web\JsAsset']);
+//Yii::$app->view->registerJsFile("bootstrap/js/bootstrap.js",['yii\web\JsAsset']);
+//Yii::$app->view->registerJsFile("bootstrap/js/application.js",['yii\web\JsAsset']);
 
-
+use kartik\social\FacebookPlugin;
+use kartik\social\GooglePlugin;
 use yii\helpers\Html;
 use yii\helpers\HtmlPurifier;
 use common\models\Posts;
@@ -106,13 +107,25 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= implode($tags, ', ') ?>
         </div>
 
-<!--        --><?php //echo Html::a(Yii::t('app','Permalink'),['post/view', 'id' => $model->id]); ?><!-- |-->
-<!--        --><?php //echo Html::a(Yii::t('app','Comments ')."({$model->commentCount})",$model->url.'#comments'); ?><!-- |-->
+        <!--        --><?php //echo Html::a(Yii::t('app','Permalink'),['post/view', 'id' => $model->id]); ?><!-- |-->
+        <!--        --><?php //echo Html::a(Yii::t('app','Comments ')."({$model->commentCount})",$model->url.'#comments'); ?><!-- |-->
         <?=Yii::t('app','Last updated on')?> <?php echo date('d-m-Y H:i:s',$model->updated_at); ?>
 
     </div>
 
 
+    <?php echo FacebookPlugin::widget(['type'=>FacebookPlugin::SHARE,
+        'settings' => ['size'=>'large',
+            'layout'=>'button_count',
+             'mobile_iframe'=>'false'],
+        'language' =>'uk',
+    ]); ?>
+
+    <?php echo GooglePlugin::widget(['type'=>GooglePlugin::SHARE,
+        'settings' => ['annotation'=>'vertical-bubble'],
+        'language' =>'uk',
+          ]);
+    ?>
 
     <?php echo \yii2mod\comments\widgets\Comment::widget([
         'model' => $model,

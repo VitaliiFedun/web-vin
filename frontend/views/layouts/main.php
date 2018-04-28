@@ -117,4 +117,5 @@ define('HTTPS_SERVER', 'https://web-vin.com/');
     <?php $this->endBody() ?>
     </body>
     </html>
+
 <?php $this->endPage() ?>

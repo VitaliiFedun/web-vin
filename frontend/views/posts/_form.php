@@ -34,13 +34,13 @@ use dosamigos\tinymce\TinyMce;
     <?= $form->field($model, 'image_url')->widget(Widget::className(), [
 
         'settings' => [
-            'lang' => 'en',
+            'lang' => 'uk',
             'minHeight' => 200,
             'imageUpload' => Url::to(['/posts/image-upload']),
             'imageManagerJson' => Url::to(['/posts/images-get']),
             'fileUpload' => Url::to(['posts/file-upload']),
             'fileManagerJson' => Url::to(['/posts/files-get']),
-            'buttons' => ['image', 'file','html'],
+            'buttons' => ['image','html'],
 
             'plugins' => [
                 'imagemanager',
@@ -54,7 +54,7 @@ use dosamigos\tinymce\TinyMce;
     <?= $form->field($model, 'anons')->widget(Widget::className(), [
 
         'settings' => [
-            'lang' => 'en',
+            'lang' => 'uk',
             'minHeight' => 200,
             'imageUpload' => Url::to(['/posts/image-upload']),
             'imageManagerJson' => Url::to(['/posts/images-get']),
@@ -62,7 +62,7 @@ use dosamigos\tinymce\TinyMce;
             'fileManagerJson' => Url::to(['/posts/files-get']),
 
             'plugins' => [
-//                'imagemanager',
+                'imagemanager',
 //                'filemanager',
 
             ],
